@@ -1,3 +1,9 @@
+#### 0.0.6 (2018-05-21)
+
+##### Bug Fixes
+
+* **cli:**  Fix typo in lerna updated config filename. ([3393faec](https://github.com/dylanaubrey/component-library/commit/3393faecb83d1c8b16fa49668a1bde97cbb45df0))
+
 #### 0.0.5 (2018-05-21)
 
 ##### Bug Fixes
