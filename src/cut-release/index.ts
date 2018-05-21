@@ -25,8 +25,8 @@ const newVersion = getNewVersion(version, type);
 checkoutMaster();
 shell.exec(`yarn run changelog --${type}`);
 
-if (scripts["cutoff:post-version"]) {
-  shell.exec("yarn run cutoff:post-version");
+if (scripts["cutoff:pre-version"]) {
+  shell.exec("yarn run cutoff:pre-version");
 }
 
 shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
