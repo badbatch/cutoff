@@ -1,3 +1,9 @@
+#### 0.0.9 (2018-05-21)
+
+##### Bug Fixes
+
+* **cli:**  Correcting path used as base for each package config. ([d55aa20b](https://github.com/dylanaubrey/component-library/commit/d55aa20b91ed066302028d8efea4536052065623))
+
 #### 0.0.8 (2018-05-21)
 
 ##### Chores
