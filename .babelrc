@@ -1,0 +1,25 @@
+{
+  "comments": false,
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": { "node": "8" },
+      "useBuiltIns": "usage"
+    }],
+    "@babel/preset-stage-0"
+  ],
+  "ignore": [
+    ".vscode",
+    "coverage",
+    "docs",
+    "lib",
+    "node_modules"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "alias": {
+        "~": "./src"
+      }
+    }],
+    "@babel/plugin-proposal-decorators"
+  ]
+}

@@ -1,0 +1,8 @@
+.vscode/
+coverage/
+lib/
+node_modules/
+.env
+.eslintcache
+*.log
+.DS_Store

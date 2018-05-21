@@ -1,0 +1,89 @@
+{
+  "name": "cutoff",
+  "version": "0.0.1",
+  "description": "An opinionated command line utility for cutting releases and publishing to npm.",
+  "author": "Dylan Aubrey <dylanaubrey@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/dylanaubrey/component-library",
+  "bugs": {
+    "url": "https://github.com/dylanaubrey/component-library/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dylanaubrey/component-library"
+  },
+  "keywords": [
+    "command line",
+    "cli",
+    "lerna",
+    "npm",
+    "releases"
+  ],
+  "bin": {
+    "cutoff": "lib/cut-release/index.js",
+    "cutoff-lerna": "lib/lerna/cut-release/index.js",
+    "publish-cutoff": "lib/publish-release/index.js",
+    "publish-lerna-cutoff": "lib/lerna/publish-release/index.js",
+    "publish-lerna-cutoff-package": "lib/lerna/publish-package/index.js"
+  },
+  "scripts": {
+    "changelog": "changelog",
+    "clean": "del node_modules package-lock.json",
+    "compile": "gulp compile",
+    "cut-release": "node lib/cut-release/index.js",
+    "jest": "jest",
+    "lint": "yarn run tslint && yarn run markdownLint",
+    "markdownLint": "markdownlint README.md CONTRIBUTING.md",
+    "publish-release": "node lib/publish-release/index.js",
+    "test": "yarn run lint && yarn run type-check",
+    "tslint": "gulp tslint",
+    "type-check": "gulp type-check"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn run test"
+    }
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "semver": "^5.5.0",
+    "shelljs": "^0.8.1",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.0.0-beta.44",
+    "@babel/core": "7.0.0-beta.44",
+    "@babel/plugin-proposal-decorators": "7.0.0-beta.44",
+    "@babel/polyfill": "7.0.0-beta.44",
+    "@babel/preset-env": "7.0.0-beta.44",
+    "@babel/preset-stage-0": "7.0.0-beta.44",
+    "@types/dotenv": "^4.0.3",
+    "@types/semver": "^5.5.0",
+    "@types/shelljs": "^0.7.9",
+    "@types/yargs": "^11.0.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "codecov": "^3.0.0",
+    "cross-env": "^5.1.4",
+    "del-cli": "^1.1.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "generate-changelog": "^1.7.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-tslint": "^8.1.3",
+    "gulp-typescript": "^4.0.2",
+    "husky": "^0.15.0-rc.13",
+    "jest": "^22.4.3",
+    "markdownlint-cli": "^0.8.1",
+    "merge-stream": "^1.0.1",
+    "ts-jest": "^22.4.6",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.0-dev.20180512"
+  }
+}

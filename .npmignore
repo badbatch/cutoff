@@ -1,0 +1,16 @@
+.vscode/
+coverage/
+docs/
+src/
+test/
+*.log
+.*
+gulpfile.js
+jest.config.js
+karma.*
+lerna.json
+mocha.opts
+package-lock.json
+sonar-project.properties
+webpack.*
+yarn.lock
