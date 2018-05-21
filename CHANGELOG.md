@@ -1,3 +1,9 @@
+#### 0.0.10 (2018-05-21)
+
+##### Bug Fixes
+
+* **cli:**  Making sure internal dependencies have versions bumped in configs. ([09aadb95](https://github.com/dylanaubrey/component-library/commit/09aadb95f5fa688cd793b64e00ff6b02baad1ba8))
+
 #### 0.0.9 (2018-05-21)
 
 ##### Bug Fixes

@@ -1,6 +1,6 @@
 {
   "name": "cutoff",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "An opinionated command line utility for cutting releases and publishing to npm.",
   "author": "Dylan Aubrey <dylanaubrey@gmail.com>",
   "license": "MIT",
