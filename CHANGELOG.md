@@ -1,3 +1,9 @@
+#### 0.0.5 (2018-05-21)
+
+##### Bug Fixes
+
+* **dependencies:**  Moving generate-changelog into dependencies from devDependencies. ([fc7a1ed8](https://github.com/dylanaubrey/component-library/commit/fc7a1ed8842f1e6892fba15caf5c4a98927bc71a))
+
 #### 0.0.4 (2018-05-21)
 
 ##### New Features
