@@ -10,7 +10,9 @@ import { checkoutMaster } from "~/helpers/checkout-master";
 import { getNewVersion } from "~/helpers/get-new-version";
 
 dotenv.config();
-const type: ReleaseTypes = yargs.argv.type;
+const { argv } = yargs.boolean("preview");
+const type: ReleaseTypes = argv.type;
+const preview: boolean = argv.preview;
 
 if (type !== "major" && type !== "minor" && type !== "patch") {
   shell.echo('cutoff expected type to be "major", "minor" or "patch".');
@@ -35,4 +37,6 @@ if (scripts["cutoff:post-version"]) {
   shell.exec("yarn run cutoff:post-version");
 }
 
-addCommitPush(newVersion);
+if (!preview) {
+  addCommitPush(newVersion);
+}
