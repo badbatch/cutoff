@@ -7,7 +7,7 @@ const merge = require('merge-stream');
 const { Linter } = require('tslint');
 
 gulp.task('compile', () => {
-  const tsProject = ts.createProject('tsconfig.json', { declaration: true, module: 'commonjs' });
+  const tsProject = ts.createProject('tsconfig.json', { module: 'commonjs' });
 
   const transpiled = gulp.src(['src/**/*.ts'])
     .pipe(sourcemaps.init())

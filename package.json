@@ -27,8 +27,9 @@
     "publish-lerna-cutoff-package": "lib/lerna/publish-package/index.js"
   },
   "scripts": {
+    "build": "yarn run clean && yarn run test && yarn run compile",
     "changelog": "changelog",
-    "clean": "del node_modules package-lock.json",
+    "clean": "del lib",
     "compile": "gulp compile",
     "cut-release": "node lib/cut-release/index.js",
     "jest": "jest",
@@ -73,7 +74,7 @@
     "eslint-plugin-react": "^7.5.1",
     "generate-changelog": "^1.7.1",
     "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0-beta.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-tslint": "^8.1.3",
     "gulp-typescript": "^4.0.2",
