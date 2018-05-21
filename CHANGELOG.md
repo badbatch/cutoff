@@ -1,3 +1,9 @@
+#### 0.0.7 (2018-05-21)
+
+##### New Features
+
+* **cli:**  Adding force option to force update all packages in a lerna repo. ([87352e1d](https://github.com/dylanaubrey/component-library/commit/87352e1dd35367479c4873366474c5f97a26295f))
+
 #### 0.0.6 (2018-05-21)
 
 ##### Bug Fixes
