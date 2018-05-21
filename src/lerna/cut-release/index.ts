@@ -38,10 +38,10 @@ if (scripts["cutoff:pre-version"]) {
 }
 
 if (force) {
+  forceUpdate(newVersion);
+} else {
   shell.exec("lerna updated --json > .lerna.updated.json");
   shell.exec(`lerna publish --skip-git --skip-npm --yes --repo-version ${newVersion}`);
-} else {
-  forceUpdate(newVersion);
 }
 
 shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
