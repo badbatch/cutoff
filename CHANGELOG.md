@@ -1,3 +1,9 @@
+#### 0.0.3 (2018-05-21)
+
+##### Bug Fixes
+
+* **ci:**  Update npmrc to ignore more files and fix another typo in script name. ([6343bfe5](https://github.com/dylanaubrey/component-library/commit/6343bfe52dabcc6c967e2016acda7534eae8c7b2))
+
 #### 0.0.2 (2018-05-21)
 
 ##### Bug Fixes
