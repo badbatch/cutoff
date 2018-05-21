@@ -10,7 +10,7 @@ export function forceUpdate(version: string): void {
   filenames.forEach((filename) => {
     const packagePath = resolve(packagesPath, filename);
     if (!statSync(packagePath).isDirectory()) return;
-    const configPath = resolve(packagesPath, "package.json");
+    const configPath = resolve(packagePath, "package.json");
     const config: PackageConfig = require(configPath);
 
     updated.push({
