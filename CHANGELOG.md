@@ -1,3 +1,13 @@
+#### 0.0.8 (2018-05-21)
+
+##### Chores
+
+* **configs:**  Removing unnecessary prettier configs. ([d4bb0187](https://github.com/dylanaubrey/component-library/commit/d4bb0187100555a08a02fe05b39efc740c8cb524))
+
+##### Bug Fixes
+
+* **cli:**  Force update conditions were the wrong way around in lerna script. ([7d8c95ca](https://github.com/dylanaubrey/component-library/commit/7d8c95ca1f9610b8351881caf1c78a29786f760d))
+
 #### 0.0.7 (2018-05-21)
 
 ##### New Features
