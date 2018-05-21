@@ -1,3 +1,9 @@
+#### 0.0.2 (2018-05-21)
+
+##### Bug Fixes
+
+* **cli:**  Correcting name of script. ([d8b48506](https://github.com/dylanaubrey/component-library/commit/d8b48506f11801d0ec5d383d0e3e63771c20c0e5))
+
 #### 0.0.1 (2018-05-21)
 
 ##### New Features
