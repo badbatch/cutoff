@@ -5,6 +5,8 @@ src/
 test/
 *.log
 .*
+CHANGELOG.md
+CONTRIBUTING.md
 gulpfile.js
 jest.config.js
 karma.*
@@ -12,5 +14,7 @@ lerna.json
 mocha.opts
 package-lock.json
 sonar-project.properties
+tsconfig.*
+tslint.*
 webpack.*
 yarn.lock
