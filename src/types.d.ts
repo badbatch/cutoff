@@ -3,7 +3,9 @@ export interface StringObjectMap {
 }
 
 export interface PackageConfig {
-  scripts: StringObjectMap;
+  name: string;
+  private?: boolean;
+  scripts?: StringObjectMap;
   version: string;
 }
 

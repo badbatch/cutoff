@@ -8,11 +8,17 @@ import { PackageConfig, ReleaseTypes } from "~/types";
 import { addCommitPush } from "~/helpers/add-commit-push";
 import { checkoutMaster } from "~/helpers/checkout-master";
 import { getNewVersion } from "~/helpers/get-new-version";
+import { forceUpdate } from "~/lerna/helpers/force-update";
 
 dotenv.config();
-const { argv } = yargs.boolean("preview");
-const type: ReleaseTypes = argv.type;
+
+const { argv } = yargs
+  .boolean("force")
+  .boolean("preview");
+
+const force: boolean = argv.force;
 const preview: boolean = argv.preview;
+const type: ReleaseTypes = argv.type;
 
 if (type !== "major" && type !== "minor" && type !== "patch") {
   shell.echo('cutoff expected type to be "major", "minor" or "patch".');
@@ -31,9 +37,14 @@ if (scripts["cutoff:pre-version"]) {
   shell.exec("yarn run cutoff:pre-version");
 }
 
-shell.exec("lerna updated --json > .lerna.updated.json");
+if (force) {
+  shell.exec("lerna updated --json > .lerna.updated.json");
+  shell.exec(`lerna publish --skip-git --skip-npm --yes --repo-version ${newVersion}`);
+} else {
+  forceUpdate(newVersion);
+}
+
 shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
-shell.exec(`lerna publish --skip-git --skip-npm --yes --repo-version ${newVersion}`);
 
 if (scripts["cutoff:post-version"]) {
   shell.exec("yarn run cutoff:post-version");
