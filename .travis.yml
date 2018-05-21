@@ -15,7 +15,7 @@ install:
   - yarn
 script:
   - yarn run test
-pre_deploy:
+before_deploy:
   - yarn run compile
 deploy:
   provider: script
