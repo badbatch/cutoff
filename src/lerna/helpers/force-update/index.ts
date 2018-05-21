@@ -1,8 +1,16 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { PackageConfig, UpdatedPackage } from "~/types";
+import { PackageConfig, StringObjectMap, UpdatedPackage } from "~/types";
 
-export function forceUpdate(version: string): void {
+function updateDependencies(name: string, version: string, dependencies?: StringObjectMap): void {
+  if (dependencies) {
+    Object.keys(dependencies).forEach((key) => {
+      if (key.startsWith(`@${name}/`)) dependencies[key] = version;
+    });
+  }
+}
+
+export function forceUpdate(name: string, version: string): void {
   const packagesPath = resolve(process.cwd(), "packages");
   const filenames = readdirSync(packagesPath);
   const updated: UpdatedPackage[] = [];
@@ -12,6 +20,8 @@ export function forceUpdate(version: string): void {
     if (!statSync(packagePath).isDirectory()) return;
     const configPath = resolve(packagePath, "package.json");
     const config: PackageConfig = require(configPath);
+    updateDependencies(name, version, config.dependencies);
+    updateDependencies(name, version, config.devDependencies);
 
     updated.push({
       name: config.name,

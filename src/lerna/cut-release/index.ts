@@ -38,7 +38,7 @@ if (scripts["cutoff:pre-version"]) {
 }
 
 if (force) {
-  forceUpdate(newVersion);
+  forceUpdate(config.name, newVersion);
 } else {
   shell.exec("lerna updated --json > .lerna.updated.json");
   shell.exec(`lerna publish --skip-git --skip-npm --yes --repo-version ${newVersion}`);

@@ -4,6 +4,8 @@ export interface StringObjectMap {
 
 export interface PackageConfig {
   name: string;
+  dependencies?: StringObjectMap;
+  devDependencies?: StringObjectMap;
   private?: boolean;
   scripts?: StringObjectMap;
   version: string;
