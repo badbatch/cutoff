@@ -1,3 +1,9 @@
+#### 0.0.4 (2018-05-21)
+
+##### New Features
+
+* **cli:**  Adding preview arg to cut-release scripts. ([f4a9c7ac](https://github.com/dylanaubrey/component-library/commit/f4a9c7acfbc528b294dd5871c4667dd866b9fcb0))
+
 #### 0.0.3 (2018-05-21)
 
 ##### Bug Fixes
