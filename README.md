@@ -32,7 +32,7 @@ yarn add cutoff --dev
 
 The script cuts a major, minor or patch release, generates/updates the changelog, runs the pre-versioning
 npm script hook, updates the project version, runs the post-versioning npm script hook, commits the changes to master
-and then commits a new tag with the message `"Release version <version>."`.
+with the message `"Release version <version>."`, and then commits a new tag with the same message.
 
 Include the `--preview` flag to stop the script after the post-versioning npm script hook, so no changes are
 committed to master.
@@ -51,8 +51,8 @@ yarn run cutoff [--type <major | minor | patch>] [--preview]
 
 The script cuts a major, minor or patch release, generates/updates the changelog, runs the pre-versioning npm script
 hook, updates the project, lerna config and package versions, writes the list of updated packages to
-`.lerna.updated.json`, runs the post-versioning npm script hook, commits the changes to master and then commits a new
-tag with the message `"Release version <version>."`.
+`.lerna.updated.json`, runs the post-versioning npm script hook, commits the changes to master with the message
+`"Release version <version>."`, and then commits a new tag with the same message.
 
 Include the `--preview` flag to stop the script after the post-versioning npm script hook, so no changes are
 committed to master. Include the `--force` flag to force update all packages to the new version.
