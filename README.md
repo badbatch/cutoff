@@ -93,7 +93,7 @@ new version.
 ```
 
 ```bash
-yarn run publish-cutoff
+yarn run publish-lerna-cutoff
 ```
 
 ## License
