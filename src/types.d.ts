@@ -1,5 +1,5 @@
-export interface StringObjectMap {
-  [key: string]: string;
+export interface ObjectMap {
+  [key: string]: any;
 }
 
 export interface PackageConfig {
@@ -12,6 +12,10 @@ export interface PackageConfig {
 }
 
 export type ReleaseTypes = "major" | "minor" | "patch";
+
+export interface StringObjectMap {
+  [key: string]: string;
+}
 
 export interface UpdatedPackage {
   name: string;

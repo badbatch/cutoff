@@ -20,22 +20,22 @@
     "releases"
   ],
   "bin": {
-    "cutoff": "lib/cut-release/index.js",
-    "cutoff-lerna": "lib/lerna/cut-release/index.js",
-    "publish-cutoff": "lib/publish-release/index.js",
-    "publish-lerna-cutoff": "lib/lerna/publish-release/index.js",
-    "publish-lerna-cutoff-package": "lib/lerna/publish-package/index.js"
+    "cutoff": "bin/cutoff.js",
+    "cutoff-lerna": "bin/cutoff-lerna.js",
+    "publish-cutoff": "bin/publish-cutoff.js",
+    "publish-lerna-cutoff": "bin/publish-lerna-cutoff.js",
+    "publish-lerna-cutoff-pkg": "bin/publish-lerna-cutoff-pkg.js"
   },
   "scripts": {
     "build": "yarn run clean && yarn run test && yarn run compile",
     "changelog": "changelog",
     "clean": "del lib",
     "compile": "gulp compile",
-    "cut-release": "node lib/cut-release/index.js",
+    "cut-release": "node bin/cutoff.js",
     "jest": "jest",
     "lint": "yarn run tslint && yarn run markdownLint",
     "markdownLint": "markdownlint README.md CONTRIBUTING.md",
-    "publish-release": "node lib/publish-release/index.js",
+    "publish-release": "node bin/publish-cutoff.js",
     "test": "yarn run lint && yarn run type-check",
     "tslint": "gulp tslint",
     "type-check": "gulp type-check"
@@ -60,6 +60,7 @@
     "@babel/preset-env": "7.0.0-beta.44",
     "@babel/preset-stage-0": "7.0.0-beta.44",
     "@types/dotenv": "^4.0.3",
+    "@types/jest": "^22.2.3",
     "@types/semver": "^5.5.0",
     "@types/shelljs": "^0.7.9",
     "@types/yargs": "^11.0.0",
