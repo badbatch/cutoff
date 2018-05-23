@@ -98,4 +98,4 @@ yarn run publish-lerna-cutoff
 
 ## License
 
-The component library is [MIT Licensed](LICENSE).
+Cutoff is [MIT Licensed](LICENSE).
