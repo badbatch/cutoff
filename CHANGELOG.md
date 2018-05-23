@@ -1,3 +1,13 @@
+#### 0.0.11 (2018-05-23)
+
+##### Bug Fixes
+
+* **docs:**  Correcting typo. ([4949ca20](https://github.com/dylanaubrey/component-library/commit/4949ca2004739bd7e38ac8e183ef00e7eae98f0c))
+
+##### Refactors
+
+* **structure:**  moving cli entrypoints to bin folder ([#2](https://github.com/dylanaubrey/component-library/pull/2)) ([a566bc09](https://github.com/dylanaubrey/component-library/commit/a566bc09b5c8daed5f2c400fcddd964c322398d8))
+
 #### 0.0.10 (2018-05-21)
 
 ##### Bug Fixes
