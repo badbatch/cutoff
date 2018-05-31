@@ -1,3 +1,9 @@
+#### 0.0.12 (2018-05-31)
+
+##### Bug Fixes
+
+* **lerna:**  Adding logic to update lerna config version as part of force update. ([#3](https://github.com/dylanaubrey/component-library/pull/3)) ([7c434e05](https://github.com/dylanaubrey/component-library/commit/7c434e056091a130d98db66e116ac2fd0e91b18b))
+
 #### 0.0.11 (2018-05-23)
 
 ##### Bug Fixes
