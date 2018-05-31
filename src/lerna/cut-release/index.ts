@@ -1,12 +1,12 @@
 import * as dotenv from "dotenv";
-import * as shell from "shelljs";
 import { resolve } from "path";
+import * as shell from "shelljs";
 import * as yargs from "yargs";
-import { PackageConfig, ReleaseTypes } from "~/types";
 import { addCommitPush } from "~/helpers/add-commit-push";
 import { checkoutMaster } from "~/helpers/checkout-master";
 import { getNewVersion } from "~/helpers/get-new-version";
 import { forceUpdate } from "~/lerna/helpers/force-update";
+import { PackageConfig, ReleaseTypes } from "~/types";
 
 export function cutLernaRelease() {
   dotenv.config();
