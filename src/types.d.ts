@@ -1,3 +1,7 @@
+export interface LernaConfig {
+  version: string;
+}
+
 export interface ObjectMap {
   [key: string]: any;
 }
