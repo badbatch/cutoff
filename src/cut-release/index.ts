@@ -7,7 +7,7 @@ import { checkoutMaster } from "~/helpers/checkout-master";
 import { getNewVersion } from "~/helpers/get-new-version";
 import { PackageConfig, ReleaseTypes } from "~/types";
 
-export function cutRelease() {
+export function cutRelease(): void {
   dotenv.config();
   const { argv } = yargs.boolean("preview");
   const type: ReleaseTypes = argv.type;

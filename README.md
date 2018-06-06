@@ -96,6 +96,10 @@ new version.
 yarn run publish-lerna-cutoff
 ```
 
+## Changelog
+
+Check out the [features, fixes and more](CHANGELOG.md) that go into each major, minor and patch version.
+
 ## License
 
 Cutoff is [MIT Licensed](LICENSE).

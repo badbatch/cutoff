@@ -2,6 +2,8 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*',
+    '!**/*.d.ts',
+    '!**/*.test.*',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [
@@ -19,8 +21,8 @@ module.exports = {
   },
   globals: {
     'ts-jest': {
-      useBabelrc: true,
       tsConfigFile: 'tsconfig.test.json',
+      useBabelrc: true,
     },
   },
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],

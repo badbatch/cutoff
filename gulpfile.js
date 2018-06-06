@@ -6,10 +6,12 @@ const ts = require('gulp-typescript');
 const merge = require('merge-stream');
 const { Linter } = require('tslint');
 
+const sources = ['src/**/*.ts', '!**/*.test.*'];
+
 gulp.task('compile', () => {
   const tsProject = ts.createProject('tsconfig.json', { module: 'commonjs' });
 
-  const transpiled = gulp.src(['src/**/*.ts'])
+  const transpiled = gulp.src(sources)
     .pipe(sourcemaps.init())
     .pipe(tsProject())
     .pipe(babel())
@@ -26,13 +28,13 @@ gulp.task('compile', () => {
 gulp.task('type-check', () => {
   const tsProject = ts.createProject('tsconfig.json', { noEmit: true });
 
-  gulp.src(['src/**/*.ts'])
+  gulp.src(sources)
     .pipe(tsProject())
     .on('error', () => process.exit(1));
 });
 
 gulp.task('tslint', () => {
-  gulp.src(['src/**/*.ts'])
+  gulp.src(sources)
     .pipe(tslint({
       configuration: 'tslint.json',
       fix: true,

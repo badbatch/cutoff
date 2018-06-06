@@ -9,6 +9,7 @@
   ],
   "ignore": [
     ".vscode",
+    "bin",
     "coverage",
     "docs",
     "lib",
@@ -19,7 +20,6 @@
       "alias": {
         "~": "./src"
       }
-    }],
-    "@babel/plugin-proposal-decorators"
+    }]
   ]
 }

@@ -1,4 +1,7 @@
+.nyc_output/
+.sonar/
 .vscode/
+bundle/
 coverage/
 docs/
 src/

@@ -8,7 +8,7 @@ import { getNewVersion } from "~/helpers/get-new-version";
 import { forceUpdate } from "~/lerna/helpers/force-update";
 import { PackageConfig, ReleaseTypes } from "~/types";
 
-export function cutLernaRelease() {
+export function cutLernaRelease(): void {
   dotenv.config();
 
   const { argv } = yargs

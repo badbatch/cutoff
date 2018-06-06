@@ -1,3 +1,5 @@
+.nyc_output/
+bundle/
 coverage/
 lib/
 node_modules/
