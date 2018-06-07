@@ -96,6 +96,28 @@ new version.
 yarn run publish-lerna-cutoff
 ```
 
+## Scripts
+
+### cutoff:pre-version
+
+Any tasks you want to run prior to npm package versions getting updated should be run in this script hook.
+
+```json
+"scripts": {
+  "cutoff:pre-version": "yarn run pre-version-tasks"
+}
+```
+
+### cutoff:post-version
+
+Any tasks you want to run after npm package versions have been updated should be run in this script hook.
+
+```json
+"scripts": {
+  "cutoff:post-version": "yarn run post-version-tasks"
+}
+```
+
 ## Changelog
 
 Check out the [features, fixes and more](CHANGELOG.md) that go into each major, minor and patch version.
