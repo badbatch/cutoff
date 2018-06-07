@@ -96,7 +96,7 @@ new version.
 yarn run publish-lerna-cutoff
 ```
 
-## Scripts
+## Script hooks
 
 ### cutoff:pre-version
 
