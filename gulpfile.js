@@ -6,7 +6,7 @@ const ts = require('gulp-typescript');
 const merge = require('merge-stream');
 const { Linter } = require('tslint');
 
-const sources = ['src/**/*.ts', '!**/*.test.*'];
+const sources = ['src/**/*.ts', '!**/*.test.*', '!**/.test/**'];
 
 gulp.task('compile', () => {
   const tsProject = ts.createProject('tsconfig.json', { module: 'commonjs' });

@@ -8,12 +8,14 @@
     "@babel/preset-stage-0"
   ],
   "ignore": [
+    ".nyc_output",
     ".vscode",
     "bin",
     "coverage",
     "docs",
     "lib",
-    "node_modules"
+    "node_modules",
+    "**/*.d.ts"
   ],
   "plugins": [
     ["module-resolver", {
