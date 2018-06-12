@@ -3,6 +3,8 @@
 An opinionated command line utility for cutting releases and publishing to npm.
 
 [![Build Status](https://travis-ci.org/bad-batch/cutoff.svg?branch=master)](https://travis-ci.org/bad-batch/cutoff)
+[![codecov](https://codecov.io/gh/bad-batch/cutoff/branch/master/graph/badge.svg)](https://codecov.io/gh/bad-batch/cutoff)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=sonarqube%3Acutoff&metric=alert_status)](https://sonarcloud.io/dashboard?id=sonarqube%3Acutoff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://badge.fury.io/js/cutoff.svg)](https://badge.fury.io/js/cutoff)
 [![dependencies Status](https://david-dm.org/bad-batch/cutoff/status.svg)](https://david-dm.org/bad-batch/cutoff)
@@ -10,7 +12,7 @@ An opinionated command line utility for cutting releases and publishing to npm.
 
 ## Summary
 
-* Works exclusively with Yarn... sorry npm it is just better.
+* Works exclusively with Yarn... sorry npm, it is just better.
 * Cuts major, minor or patch releases from master branch.
 * Generates changelog based on angular-style commits since last git tag.
 * Updates package version and git tag automatically based on release type.
