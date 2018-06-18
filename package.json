@@ -31,11 +31,11 @@
     "changelog": "changelog",
     "clean": "del lib",
     "compile": "gulp compile",
-    "cut-release": "node bin/cutoff.js",
+    "cutoff": "node bin/cutoff.js",
     "jest": "jest",
     "lint": "yarn run tslint && yarn run markdownLint",
     "markdownLint": "markdownlint README.md CONTRIBUTING.md",
-    "publish-release": "node bin/publish-cutoff.js",
+    "publish-cutoff": "node bin/publish-cutoff.js",
     "test": "yarn run lint && yarn run type-check",
     "tslint": "gulp tslint",
     "type-check": "gulp type-check"
