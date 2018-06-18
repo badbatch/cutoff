@@ -14,7 +14,7 @@ export function cutRelease(): void {
   const preview: boolean = argv.preview;
 
   if (type !== "major" && type !== "minor" && type !== "patch") {
-    shell.echo('cutoff expected type to be "major", "minor" or "patch".');
+    shell.echo("cutoff expected type to be 'major', 'minor' or 'patch'.");
     shell.exit(1);
   }
 
