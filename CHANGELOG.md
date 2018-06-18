@@ -1,3 +1,10 @@
+#### 0.0.13 (2018-06-18)
+
+##### Chores
+
+* **configs:**  Update travis ci config. ([96894fdc](https://github.com/bad-batch/cutoff/commit/96894fdc367f19058b8f69ed4de26da29baf5e93))
+* **config:**  Update script names in package json. ([40958852](https://github.com/bad-batch/cutoff/commit/409588521b1d0ef20e8d97e33fdd648728d85677))
+
 #### 0.0.12 (2018-05-31)
 
 ##### Bug Fixes
