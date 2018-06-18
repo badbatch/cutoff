@@ -20,7 +20,7 @@ before_deploy:
 deploy:
   provider: script
   script:
-    - yarn run publish-release
+    - yarn run publish-cutoff
   skip_cleanup: true
   on:
     tags: true
