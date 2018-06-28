@@ -1,8 +1,8 @@
 import * as semver from "semver";
 import * as shell from "shelljs";
-import { ReleaseTypes } from "~/types";
+import { ReleaseTypes } from "../../types";
 
-export function getNewVersion(version: string, type: ReleaseTypes): string {
+export function getNewVersion(version: string, type: ReleaseTypes): string | undefined {
   const newVersion = semver.inc(version, type);
   let invalid = false;
 
@@ -16,6 +16,10 @@ export function getNewVersion(version: string, type: ReleaseTypes): string {
     invalid = true;
   }
 
-  if (!newVersion || invalid) throw shell.exit(1);
+  if (!newVersion || invalid) {
+    shell.exit(1);
+    return;
+  }
+
   return newVersion;
 }

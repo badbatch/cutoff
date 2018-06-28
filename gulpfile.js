@@ -11,17 +11,27 @@ const sources = ['src/**/*.ts', '!**/*.test.*', '!**/.test/**'];
 gulp.task('compile', () => {
   const tsProject = ts.createProject('tsconfig.json', { module: 'commonjs' });
 
-  const transpiled = gulp.src(sources)
+  return gulp.src(sources)
     .pipe(sourcemaps.init())
     .pipe(tsProject())
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('lib'));
+    .pipe(gulp.dest('lib/main'));
+    .on('error', () => process.exit(1));
+});
 
-  const copied = gulp.src(['src/**/*.d.ts'])
-    .pipe(gulp.dest('lib'));
+gulp.task('types', () => {
+  const tsProject = ts.createProject('tsconfig.json', {
+    declaration: true,
+    module: 'commonjs',
+    removeComments: true,
+  });
 
-  return merge(transpiled, copied)
+  const transpiled = gulp.src([...sources, '!src/index.ts']).pipe(tsProject());
+  const copied = gulp.src(['src/**/*.d.ts']);
+
+  return merge(transpiled.dts, copied)
+    .pipe(gulp.dest('lib/types'))
     .on('error', () => process.exit(1));
 });
 

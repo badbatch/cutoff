@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import * as shell from "shelljs";
-import { UpdatedPackage } from "~/types";
+import { UpdatedPackage } from "../../types";
 
 export function publishLernaRelease(): void {
   const updatedConfigPath = resolve(process.cwd(), ".lerna.updated.json");

@@ -1,6 +1,6 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { LernaConfig, PackageConfig, StringObjectMap, UpdatedPackage } from "~/types";
+import { LernaConfig, PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
 
 function updateDependencies(name: string, version: string, dependencies?: StringObjectMap): void {
   if (dependencies) {

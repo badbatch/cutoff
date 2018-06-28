@@ -1,6 +1,6 @@
 import { resolve } from "path";
 import * as shell from "shelljs";
-import { PackageConfig } from "~/types";
+import { PackageConfig } from "../types";
 
 export function publishRelease(): void {
   const packagePath = resolve(process.cwd(), "package.json");

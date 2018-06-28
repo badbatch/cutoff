@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import * as shell from "shelljs";
 import * as yargs from "yargs";
-import { PackageConfig } from "~/types";
+import { PackageConfig } from "../../types";
 
 export function publishLernaPackage(): void {
   const packages: string[] = yargs.array("packages").argv.packages;

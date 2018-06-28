@@ -26,3 +26,7 @@ export interface UpdatedPackage {
   private: boolean;
   version: string;
 }
+
+export interface UpdatedPackagesMap {
+  [key: string]: { private: boolean, version: string };
+}
