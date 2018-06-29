@@ -1,3 +1,13 @@
+#### 0.0.14 (2018-06-29)
+
+##### Chores
+
+* **dependencies:**  Updating dependencies. ([953f34c1](https://github.com/bad-batch/cutoff/commit/953f34c1227cd058212ff45f23b4b5fb247e671f))
+
+##### Tests
+
+* **lerna flows:**  Adding unit tests for lerna flows and fixing bugs. ([#4](https://github.com/bad-batch/cutoff/pull/4)) ([7c903230](https://github.com/bad-batch/cutoff/commit/7c9032300af64a39ef09a9ee4698b522cf1e8040))
+
 #### 0.0.13 (2018-06-18)
 
 ##### Chores
