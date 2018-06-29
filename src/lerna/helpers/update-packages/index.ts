@@ -2,15 +2,22 @@ import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
 
-function updateDependencies(updatedNames: string[], version: string, dependencies?: StringObjectMap): void {
+function updateDependencies(updatedNames: string[], version: string, dependencies?: StringObjectMap): boolean {
+  let updated = false;
+
   if (dependencies) {
     Object.keys(dependencies).forEach((key) => {
-      if (updatedNames.includes(key)) dependencies[key] = version;
+      if (updatedNames.includes(key)) {
+        dependencies[key] = version;
+        updated = true;
+      }
     });
   }
+
+  return updated;
 }
 
-export function updatePackages(version: string): void {
+export default function updatePackages(version: string): void {
   const cwd = process.cwd();
   const updatedConfigPath = resolve(cwd, ".lerna.updated.json");
   const updatedConfig: UpdatedPackage[] = require(updatedConfigPath);
@@ -23,13 +30,16 @@ export function updatePackages(version: string): void {
     if (!statSync(packagePath).isDirectory()) return;
     const configPath = resolve(packagePath, "package.json");
     const config: PackageConfig = require(configPath);
+    let packageUpdated = false;
 
     if (updatedNames.includes(config.name)) {
       config.version = version;
+      packageUpdated = true;
     }
 
-    updateDependencies(updatedNames, version, config.dependencies);
-    updateDependencies(updatedNames, version, config.devDependencies);
-    writeFileSync(configPath, JSON.stringify({ ...config, version }, null, 2));
+    const dependenciesUpdated = updateDependencies(updatedNames, version, config.dependencies);
+    const devDependenciesUpdated = updateDependencies(updatedNames, version, config.devDependencies);
+    if (!packageUpdated && !dependenciesUpdated && !devDependenciesUpdated) return;
+    writeFileSync(configPath, JSON.stringify(config, null, 2));
   });
 }

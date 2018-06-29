@@ -2,14 +2,14 @@ import { writeFileSync } from "fs";
 import { resolve } from "path";
 import * as shell from "shelljs";
 import * as yargs from "yargs";
-import { addCommitPush } from "../../helpers/add-commit-push";
-import { checkoutMaster } from "../../helpers/checkout-master";
-import { getNewVersion } from "../../helpers/get-new-version";
-import { forceUpdate } from "../../lerna/helpers/force-update";
+import addCommitPush from "../../helpers/add-commit-push";
+import checkoutMaster from "../../helpers/checkout-master";
+import getNewVersion from "../../helpers/get-new-version";
+import forceUpdate from "../../lerna/helpers/force-update";
 import { LernaConfig, PackageConfig, ReleaseTypes } from "../../types";
-import { updatePackages } from "../helpers/update-packages";
+import updatePackages from "../helpers/update-packages";
 
-export function cutLernaRelease(): void {
+export default function cutLernaRelease(): void {
   const argv = yargs
     .boolean("force")
     .boolean("preview")
@@ -38,14 +38,15 @@ export function cutLernaRelease(): void {
     shell.exec("yarn run cutoff:pre-version");
   }
 
+  const lernaConfigPath = resolve(process.cwd(), "lerna.json");
+  const lernaConfig: LernaConfig = require(lernaConfigPath);
+  writeFileSync(lernaConfigPath, JSON.stringify({ ...lernaConfig, version: newVersion }, null, 2));
+
   if (force) {
     forceUpdate(config.name, newVersion);
   } else {
     shell.exec("lerna updated --json > .lerna.updated.json");
-    const lernaConfigPath = resolve(process.cwd(), "lerna.json");
-    const lernaConfig: LernaConfig = require(lernaConfigPath);
-    writeFileSync(lernaConfigPath, JSON.stringify({ ...lernaConfig, version }, null, 2));
-    updatePackages(version);
+    updatePackages(newVersion);
   }
 
   shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);

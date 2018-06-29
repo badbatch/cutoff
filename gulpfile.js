@@ -3,7 +3,6 @@ const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
 const ts = require('gulp-typescript');
-const merge = require('merge-stream');
 const { Linter } = require('tslint');
 
 const sources = ['src/**/*.ts', '!**/*.test.*', '!**/.test/**'];
@@ -16,22 +15,7 @@ gulp.task('compile', () => {
     .pipe(tsProject())
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('lib/main'));
-    .on('error', () => process.exit(1));
-});
-
-gulp.task('types', () => {
-  const tsProject = ts.createProject('tsconfig.json', {
-    declaration: true,
-    module: 'commonjs',
-    removeComments: true,
-  });
-
-  const transpiled = gulp.src([...sources, '!src/index.ts']).pipe(tsProject());
-  const copied = gulp.src(['src/**/*.d.ts']);
-
-  return merge(transpiled.dts, copied)
-    .pipe(gulp.dest('lib/types'))
+    .pipe(gulp.dest('lib/main'))
     .on('error', () => process.exit(1));
 });
 

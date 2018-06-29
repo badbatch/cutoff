@@ -1,14 +1,12 @@
-import * as dotenv from "dotenv";
 import { resolve } from "path";
 import * as shell from "shelljs";
 import * as yargs from "yargs";
-import { addCommitPush } from "../helpers/add-commit-push";
-import { checkoutMaster } from "../helpers/checkout-master";
-import { getNewVersion } from "../helpers/get-new-version";
+import addCommitPush from "../helpers/add-commit-push";
+import checkoutMaster from "../helpers/checkout-master";
+import getNewVersion from "../helpers/get-new-version";
 import { PackageConfig, ReleaseTypes } from "../types";
 
-export function cutRelease(): void {
-  dotenv.config();
+export default function cutRelease(): void {
   const { argv } = yargs.boolean("preview");
   const type: ReleaseTypes = argv.type;
   const preview: boolean = argv.preview;

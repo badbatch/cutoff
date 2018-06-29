@@ -1,6 +1,6 @@
 import * as shell from "shelljs";
 
-export function addCommitPush(version: string): void {
+export default function addCommitPush(version: string): void {
   shell.exec("git add --all");
   shell.exec(`git commit --no-verify -m "Release version ${version}."`);
   shell.exec("git push --no-verify");

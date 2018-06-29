@@ -1,0 +1,13 @@
+[{
+  "name": "@test/button",
+  "private": false,
+  "version": "0.0.1"
+}, {
+  "name": "@test/icon",
+  "private": false,
+  "version": "0.0.1"
+}, {
+  "name": "@test/link",
+  "private": false,
+  "version": "0.0.1"
+}]

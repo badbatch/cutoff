@@ -1,6 +1,6 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { LernaConfig, PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
+import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
 
 function updateDependencies(name: string, version: string, dependencies?: StringObjectMap): void {
   if (dependencies) {
@@ -10,12 +10,9 @@ function updateDependencies(name: string, version: string, dependencies?: String
   }
 }
 
-export function forceUpdate(name: string, version: string): void {
-  const lernaConfigPath = resolve(process.cwd(), "lerna.json");
-  const lernaConfig: LernaConfig = require(lernaConfigPath);
-  writeFileSync(lernaConfigPath, JSON.stringify({ ...lernaConfig, version }, null, 2));
-
-  const packagesPath = resolve(process.cwd(), "packages");
+export default function forceUpdate(name: string, version: string): void {
+  const cwd = process.cwd();
+  const packagesPath = resolve(cwd, "packages");
   const filenames = readdirSync(packagesPath);
   const updated: UpdatedPackage[] = [];
 
@@ -36,5 +33,5 @@ export function forceUpdate(name: string, version: string): void {
     writeFileSync(configPath, JSON.stringify({ ...config, version }, null, 2));
   });
 
-  writeFileSync(resolve(process.cwd(), ".lerna.updated.json"), JSON.stringify(updated, null, 2));
+  writeFileSync(resolve(cwd, ".lerna.updated.json"), JSON.stringify(updated, null, 2));
 }
