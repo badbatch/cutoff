@@ -15,7 +15,6 @@ install:
   - yarn
 script:
   - yarn run test
-  - sonar-scanner
   - codecov
 before_deploy:
   - yarn run compile
