@@ -2,6 +2,9 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*',
+    '!**/__test__/**',
+    '!**/*.test.*',
+    '!**/*.d.*',
   ],
   coverageDirectory: 'coverage',
   coverageReporters: [
@@ -9,24 +12,16 @@ module.exports = {
     'lcov',
     'text-summary',
   ],
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  },
   globals: {
     'ts-jest': {
-      useBabelrc: true,
       tsConfigFile: 'tsconfig.test.json',
+      useBabelrc: true,
     },
   },
   moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
-  moduleNameMapper: {
-    '~/([^\\.]*)$': '<rootDir>/src/$1',
-  },
+  testMatch: [
+    '**/src/**/*.test.*',
+  ],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },

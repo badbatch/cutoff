@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/lerna/publish-release').publishLernaRelease();
+require('../lib/lerna/publish-release').default();

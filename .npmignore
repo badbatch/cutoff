@@ -1,4 +1,7 @@
+.nyc_output/
+.sonar/
 .vscode/
+bundle/
 coverage/
 docs/
 src/
@@ -7,6 +10,7 @@ test/
 .*
 CHANGELOG.md
 CONTRIBUTING.md
+codecov.yml
 gulpfile.js
 jest.config.js
 karma.*

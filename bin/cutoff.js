@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/cut-release').cutRelease();
+require('../lib/cut-release').default();

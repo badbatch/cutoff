@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/lerna/cut-release').cutLernaRelease();
+require('../lib/lerna/cut-release').default();

@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/publish-release').publishRelease();
+require('../lib/publish-release').default();

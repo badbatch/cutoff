@@ -1,0 +1,15 @@
+{
+  "name": "@test/foundation",
+  "version": "0.0.1",
+  "description": "A set of base React components, mixins and helper functions.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@babel/polyfill": "7.0.0-beta.44"
+  },
+  "devDependencies": {
+    "@test/icon": "0.0.1",
+    "@test/theme": "0.0.1"
+  }
+}

@@ -3,6 +3,7 @@
 An opinionated command line utility for cutting releases and publishing to npm.
 
 [![Build Status](https://travis-ci.org/bad-batch/cutoff.svg?branch=master)](https://travis-ci.org/bad-batch/cutoff)
+[![codecov](https://codecov.io/gh/bad-batch/cutoff/branch/master/graph/badge.svg)](https://codecov.io/gh/bad-batch/cutoff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://badge.fury.io/js/cutoff.svg)](https://badge.fury.io/js/cutoff)
 [![dependencies Status](https://david-dm.org/bad-batch/cutoff/status.svg)](https://david-dm.org/bad-batch/cutoff)
@@ -10,7 +11,7 @@ An opinionated command line utility for cutting releases and publishing to npm.
 
 ## Summary
 
-* Works exclusively with Yarn... sorry npm it is just better.
+* Works exclusively with Yarn... sorry npm, it is just better.
 * Cuts major, minor or patch releases from master branch.
 * Generates changelog based on angular-style commits since last git tag.
 * Updates package version and git tag automatically based on release type.
@@ -95,6 +96,32 @@ new version.
 ```bash
 yarn run publish-lerna-cutoff
 ```
+
+## Script hooks
+
+### cutoff:pre-version
+
+Any tasks you want to run prior to npm package versions getting updated should be run in this script hook.
+
+```json
+"scripts": {
+  "cutoff:pre-version": "yarn run pre-version-tasks"
+}
+```
+
+### cutoff:post-version
+
+Any tasks you want to run after npm package versions have been updated should be run in this script hook.
+
+```json
+"scripts": {
+  "cutoff:post-version": "yarn run post-version-tasks"
+}
+```
+
+## Changelog
+
+Check out the [features, fixes and more](CHANGELOG.md) that go into each major, minor and patch version.
 
 ## License
 
