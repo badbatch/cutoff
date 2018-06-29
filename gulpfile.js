@@ -15,7 +15,7 @@ gulp.task('compile', () => {
     .pipe(tsProject())
     .pipe(babel())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('lib/main'))
+    .pipe(gulp.dest('lib'))
     .on('error', () => process.exit(1));
 });
 
