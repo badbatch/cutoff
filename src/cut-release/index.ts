@@ -7,12 +7,12 @@ import getNewVersion from "../helpers/get-new-version";
 import { PackageConfig, ReleaseTypes } from "../types";
 
 export default function cutRelease(): void {
-  const { argv } = yargs.boolean("preview");
+  const argv = yargs.boolean("preview").parse();
   const type: ReleaseTypes = argv.type;
   const preview: boolean = argv.preview;
 
   if (type !== "major" && type !== "minor" && type !== "patch") {
-    shell.echo("cutoff expected type to be 'major', 'minor' or 'patch'.");
+    shell.echo("cutoff expected type to be \"major\", \"minor\" or \"patch\".");
     shell.exit(1);
     return;
   }

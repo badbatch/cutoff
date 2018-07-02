@@ -20,7 +20,7 @@ function updateDependencies(updatedNames: string[], version: string, dependencie
 export default function updatePackages(version: string): void {
   const cwd = process.cwd();
   const updatedConfigPath = resolve(cwd, ".lerna.updated.json");
-  const updatedConfig: UpdatedPackage[] = require(updatedConfigPath);
+  const updatedConfig: UpdatedPackage[] = require(updatedConfigPath) || [];
   const updatedNames: string[] = updatedConfig.map((pkg) => pkg.name);
   const packagesPath = resolve(cwd, "packages");
   const filenames = readdirSync(packagesPath);
