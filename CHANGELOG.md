@@ -1,3 +1,9 @@
+#### 0.0.15 (2018-07-02)
+
+##### Tests
+
+* **coverage:**  Test adding more unit tests ([#5](https://github.com/bad-batch/cutoff/pull/5)) ([58f7f7e8](https://github.com/bad-batch/cutoff/commit/58f7f7e828ca21e79b95ec41d0ea8969d8ccfce0))
+
 #### 0.0.14 (2018-06-29)
 
 ##### Chores
