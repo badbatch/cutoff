@@ -1,9 +1,9 @@
-import * as semver from "semver";
-import * as shell from "shelljs";
-import { ReleaseTypes } from "../../types";
+import semver, { ReleaseType } from "semver";
+import shell from "shelljs";
+import { ReleaseTag } from "../../types";
 
-export default function getNewVersion(version: string, type: ReleaseTypes): string | undefined {
-  const newVersion = semver.inc(version, type);
+export default function getNewVersion(version: string, type: ReleaseType, tag?: ReleaseTag): string | undefined {
+  const newVersion = semver.inc(version, type, false, tag);
 
   if (!newVersion) {
     shell.echo(`The new package verison number is invalid.`);

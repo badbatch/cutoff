@@ -1,6 +1,7 @@
 import { resolve } from "path";
-import * as shell from "shelljs";
-import * as yargs from "yargs";
+import shell from "shelljs";
+import yargs from "yargs";
+import getTag from "../../helpers/get-tag";
 import { PackageConfig } from "../../types";
 
 export default function publishLernaPackage(): void {
@@ -9,6 +10,7 @@ export default function publishLernaPackage(): void {
   if (typeof process.env.LERNA_PACKAGE_NAME === "string" && packages.indexOf(process.env.LERNA_PACKAGE_NAME) !== -1) {
     const packagePath = resolve(process.cwd(), "package.json");
     const { version }: PackageConfig = require(packagePath);
-    shell.exec(`yarn publish --new-version ${version}`);
+    const tag = getTag(version);
+    shell.exec(`yarn publish --new-version ${version}${tag ? ` --tag ${tag}` : ""}`);
   }
 }

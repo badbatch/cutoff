@@ -1,4 +1,4 @@
-import * as shell from "shelljs";
+import shell from "shelljs";
 
 export default function addCommitPush(version: string): void {
   shell.exec("git add --all");

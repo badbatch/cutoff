@@ -1,4 +1,4 @@
-import * as shell from "shelljs";
+import shell from "shelljs";
 
 export default function checkoutMaster(): void {
   shell.exec("git checkout master");
