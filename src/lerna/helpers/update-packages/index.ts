@@ -1,5 +1,6 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import semver from "semver";
 import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
 
 function updateDependencies(updatedNames: string[], version: string, dependencies?: StringObjectMap): boolean {
@@ -7,10 +8,9 @@ function updateDependencies(updatedNames: string[], version: string, dependencie
 
   if (dependencies) {
     Object.keys(dependencies).forEach((key) => {
-      if (updatedNames.includes(key)) {
-        dependencies[key] = version;
-        updated = true;
-      }
+      if (!updatedNames.includes(key) || semver.satisfies(version, dependencies[key])) return;
+      dependencies[key] = `~${version}`;
+      updated = true;
     });
   }
 

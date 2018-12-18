@@ -1,5 +1,5 @@
-import * as shell from "shelljs";
-import * as yargs from "yargs";
+import shell from "shelljs";
+import yargs from "yargs";
 import cutRelease from ".";
 import addCommitPush from "../helpers/add-commit-push";
 import checkoutMaster from "../helpers/checkout-master";
@@ -16,9 +16,9 @@ jest.mock("shelljs", () => ({
   exit: jest.fn(),
 }));
 
-jest.mock("../helpers/add-commit-push", () => ({ default: jest.fn() }));
-jest.mock("../helpers/checkout-master", () => ({ default: jest.fn() }));
-jest.mock("../helpers/get-new-version", () => ({ default: jest.fn() }));
+jest.mock("../helpers/add-commit-push", () => jest.fn());
+jest.mock("../helpers/checkout-master", () => jest.fn());
+jest.mock("../helpers/get-new-version", () => jest.fn());
 
 describe("the cutRelease function", () => {
   let processCwd: () => string;
@@ -40,7 +40,7 @@ describe("the cutRelease function", () => {
     });
 
     it("then the function should echo the correct message", () => {
-      const message = "cutoff expected type to be \"major\", \"minor\" or \"patch\".";
+      const message = "cutoff expected type to be a valid release type.";
       expect(shell.echo).toBeCalledWith(message);
     });
 
@@ -57,7 +57,7 @@ describe("the cutRelease function", () => {
     });
 
     it("then the function should call getNewVersion with the correct version and type", () => {
-      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch");
+      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined);
     });
 
     it("then the function should call checkoutMaster", () => {
@@ -85,9 +85,9 @@ describe("the cutRelease function", () => {
     });
   });
 
-  describe("when preview is passed into the function", () => {
+  describe("when dryrun is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ preview: true, type: "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ dryrun: true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (addCommitPush as jest.Mock).mockClear();
       cutRelease();

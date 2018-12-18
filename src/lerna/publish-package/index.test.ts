@@ -1,5 +1,5 @@
-import * as shell from "shelljs";
-import * as yargs from "yargs";
+import shell from "shelljs";
+import yargs from "yargs";
 import publishLernaRelease from ".";
 
 jest.mock("shelljs", () => ({ exec: jest.fn() }));

@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import * as shell from "shelljs";
+import shell from "shelljs";
 import { UpdatedPackage } from "../../types";
 
 export default function publishLernaRelease(): void {

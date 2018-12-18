@@ -1,4 +1,4 @@
-import * as shell from "shelljs";
+import shell from "shelljs";
 import publishLernaRelease from ".";
 
 jest.mock("shelljs", () => ({ exec: jest.fn() }));

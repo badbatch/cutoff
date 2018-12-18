@@ -6,6 +6,8 @@ export interface ObjectMap {
   [key: string]: any;
 }
 
+export type ReleaseTag = "alfa" | "beta";
+
 export interface PackageConfig {
   name: string;
   dependencies?: StringObjectMap;
@@ -14,8 +16,6 @@ export interface PackageConfig {
   scripts?: StringObjectMap;
   version: string;
 }
-
-export type ReleaseTypes = "major" | "minor" | "patch";
 
 export interface StringObjectMap {
   [key: string]: string;

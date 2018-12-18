@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
-import * as shell from "shelljs";
-import * as yargs from "yargs";
+import shell from "shelljs";
+import yargs from "yargs";
 import cutLernaRelease from ".";
 import addCommitPush from "../../helpers/add-commit-push";
 import checkoutMaster from "../../helpers/checkout-master";
@@ -21,11 +21,11 @@ jest.mock("shelljs", () => ({
   exit: jest.fn(),
 }));
 
-jest.mock("../../helpers/add-commit-push", () => ({ default: jest.fn() }));
-jest.mock("../../helpers/checkout-master", () => ({ default: jest.fn() }));
-jest.mock("../../helpers/get-new-version", () => ({ default: jest.fn() }));
-jest.mock("../../lerna/helpers/force-update", () => ({ default: jest.fn() }));
-jest.mock("../helpers/update-packages", () => ({ default: jest.fn() }));
+jest.mock("../../helpers/add-commit-push", () => jest.fn());
+jest.mock("../../helpers/checkout-master", () => jest.fn());
+jest.mock("../../helpers/get-new-version", () => jest.fn());
+jest.mock("../../lerna/helpers/force-update", () => jest.fn());
+jest.mock("../helpers/update-packages", () => jest.fn());
 
 describe("the cutLernaRelease function", () => {
   let processCwd: () => string;
@@ -47,7 +47,7 @@ describe("the cutLernaRelease function", () => {
     });
 
     it("then the function should echo the correct message", () => {
-      const message = "cutoff expected type to be \"major\", \"minor\" or \"patch\".";
+      const message = "cutoff expected type to be a valid release type.";
       expect(shell.echo).toBeCalledWith(message);
     });
 
@@ -64,7 +64,7 @@ describe("the cutLernaRelease function", () => {
     });
 
     it("then the function should call getNewVersion with the correct version and type", () => {
-      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch");
+      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined);
     });
 
     it("then the function should call checkoutMaster", () => {
@@ -126,9 +126,9 @@ describe("the cutLernaRelease function", () => {
     });
   });
 
-  describe("when preview is passed into the function", () => {
+  describe("when dryrun is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ preview: true, type: "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ dryrun: true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (addCommitPush as jest.Mock).mockClear();
       cutLernaRelease();

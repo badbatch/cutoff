@@ -35,7 +35,7 @@ The script cuts a major, minor or patch release, generates/updates the changelog
 npm script hook, updates the project version, runs the post-versioning npm script hook, commits the changes to master
 with the message `"Release version <version>."`, and then commits a new tag with the same message.
 
-Include the `--preview` flag to stop the script after the post-versioning npm script hook, so no changes are
+Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
 committed to master.
 
 ```json
@@ -45,7 +45,10 @@ committed to master.
 ```
 
 ```bash
-yarn run cutoff [--type <major | minor | patch>] [--preview]
+yarn run cutoff
+  [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
+  [--tag <alfa | beta>]
+  [--dryrun]
 ```
 
 ### cutoff-lerna
@@ -55,7 +58,7 @@ hook, updates the project, lerna config and package versions, writes the list of
 `.lerna.updated.json`, runs the post-versioning npm script hook, commits the changes to master with the message
 `"Release version <version>."`, and then commits a new tag with the same message.
 
-Include the `--preview` flag to stop the script after the post-versioning npm script hook, so no changes are
+Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
 committed to master. Include the `--force` flag to force update all packages to the new version.
 
 ```json
@@ -65,7 +68,11 @@ committed to master. Include the `--force` flag to force update all packages to 
 ```
 
 ```bash
-yarn run cutoff-lerna [--type <major | minor | patch>] [--preview] [--force]
+yarn run cutoff-lerna
+  [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
+  [--tag <alfa | beta>]
+  [--dryrun]
+  [--force]
 ```
 
 ### publish-cutoff
