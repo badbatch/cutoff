@@ -35,7 +35,10 @@ export default function cutLernaRelease(): void {
   if (!newVersion) return;
 
   checkoutMaster();
-  shell.exec(`yarn run changelog --${type}`);
+
+  if (["patch", "minor", "major"].includes(type)) {
+    shell.exec(`yarn run changelog --${type}`);
+  }
 
   if (scripts["cutoff:pre-version"]) {
     shell.exec("yarn run cutoff:pre-version");
