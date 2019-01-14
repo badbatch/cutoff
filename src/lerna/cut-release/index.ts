@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
-import { ReleaseType } from "semver";
+import semver, { ReleaseType } from "semver";
 import shell from "shelljs";
 import yargs from "yargs";
 import addCommitPush from "../../helpers/add-commit-push";
@@ -44,18 +44,19 @@ export default function cutLernaRelease(): void {
     shell.exec("yarn run cutoff:pre-version");
   }
 
-  const lernaConfigPath = resolve(process.cwd(), "lerna.json");
-  const lernaConfig: LernaConfig = require(lernaConfigPath);
-  writeFileSync(lernaConfigPath, JSON.stringify({ ...lernaConfig, version: newVersion }, null, 2));
-
   if (force) {
     forceUpdate(config.name, newVersion);
   } else {
     shell.exec("lerna updated --json > .lerna.updated.json");
-    updatePackages(newVersion);
+    updatePackages(type, tag);
   }
 
-  shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
+  if (semver.gt(newVersion, version)) {
+    const lernaConfigPath = resolve(process.cwd(), "lerna.json");
+    const lernaConfig: LernaConfig = require(lernaConfigPath);
+    writeFileSync(lernaConfigPath, JSON.stringify({ ...lernaConfig, version: newVersion }, null, 2));
+    shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
+  }
 
   if (scripts["cutoff:post-version"]) {
     shell.exec("yarn run cutoff:post-version");

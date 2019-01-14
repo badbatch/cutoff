@@ -1,3 +1,7 @@
+export interface ConfigMap {
+  [key: string]: PackageConfig;
+}
+
 export interface LernaConfig {
   version: string;
 }

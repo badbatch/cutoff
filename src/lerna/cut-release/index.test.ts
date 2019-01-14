@@ -98,7 +98,7 @@ describe("the cutLernaRelease function", () => {
     });
 
     it("then the function should call updatePackages with the correct version", () => {
-      expect(updatePackages).toHaveBeenCalledWith("0.0.2");
+      expect(updatePackages).toHaveBeenCalledWith("patch", undefined);
     });
 
     it("then the function should execute the yarn version command with the correct version", () => {

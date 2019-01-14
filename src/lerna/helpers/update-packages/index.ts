@@ -1,15 +1,24 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import semver from "semver";
-import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
+import semver, { ReleaseType } from "semver";
+import getNewVersion from "../../../helpers/get-new-version";
+import { ConfigMap, PackageConfig, ReleaseTag, StringObjectMap, UpdatedPackage } from "../../../types";
 
-function updateDependencies(updatedNames: string[], version: string, dependencies?: StringObjectMap): boolean {
+function updateDependencies(
+  updatedNames: string[],
+  configMap: ConfigMap,
+  dependencies?: StringObjectMap,
+): boolean {
   let updated = false;
 
   if (dependencies) {
     Object.keys(dependencies).forEach((key) => {
-      if (!updatedNames.includes(key) || semver.satisfies(version, dependencies[key])) return;
-      dependencies[key] = `~${version}`;
+      if (!updatedNames.includes(key)) return;
+
+      const newVersion = configMap[key] && configMap[key].version;
+      if (!newVersion || semver.satisfies(newVersion, dependencies[key])) return;
+
+      dependencies[key] = `~${newVersion}`;
       updated = true;
     });
   }
@@ -17,13 +26,14 @@ function updateDependencies(updatedNames: string[], version: string, dependencie
   return updated;
 }
 
-export default function updatePackages(version: string): void {
+export default function updatePackages(type: ReleaseType, tag?: ReleaseTag): void {
   const cwd = process.cwd();
   const updatedConfigPath = resolve(cwd, ".lerna.updated.json");
   const updatedConfig: UpdatedPackage[] = require(updatedConfigPath) || [];
   const updatedNames: string[] = updatedConfig.map((pkg) => pkg.name);
   const packagesPath = resolve(cwd, "packages");
   const filenames = readdirSync(packagesPath);
+  const configMap: ConfigMap = {};
 
   filenames.forEach((filename) => {
     const packagePath = resolve(packagesPath, filename);
@@ -33,12 +43,26 @@ export default function updatePackages(version: string): void {
     let packageUpdated = false;
 
     if (updatedNames.includes(config.name)) {
-      config.version = version;
-      packageUpdated = true;
+      const newVersion = getNewVersion(config.version, type, tag);
+
+      if (newVersion) {
+        config.version = newVersion;
+        packageUpdated = true;
+      }
     }
 
-    const dependenciesUpdated = updateDependencies(updatedNames, version, config.dependencies);
-    const devDependenciesUpdated = updateDependencies(updatedNames, version, config.devDependencies);
+    if (!packageUpdated) return;
+    configMap[config.name] = config;
+  });
+
+  filenames.forEach((filename) => {
+    const packagePath = resolve(packagesPath, filename);
+    if (!statSync(packagePath).isDirectory()) return;
+    const configPath = resolve(packagePath, "package.json");
+    const config: PackageConfig = require(configPath);
+    const dependenciesUpdated = updateDependencies(updatedNames, configMap, config.dependencies);
+    const devDependenciesUpdated = updateDependencies(updatedNames, configMap, config.devDependencies);
+    const packageUpdated = !!configMap[config.name];
     if (!packageUpdated && !dependenciesUpdated && !devDependenciesUpdated) return;
     writeFileSync(configPath, JSON.stringify(config, null, 2));
   });
