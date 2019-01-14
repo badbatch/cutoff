@@ -1,3 +1,9 @@
+#### 0.1.1 (2019-01-14)
+
+##### Other Changes
+
+* **versioning:**  Decouple repo version from package version. ([#8](https://github.com/bad-batch/cutoff/pull/8)) ([6b08079b](https://github.com/bad-batch/cutoff/commit/6b08079b494c6cd83d42809e2cbe2f4276f4af40))
+
 ### 0.2.0.0 (2018-12-18)
 
 #### 0.0.15 (2018-07-02)
