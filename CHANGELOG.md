@@ -1,3 +1,9 @@
+#### 0.1.2 (2019-01-18)
+
+##### Other Changes
+
+* **cut release:**  don't run post-cutoff scripts if dryrun flag is true. ([fcf612a7](https://github.com/bad-batch/cutoff/commit/fcf612a74f9586963d9b8b6cf2fb09f55e8dd6ba))
+
 #### 0.1.1 (2019-01-14)
 
 ##### Other Changes
