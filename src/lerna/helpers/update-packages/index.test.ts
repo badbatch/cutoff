@@ -30,7 +30,7 @@ describe("the updatePackages function", () => {
       expect(buttonPath.endsWith(`${REPO_PATH}/packages/button/package.json`)).toBe(true);
       const buttonConfig = JSON.parse(calls[0][1]);
       expect(buttonConfig.version).toBe("0.1.0");
-      expect(buttonConfig.devDependencies["@test/icon"]).toBe("~0.1.0");
+      expect(buttonConfig.devDependencies["@test/icon"]).toBe("^0.1.0");
     });
 
     it("then the function should call writeFileSync for the foundation package with the correct config", () => {
@@ -39,7 +39,7 @@ describe("the updatePackages function", () => {
       expect(foundationPath.endsWith(`${REPO_PATH}/packages/foundation/package.json`)).toBe(true);
       const foundationConfig = JSON.parse(calls[1][1]);
       expect(foundationConfig.version).toBe("0.0.1");
-      expect(foundationConfig.devDependencies["@test/icon"]).toBe("~0.1.0");
+      expect(foundationConfig.devDependencies["@test/icon"]).toBe("^0.1.0");
     });
 
     it("then the function should call writeFileSync for the icon package with the correct config", () => {
@@ -56,7 +56,7 @@ describe("the updatePackages function", () => {
       expect(linkPath.endsWith(`${REPO_PATH}/packages/link/package.json`)).toBe(true);
       const linkConfig = JSON.parse(calls[3][1]);
       expect(linkConfig.version).toBe("0.1.0");
-      expect(linkConfig.devDependencies["@test/icon"]).toBe("~0.1.0");
+      expect(linkConfig.devDependencies["@test/icon"]).toBe("^0.1.0");
     });
 
     it("then the function should call writeFileSync for the tabs package with the correct config", () => {
@@ -65,7 +65,7 @@ describe("the updatePackages function", () => {
       expect(tabsPath.endsWith(`${REPO_PATH}/packages/tabs/package.json`)).toBe(true);
       const tabsConfig = JSON.parse(calls[4][1]);
       expect(tabsConfig.version).toBe("0.0.1");
-      expect(tabsConfig.devDependencies["@test/link"]).toBe("~0.1.0");
+      expect(tabsConfig.devDependencies["@test/link"]).toBe("^0.1.0");
     });
   });
 });
