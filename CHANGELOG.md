@@ -1,3 +1,9 @@
+### 0.2.0 (2019-03-19)
+
+##### Other Changes
+
+* **versioning:**  Update version prefix to carat and make major release force update. ([#9](https://github.com/bad-batch/cutoff/pull/9)) ([462bea65](https://github.com/bad-batch/cutoff/commit/462bea65d65352022a264b141f4f717c3edea6b5))
+
 #### 0.1.2 (2019-01-18)
 
 ##### Other Changes
