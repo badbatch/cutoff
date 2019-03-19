@@ -44,7 +44,7 @@ export default function cutLernaRelease(): void {
     shell.exec("yarn run cutoff:pre-version");
   }
 
-  if (force) {
+  if (type === "major" || force) {
     forceUpdate(config.name, newVersion);
   } else {
     shell.exec("lerna updated --json > .lerna.updated.json");

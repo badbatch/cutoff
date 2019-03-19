@@ -18,7 +18,7 @@ function updateDependencies(
       const newVersion = configMap[key] && configMap[key].version;
       if (!newVersion || semver.satisfies(newVersion, dependencies[key])) return;
 
-      dependencies[key] = `~${newVersion}`;
+      dependencies[key] = `^${newVersion}`;
       updated = true;
     });
   }
