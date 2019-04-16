@@ -1,11 +1,14 @@
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import semver from "semver";
 import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
 
 function updateDependencies(name: string, version: string, dependencies?: StringObjectMap): void {
   if (dependencies) {
     Object.keys(dependencies).forEach((key) => {
-      if (key.startsWith(`@${name}/`)) dependencies[key] = `^${version}`;
+      if (!key.startsWith(`@${name}/`)) return;
+      if (semver.satisfies(version, dependencies[key])) return;
+      dependencies[key] = `^${version}`;
     });
   }
 }
