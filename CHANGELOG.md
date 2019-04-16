@@ -1,3 +1,9 @@
+#### 0.2.1 (2019-04-16)
+
+##### Bug Fixes
+
+* **force update:**  Check if semver satifies before updating dependency verisons. ([1933cd89](https://github.com/bad-batch/cutoff/commit/1933cd891f1ad8f1e6250ead9db5f4a7a5931968))
+
 ### 0.2.0 (2019-03-19)
 
 ##### Other Changes
