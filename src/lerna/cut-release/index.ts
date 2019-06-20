@@ -62,11 +62,11 @@ export default function cutLernaRelease(): void {
     shell.exec(`yarn version --new-version ${newVersion} --no-git-tag-version`);
   }
 
-  if (dryrun) return;
-
   if (scripts["cutoff:post-version"]) {
     shell.exec("yarn run cutoff:post-version");
   }
+
+  if (dryrun) return;
 
   addCommitPush(newVersion);
 }
