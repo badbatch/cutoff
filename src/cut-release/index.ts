@@ -9,8 +9,13 @@ import isValidReleaseType from "../helpers/is-valid-release-type";
 import { PackageConfig, ReleaseTag } from "../types";
 
 export default function cutRelease(): void {
-  const argv = yargs.boolean("dryrun").parse();
+  const argv = yargs
+    .boolean("dryrun")
+    .boolean("skip-checkout")
+    .parse();
+
   const dryrun: boolean = argv.dryrun;
+  const skipCheckout: boolean = argv["skip-checkout"];
   const type: ReleaseType = argv.type;
   const tag: ReleaseTag | undefined = argv.tag;
 
@@ -26,7 +31,9 @@ export default function cutRelease(): void {
   const newVersion = getNewVersion(version, type, tag);
   if (!newVersion) return;
 
-  checkoutMaster();
+  if (!skipCheckout) {
+    checkoutMaster();
+  }
 
   if (["patch", "minor", "major"].includes(type)) {
     shell.exec(`yarn run changelog --${type}`);

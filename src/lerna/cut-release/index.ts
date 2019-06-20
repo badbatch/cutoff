@@ -15,10 +15,12 @@ export default function cutLernaRelease(): void {
   const argv = yargs
     .boolean("force")
     .boolean("dryrun")
+    .boolean("skip-checkout")
     .parse();
 
   const dryrun: boolean = argv.dryrun;
   const force: boolean = argv.force;
+  const skipCheckout: boolean = argv["skip-checkout"];
   const tag: ReleaseTag | undefined = argv.tag;
   const type: ReleaseType = argv.type;
 
@@ -34,7 +36,9 @@ export default function cutLernaRelease(): void {
   const newVersion = getNewVersion(version, type, tag);
   if (!newVersion) return;
 
-  checkoutMaster();
+  if (!skipCheckout) {
+    checkoutMaster();
+  }
 
   if (["patch", "minor", "major"].includes(type)) {
     shell.exec(`yarn run changelog --${type}`);

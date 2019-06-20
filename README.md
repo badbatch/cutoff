@@ -36,7 +36,7 @@ npm script hook, updates the project version, runs the post-versioning npm scrip
 with the message `"Release version <version>."`, and then commits a new tag with the same message.
 
 Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
-committed to master.
+committed to master. Include the `--skip-checkout` flag to commit the changes to current branch.
 
 ```json
 "scripts": {
@@ -47,7 +47,8 @@ committed to master.
 ```bash
 yarn run cutoff
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta>]
+  [--tag <alfa | beta | unstable>]
+  [--skip-checkout]
   [--dryrun]
 ```
 
@@ -59,7 +60,8 @@ hook, updates the project, lerna config and package versions, writes the list of
 `"Release version <version>."`, and then commits a new tag with the same message.
 
 Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
-committed to master. Include the `--force` flag to force update all packages to the new version.
+committed to master. Include the `--force` flag to force update all packages to the new version. Include the
+`--skip-checkout` flag to commit the changes to current branch.
 
 ```json
 "scripts": {
@@ -70,7 +72,8 @@ committed to master. Include the `--force` flag to force update all packages to 
 ```bash
 yarn run cutoff-lerna
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta>]
+  [--tag <alfa | beta | unstable>]
+  [--skip-checkout]
   [--dryrun]
   [--force]
 ```
