@@ -35,7 +35,7 @@ The script cuts a major, minor or patch release, generates/updates the changelog
 npm script hook, updates the project version, runs the post-versioning npm script hook, commits the changes to master
 with the message `"Release version <version>."`, and then commits a new tag with the same message.
 
-Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
+Include the `--dryrun` flag to stop the script after the versioning is completed, so no changes are
 committed to master. Include the `--skip-checkout` flag to commit the changes to current branch.
 
 ```json
@@ -59,7 +59,7 @@ hook, updates the project, lerna config and package versions, writes the list of
 `.lerna.updated.json`, runs the post-versioning npm script hook, commits the changes to master with the message
 `"Release version <version>."`, and then commits a new tag with the same message.
 
-Include the `--dryrun` flag to stop the script after the post-versioning npm script hook, so no changes are
+Include the `--dryrun` flag to stop the script after the versioning is completed, so no changes are
 committed to master. Include the `--force` flag to force update all packages to the new version. Include the
 `--skip-checkout` flag to commit the changes to current branch.
 
