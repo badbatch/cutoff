@@ -141,7 +141,7 @@ describe("the cutLernaRelease function", () => {
 
   describe("when skip-checkout is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ "skip-checkout": true, "type": "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ skipCheckout: true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (checkoutMaster as jest.Mock).mockClear();
       cutLernaRelease();

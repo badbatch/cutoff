@@ -15,7 +15,7 @@ export default function cutRelease(): void {
     .parse();
 
   const dryrun: boolean = argv.dryrun;
-  const skipCheckout: boolean = argv["skip-checkout"];
+  const skipCheckout: boolean = argv.skipCheckout;
   const type: ReleaseType = argv.type;
   const tag: ReleaseTag | undefined = argv.tag;
 

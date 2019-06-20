@@ -20,7 +20,7 @@ export default function cutLernaRelease(): void {
 
   const dryrun: boolean = argv.dryrun;
   const force: boolean = argv.force;
-  const skipCheckout: boolean = argv["skip-checkout"];
+  const skipCheckout: boolean = argv.skipCheckout;
   const tag: ReleaseTag | undefined = argv.tag;
   const type: ReleaseType = argv.type;
 
