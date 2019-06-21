@@ -1,5 +1,8 @@
 export default function getTag(version: string): string | void {
-  if (/alfa/.test(version)) return "alfa";
+  if (/alpha/.test(version)) return "alpha";
   if (/beta/.test(version)) return "beta";
-  if (/unstable/.test(version)) return "unstable";
+
+  const matches = version.match(new RegExp("(unstable(.*))\\.\\d+"));
+
+  if (matches) return matches[1];
 }

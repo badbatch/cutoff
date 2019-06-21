@@ -47,7 +47,7 @@ committed to master. Include the `--skip-checkout` flag to commit the changes to
 ```bash
 yarn run cutoff
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta | unstable>]
+  [--tag <alfa | beta | unstable> [--preid <string>]]
   [--skip-checkout]
   [--dryrun]
 ```
@@ -63,6 +63,8 @@ Include the `--dryrun` flag to stop the script after the versioning is completed
 committed to master. Include the `--force` flag to force update all packages to the new version. Include the
 `--skip-checkout` flag to commit the changes to current branch.
 
+If a `preid` is provided it is appended to the release tag.
+
 ```json
 "scripts": {
   "cutoff-lerna": "cutoff-lerna"
@@ -72,7 +74,7 @@ committed to master. Include the `--force` flag to force update all packages to 
 ```bash
 yarn run cutoff-lerna
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta | unstable>]
+  [--tag <alfa | beta | unstable> [--preid <string>]]
   [--skip-checkout]
   [--dryrun]
   [--force]

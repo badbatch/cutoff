@@ -64,7 +64,7 @@ describe("the cutLernaRelease function", () => {
     });
 
     it("then the function should call getNewVersion with the correct version and type", () => {
-      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined);
+      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined, undefined);
     });
 
     it("then the function should call checkoutMaster", () => {
