@@ -1,3 +1,9 @@
+#### 0.2.2 (2019-06-21)
+
+##### Other Changes
+
+* **tags:**  support unstable releases. ([#11](https://github.com/bad-batch/cutoff/pull/11)) ([f1b1e1c3](https://github.com/bad-batch/cutoff/commit/f1b1e1c38c9253deb4cc43bc6c8b6f1321c3a46d))
+
 #### 0.2.1 (2019-04-16)
 
 ##### Bug Fixes
