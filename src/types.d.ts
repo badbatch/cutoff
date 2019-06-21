@@ -10,7 +10,7 @@ export interface ObjectMap {
   [key: string]: any;
 }
 
-export type ReleaseTag = "alfa" | "beta";
+export type ReleaseTag = "alfa" | "beta" | "unstable";
 
 export interface PackageConfig {
   name: string;

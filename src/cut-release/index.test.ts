@@ -97,4 +97,17 @@ describe("the cutRelease function", () => {
       expect(addCommitPush).not.toHaveBeenCalled();
     });
   });
+
+  describe("when skip-checkout is passed into the function", () => {
+    beforeAll(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ skipCheckout: true, type: "patch" });
+      (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
+      (checkoutMaster as jest.Mock).mockClear();
+      cutRelease();
+    });
+
+    it("then the function should not call checkoutMaster", () => {
+      expect(checkoutMaster).not.toHaveBeenCalled();
+    });
+  });
 });
