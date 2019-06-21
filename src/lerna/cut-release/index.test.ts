@@ -114,6 +114,22 @@ describe("the cutLernaRelease function", () => {
     });
   });
 
+  describe("when an invalid tag is passed into the function", () => {
+    beforeEach(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ type: "prerelease", tag: "invalid" });
+      cutLernaRelease();
+    });
+
+    it("then the function should echo the correct message", () => {
+      const message = "cutoff expected tag to be a valid release tag.";
+      expect(shell.echo).toBeCalledWith(message);
+    });
+
+    it("then the function should exit with the correct code", () => {
+      expect(shell.exit).toBeCalledWith(1);
+    });
+  });
+
   describe("when force is passed into the function", () => {
     beforeAll(() => {
       (yargs.parse as jest.Mock).mockReturnValue({ force: true, type: "patch" });
