@@ -6,10 +6,12 @@ export default function getNewVersion(
   version: string,
   type: ReleaseType,
   tag?: ReleaseTag,
-  preReleaseId?: PreReleaseId): string | undefined {
+  preReleaseId?: PreReleaseId,
+  ): string | undefined {
   if (tag && preReleaseId) {
     tag += preReleaseId;
   }
+
   const newVersion = semver.inc(version, type, false, tag);
 
   if (!newVersion) {

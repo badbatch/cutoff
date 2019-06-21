@@ -47,7 +47,7 @@ committed to master. Include the `--skip-checkout` flag to commit the changes to
 ```bash
 yarn run cutoff
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta | unstable> [--preid <string>]]
+  [--tag <alpha | beta | unstable> [--preid <string>]]
   [--skip-checkout]
   [--dryrun]
 ```
@@ -74,7 +74,7 @@ If a `preid` is provided it is appended to the release tag.
 ```bash
 yarn run cutoff-lerna
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alfa | beta | unstable> [--preid <string>]]
+  [--tag <alpha | beta | unstable> [--preid <string>]]
   [--skip-checkout]
   [--dryrun]
   [--force]
