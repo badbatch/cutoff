@@ -38,6 +38,8 @@ with the message `"Release version <version>."`, and then commits a new tag with
 Include the `--dryrun` flag to stop the script after the versioning is completed, so no changes are
 committed to master. Include the `--skip-checkout` flag to commit the changes to current branch.
 
+If a `preid` is provided it is appended to the release tag.
+
 ```json
 "scripts": {
   "cutoff": "cutoff"
