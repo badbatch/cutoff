@@ -1,3 +1,9 @@
+#### 0.2.3 (2019-06-24)
+
+##### New Features
+
+* **versioning:**  pre-release identifier suffix for release tags ([#12](https://github.com/bad-batch/cutoff/pull/12)) ([f6cea9f8](https://github.com/bad-batch/cutoff/commit/f6cea9f82bdbe7bce866ff0dd452140271ddb9ec))
+
 #### 0.2.2 (2019-06-21)
 
 ##### Other Changes
