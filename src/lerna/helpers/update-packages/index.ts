@@ -2,7 +2,7 @@ import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import semver, { ReleaseType } from "semver";
 import getNewVersion from "../../../helpers/get-new-version";
-import { ConfigMap, PackageConfig, ReleaseTag, StringObjectMap, UpdatedPackage } from "../../../types";
+import { ConfigMap, PackageConfig, PreReleaseId, ReleaseTag, StringObjectMap, UpdatedPackage } from "../../../types";
 
 function updateDependencies(
   updatedNames: string[],
@@ -26,7 +26,7 @@ function updateDependencies(
   return updated;
 }
 
-export default function updatePackages(type: ReleaseType, tag?: ReleaseTag): void {
+export default function updatePackages(type: ReleaseType, tag?: ReleaseTag, preReleaseId?: PreReleaseId): void {
   const cwd = process.cwd();
   const updatedConfigPath = resolve(cwd, ".lerna.updated.json");
   const updatedConfig: UpdatedPackage[] = require(updatedConfigPath) || [];

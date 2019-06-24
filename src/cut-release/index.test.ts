@@ -57,7 +57,7 @@ describe("the cutRelease function", () => {
     });
 
     it("then the function should call getNewVersion with the correct version and type", () => {
-      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined);
+      expect(getNewVersion).toHaveBeenCalledWith("0.0.1", "patch", undefined, undefined);
     });
 
     it("then the function should call checkoutMaster", () => {
@@ -82,6 +82,22 @@ describe("the cutRelease function", () => {
 
     it("then the function should call addCommitPush with the correct version", () => {
       expect(addCommitPush).toHaveBeenCalledWith("0.0.2");
+    });
+  });
+
+  describe("when an invalid tag is passed into the function", () => {
+    beforeAll(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ type: "prerelease", tag: "invalid" });
+      cutRelease();
+    });
+
+    it("then the function should echo the correct message", () => {
+      const message = "cutoff expected tag to be a valid release tag.";
+      expect(shell.echo).toBeCalledWith(message);
+    });
+
+    it("then the function should exit with the correct code", () => {
+      expect(shell.exit).toBeCalledWith(1);
     });
   });
 

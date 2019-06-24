@@ -1,8 +1,17 @@
 import semver, { ReleaseType } from "semver";
 import shell from "shelljs";
-import { ReleaseTag } from "../../types";
+import { PreReleaseId, ReleaseTag } from "../../types";
 
-export default function getNewVersion(version: string, type: ReleaseType, tag?: ReleaseTag): string | undefined {
+export default function getNewVersion(
+  version: string,
+  type: ReleaseType,
+  tag?: ReleaseTag,
+  preReleaseId?: PreReleaseId,
+): string | undefined {
+  if (tag && preReleaseId) {
+    tag += preReleaseId;
+  }
+
   const newVersion = semver.inc(version, type, false, tag);
 
   if (!newVersion) {

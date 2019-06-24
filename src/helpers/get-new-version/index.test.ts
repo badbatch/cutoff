@@ -29,12 +29,35 @@ describe("the getNewVersion function", () => {
   });
 
   describe("when a valid version is passed into the function", () => {
-    beforeAll(() => {
-      newVersion = getNewVersion("0.0.1", "patch");
+    describe("when ReleaseTag is not present", () => {
+      beforeAll(() => {
+        newVersion = getNewVersion("0.0.1", "patch");
+      });
+
+      it("then the function should return the new version", () => {
+        expect(newVersion).toBe("0.0.2");
+      });
     });
 
-    it("then the function should return the new version", () => {
-      expect(newVersion).toBe("0.0.2");
+    describe("when ReleaseTag is present", () => {
+      beforeAll(() => {
+        newVersion = getNewVersion("0.0.1", "prerelease", "alpha");
+      });
+
+      it("then the function should return the new version", () => {
+        expect(newVersion).toBe("0.0.2-alpha.0");
+      });
     });
+
+    describe("when ReleaseTag and PreReleaseId present", () => {
+      beforeAll(() => {
+        newVersion = getNewVersion("0.0.1", "prerelease", "unstable", "233");
+      });
+
+      it("then the function should return the new version", () => {
+        expect(newVersion).toBe("0.0.2-unstable233.0");
+      });
+    });
+
   });
 });

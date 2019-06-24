@@ -5,8 +5,9 @@ import yargs from "yargs";
 import addCommitPush from "../helpers/add-commit-push";
 import checkoutMaster from "../helpers/checkout-master";
 import getNewVersion from "../helpers/get-new-version";
+import isValidReleaseTag from "../helpers/is-valid-release-tag";
 import isValidReleaseType from "../helpers/is-valid-release-type";
-import { PackageConfig, ReleaseTag } from "../types";
+import { PackageConfig, PreReleaseId, ReleaseTag } from "../types";
 
 export default function cutRelease(): void {
   const argv = yargs
@@ -18,6 +19,7 @@ export default function cutRelease(): void {
   const skipCheckout: boolean = argv.skipCheckout;
   const type: ReleaseType = argv.type;
   const tag: ReleaseTag | undefined = argv.tag;
+  const preReleaseId: PreReleaseId | undefined = argv.preid;
 
   if (!isValidReleaseType(type)) {
     shell.echo("cutoff expected type to be a valid release type.");
@@ -25,10 +27,16 @@ export default function cutRelease(): void {
     return;
   }
 
+  if (tag && !isValidReleaseTag(tag)) {
+    shell.echo("cutoff expected tag to be a valid release tag.");
+    shell.exit(1);
+    return;
+  }
+
   const configPath = resolve(process.cwd(), "package.json");
   const config: PackageConfig = require(configPath);
   const { scripts = {}, version } = config;
-  const newVersion = getNewVersion(version, type, tag);
+  const newVersion = getNewVersion(version, type, tag, preReleaseId);
   if (!newVersion) return;
 
   if (!skipCheckout) {
