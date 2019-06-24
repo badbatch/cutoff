@@ -85,6 +85,22 @@ describe("the cutRelease function", () => {
     });
   });
 
+  describe("when an invalid tag is passed into the function", () => {
+    beforeAll(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ type: "prerelease", tag: "invalid" });
+      cutRelease();
+    });
+
+    it("then the function should echo the correct message", () => {
+      const message = "cutoff expected tag to be a valid release tag.";
+      expect(shell.echo).toBeCalledWith(message);
+    });
+
+    it("then the function should exit with the correct code", () => {
+      expect(shell.exit).toBeCalledWith(1);
+    });
+  });
+
   describe("when dryrun is passed into the function", () => {
     beforeAll(() => {
       (yargs.parse as jest.Mock).mockReturnValue({ dryrun: true, type: "patch" });

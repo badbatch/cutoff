@@ -5,6 +5,7 @@ import yargs from "yargs";
 import addCommitPush from "../helpers/add-commit-push";
 import checkoutMaster from "../helpers/checkout-master";
 import getNewVersion from "../helpers/get-new-version";
+import isValidReleaseTag from "../helpers/is-valid-release-tag";
 import isValidReleaseType from "../helpers/is-valid-release-type";
 import { PackageConfig, PreReleaseId, ReleaseTag } from "../types";
 
@@ -22,6 +23,12 @@ export default function cutRelease(): void {
 
   if (!isValidReleaseType(type)) {
     shell.echo("cutoff expected type to be a valid release type.");
+    shell.exit(1);
+    return;
+  }
+
+  if (tag && !isValidReleaseTag(tag)) {
+    shell.echo("cutoff expected tag to be a valid release tag.");
     shell.exit(1);
     return;
   }

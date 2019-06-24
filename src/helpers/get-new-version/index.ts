@@ -8,6 +8,7 @@ export default function getNewVersion(
   tag?: ReleaseTag,
   preReleaseId?: PreReleaseId,
   ): string | undefined {
+
   if (tag && preReleaseId) {
     tag += preReleaseId;
   }

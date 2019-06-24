@@ -6,6 +6,6 @@ describe("the getTag function", () => {
   });
 
   it("should get release tag when a pre-release id is present", () => {
-    expect(getTag("1.2.3-unstable-233.0")).toBe("unstable-233");
+    expect(getTag("1.2.3-unstable233.0")).toBe("unstable233");
   });
 });
