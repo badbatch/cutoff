@@ -8,6 +8,5 @@ export default function publishLernaRelease(): void {
   const updated: UpdatedPackage[] = require(updatedConfigPath) || [];
   const names = updated.map((pkg) => pkg.name);
   const concurrency: number = yargs.number("concurrency").parse().concurrency || 4;
-  /* tslint:disable-next-line */
-  shell.exec(`lerna exec --parallel --concurrency ${concurrency} -- publish-lerna-cutoff-pkg --packages ${names.join(" ")}`);
+  shell.exec(`lerna exec --concurrency ${concurrency} -- publish-lerna-cutoff-pkg --packages ${names.join(" ")}`);
 }

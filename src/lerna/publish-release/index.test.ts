@@ -30,7 +30,7 @@ describe("the publishLernaRelease function", () => {
 
     it("then the function should execute the lerna exec command with the correct list of package names", () => {
       /* tslint:disable-next-line */
-      const cmd = "lerna exec --parallel --concurrency 3 -- publish-lerna-cutoff-pkg --packages @test/button @test/icon @test/link";
+      const cmd = "lerna exec --concurrency 3 -- publish-lerna-cutoff-pkg --packages @test/button @test/icon @test/link";
       expect(shell.exec).toHaveBeenCalledWith(cmd);
     });
   });
