@@ -3,6 +3,7 @@ import yargs from "yargs";
 import publishLernaRelease from ".";
 
 jest.mock("shelljs", () => ({ exec: jest.fn() }));
+
 jest.mock("yargs", () => ({
   number: jest.fn().mockReturnThis(),
   parse: jest.fn(),
