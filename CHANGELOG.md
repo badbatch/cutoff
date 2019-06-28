@@ -1,3 +1,9 @@
+#### 0.2.4 (2019-06-28)
+
+##### Other Changes
+
+* **publish-lerna-cutoff:**  option to control concurrency ([#13](https://github.com/bad-batch/cutoff/pull/13)) ([d60f9d0b](https://github.com/bad-batch/cutoff/commit/d60f9d0b5abd4df94da2f14461c2ad7309e4fdac))
+
 #### 0.2.3 (2019-06-24)
 
 ##### New Features
