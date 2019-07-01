@@ -1,3 +1,9 @@
+#### 0.2.5 (2019-07-01)
+
+##### Bug Fixes
+
+* **publish-lerna-cutoff:**  preid not passed while update packages ([#14](https://github.com/bad-batch/cutoff/pull/14)) ([06cb53c1](https://github.com/bad-batch/cutoff/commit/06cb53c1ec764689e8b06aaba61cd6cb7b2f1e0a))
+
 #### 0.2.4 (2019-06-28)
 
 ##### Other Changes
