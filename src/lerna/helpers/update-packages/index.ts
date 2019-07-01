@@ -43,7 +43,7 @@ export default function updatePackages(type: ReleaseType, tag?: ReleaseTag, preR
     let packageUpdated = false;
 
     if (updatedNames.includes(config.name)) {
-      const newVersion = getNewVersion(config.version, type, tag);
+      const newVersion = getNewVersion(config.version, type, tag, preReleaseId);
 
       if (newVersion) {
         config.version = newVersion;
