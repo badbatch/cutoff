@@ -60,7 +60,7 @@ export default function cutLernaRelease(): void {
     forceUpdate(config.name, newVersion);
   } else {
     shell.exec("lerna updated --json > .lerna.updated.json");
-    updatePackages(type, tag);
+    updatePackages(type, tag, preReleaseId);
   }
 
   if (semver.gt(newVersion, version)) {
