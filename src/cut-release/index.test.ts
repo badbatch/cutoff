@@ -126,4 +126,32 @@ describe("the cutRelease function", () => {
       expect(checkoutMaster).not.toHaveBeenCalled();
     });
   });
+
+  describe("when skip-prehook is passed into the function", () => {
+    beforeAll(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ skipPrehook: true, type: "patch" });
+      (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
+      (shell.exec as jest.Mock).mockClear();
+      cutRelease();
+    });
+
+    it("then cutoff:pre-version should not be executed", () => {
+      const hook = "yarn run cutoff:pre-version";
+      expect(shell.exec).not.toBeCalledWith(hook);
+    });
+  });
+
+  describe("when skip-prehook is passed into the function", () => {
+    beforeAll(() => {
+      (yargs.parse as jest.Mock).mockReturnValue({ skipPosthook: true, type: "patch" });
+      (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
+      (shell.exec as jest.Mock).mockClear();
+      cutRelease();
+    });
+
+    it("then cutoff:post-version should not be executed", () => {
+      const hook = "yarn run cutoff:post-version";
+      expect(shell.exec).not.toBeCalledWith(hook);
+    });
+  });
 });
