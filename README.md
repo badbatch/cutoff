@@ -51,6 +51,8 @@ yarn run cutoff
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
   [--tag <alpha | beta | unstable> [--preid <string>]]
   [--skip-checkout]
+  [--skip-prehook]
+  [--skip-posthook]
   [--dryrun]
 ```
 
@@ -78,6 +80,8 @@ yarn run cutoff-lerna
   [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
   [--tag <alpha | beta | unstable> [--preid <string>]]
   [--skip-checkout]
+  [--skip-prehook]
+  [--skip-posthook]
   [--dryrun]
   [--force]
 ```

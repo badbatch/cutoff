@@ -17,11 +17,15 @@ export default function cutLernaRelease(): void {
     .boolean("force")
     .boolean("dryrun")
     .boolean("skip-checkout")
+    .boolean("skip-posthook")
+    .boolean("skip-prehook")
     .parse();
 
   const dryrun: boolean = argv.dryrun;
   const force: boolean = argv.force;
   const skipCheckout: boolean = argv.skipCheckout;
+  const skipPosthook: boolean = argv.skipPosthook;
+  const skipPrehook: boolean = argv.skipPrehook;
   const tag: ReleaseTag | undefined = argv.tag;
   const type: ReleaseType = argv.type;
   const preReleaseId: PreReleaseId = argv.preid;
@@ -52,7 +56,7 @@ export default function cutLernaRelease(): void {
     shell.exec(`yarn run changelog --${type}`);
   }
 
-  if (scripts["cutoff:pre-version"]) {
+  if (!skipPrehook && scripts["cutoff:pre-version"]) {
     shell.exec("yarn run cutoff:pre-version");
   }
 
@@ -72,7 +76,7 @@ export default function cutLernaRelease(): void {
 
   if (dryrun) return;
 
-  if (scripts["cutoff:post-version"]) {
+  if (!skipPosthook && scripts["cutoff:post-version"]) {
     shell.exec("yarn run cutoff:post-version");
   }
 
