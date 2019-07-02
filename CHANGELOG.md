@@ -1,3 +1,9 @@
+#### 0.2.7 (2019-07-02)
+
+##### Other Changes
+
+* **cut-release:**  Add options to skip hooks ([#16](https://github.com/bad-batch/cutoff/pull/16)) ([6acfe775](https://github.com/bad-batch/cutoff/commit/6acfe775b6aa904956a1b367b80e0cb8ab35726f))
+
 #### 0.2.6 (2019-07-02)
 
 ##### Bug Fixes
