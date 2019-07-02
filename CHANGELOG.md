@@ -1,3 +1,9 @@
+#### 0.2.6 (2019-07-02)
+
+##### Bug Fixes
+
+* **cut-lerna-release:**  preId not passed in updatePackages call ([#15](https://github.com/bad-batch/cutoff/pull/15)) ([597c8b89](https://github.com/bad-batch/cutoff/commit/597c8b8916b8af4ee4eaa2da4f9837b69f221af5))
+
 #### 0.2.5 (2019-07-01)
 
 ##### Bug Fixes
