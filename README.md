@@ -2,7 +2,7 @@
 
 An opinionated command line utility for cutting releases and publishing to npm.
 
-[![Build Status](https://travis-ci.org/badbatch/cutoff.svg?branch=master)](https://travis-ci.org/badbatch/cutoff)
+[![Build Status](https://travis-ci.com/badbatch/cutoff.svg?branch=master)](https://travis-ci.com/badbatch/cutoff)
 [![codecov](https://codecov.io/gh/badbatch/cutoff/branch/master/graph/badge.svg)](https://codecov.io/gh/badbatch/cutoff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://badge.fury.io/js/cutoff.svg)](https://badge.fury.io/js/cutoff)
