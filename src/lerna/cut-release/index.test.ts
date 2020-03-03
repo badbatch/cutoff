@@ -29,7 +29,7 @@ jest.mock("../helpers/update-packages", () => jest.fn());
 
 describe("the cutLernaRelease function", () => {
   let processCwd: () => string;
-  const REPO_PATH = "src/__test__/lerna-repo";
+  const REPO_PATH = "src/__tests__/lerna-repo";
 
   beforeAll(() => {
     processCwd = process.cwd;
@@ -173,7 +173,7 @@ describe("the cutLernaRelease function", () => {
 
   describe("when skip-checkout is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ skipCheckout: true, type: "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ "skip-checkout": true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (checkoutMaster as jest.Mock).mockClear();
       cutLernaRelease();
@@ -186,7 +186,7 @@ describe("the cutLernaRelease function", () => {
 
   describe("when skip-prehook is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ skipPrehook: true, type: "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ "skip-prehook": true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (shell.exec as jest.Mock).mockClear();
       cutLernaRelease();
@@ -200,7 +200,7 @@ describe("the cutLernaRelease function", () => {
 
   describe("when skip-prehook is passed into the function", () => {
     beforeAll(() => {
-      (yargs.parse as jest.Mock).mockReturnValue({ skipPosthook: true, type: "patch" });
+      (yargs.parse as jest.Mock).mockReturnValue({ "skip-posthook": true, type: "patch" });
       (getNewVersion as jest.Mock).mockReturnValue("0.0.2");
       (shell.exec as jest.Mock).mockClear();
       cutLernaRelease();

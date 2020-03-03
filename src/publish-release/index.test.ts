@@ -5,7 +5,7 @@ jest.mock("shelljs", () => ({ exec: jest.fn() }));
 
 describe("the publishRelease function", () => {
   let processCwd: () => string;
-  const REPO_PATH = "src/__test__/repo";
+  const REPO_PATH = "src/__tests__/repo";
 
   beforeAll(() => {
     processCwd = process.cwd;

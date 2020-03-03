@@ -11,7 +11,7 @@ jest.mock("yargs", () => ({
 
 describe("the publishLernaRelease function", () => {
   let processCwd: () => string;
-  const REPO_PATH = "src/__test__/lerna-repo";
+  const REPO_PATH = "src/__tests__/lerna-repo";
 
   beforeAll(() => {
     processCwd = process.cwd;

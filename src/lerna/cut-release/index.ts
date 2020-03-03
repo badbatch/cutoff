@@ -12,7 +12,7 @@ import forceUpdate from "../../lerna/helpers/force-update";
 import { LernaConfig, PackageConfig, PreReleaseId, ReleaseTag } from "../../types";
 import updatePackages from "../helpers/update-packages";
 
-export default function cutLernaRelease(): void {
+export default function cutLernaRelease() {
   const argv = yargs
     .boolean("force")
     .boolean("dryrun")
@@ -21,14 +21,14 @@ export default function cutLernaRelease(): void {
     .boolean("skip-prehook")
     .parse();
 
-  const dryrun: boolean = argv.dryrun;
-  const force: boolean = argv.force;
-  const skipCheckout: boolean = argv.skipCheckout;
-  const skipPosthook: boolean = argv.skipPosthook;
-  const skipPrehook: boolean = argv.skipPrehook;
-  const tag: ReleaseTag | undefined = argv.tag;
-  const type: ReleaseType = argv.type;
-  const preReleaseId: PreReleaseId = argv.preid;
+  const dryrun: boolean = argv.dryrun || false;
+  const force: boolean = argv.force || false;
+  const skipCheckout: boolean = argv["skip-checkout"] || false;
+  const skipPosthook: boolean = argv["skip-posthook"] || false;
+  const skipPrehook: boolean = argv["skip-prehook"] || false;
+  const type = argv.type as ReleaseType;
+  const tag = argv.tag as ReleaseTag | undefined;
+  const preReleaseId = argv.preid as PreReleaseId | undefined;
 
   if (!isValidReleaseType(type)) {
     shell.echo("cutoff expected type to be a valid release type.");

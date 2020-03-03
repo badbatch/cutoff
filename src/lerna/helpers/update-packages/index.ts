@@ -1,18 +1,15 @@
+import { StringObject } from "@repodog/types";
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import semver, { ReleaseType } from "semver";
 import getNewVersion from "../../../helpers/get-new-version";
-import { ConfigMap, PackageConfig, PreReleaseId, ReleaseTag, StringObjectMap, UpdatedPackage } from "../../../types";
+import { ConfigMap, PackageConfig, PreReleaseId, ReleaseTag, UpdatedPackage } from "../../../types";
 
-function updateDependencies(
-  updatedNames: string[],
-  configMap: ConfigMap,
-  dependencies?: StringObjectMap,
-): boolean {
+function updateDependencies(updatedNames: string[], configMap: ConfigMap, dependencies?: StringObject) {
   let updated = false;
 
   if (dependencies) {
-    Object.keys(dependencies).forEach((key) => {
+    Object.keys(dependencies).forEach(key => {
       if (!updatedNames.includes(key)) return;
 
       const newVersion = configMap[key] && configMap[key].version;
@@ -26,16 +23,16 @@ function updateDependencies(
   return updated;
 }
 
-export default function updatePackages(type: ReleaseType, tag?: ReleaseTag, preReleaseId?: PreReleaseId): void {
+export default function updatePackages(type: ReleaseType, tag?: ReleaseTag, preReleaseId?: PreReleaseId) {
   const cwd = process.cwd();
   const updatedConfigPath = resolve(cwd, ".lerna.updated.json");
   const updatedConfig: UpdatedPackage[] = require(updatedConfigPath) || [];
-  const updatedNames: string[] = updatedConfig.map((pkg) => pkg.name);
+  const updatedNames: string[] = updatedConfig.map(pkg => pkg.name);
   const packagesPath = resolve(cwd, "packages");
   const filenames = readdirSync(packagesPath);
   const configMap: ConfigMap = {};
 
-  filenames.forEach((filename) => {
+  filenames.forEach(filename => {
     const packagePath = resolve(packagesPath, filename);
     if (!statSync(packagePath).isDirectory()) return;
     const configPath = resolve(packagePath, "package.json");
@@ -55,7 +52,7 @@ export default function updatePackages(type: ReleaseType, tag?: ReleaseTag, preR
     configMap[config.name] = config;
   });
 
-  filenames.forEach((filename) => {
+  filenames.forEach(filename => {
     const packagePath = resolve(packagesPath, filename);
     if (!statSync(packagePath).isDirectory()) return;
     const configPath = resolve(packagePath, "package.json");

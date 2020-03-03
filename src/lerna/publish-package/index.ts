@@ -4,8 +4,8 @@ import yargs from "yargs";
 import getTag from "../../helpers/get-tag";
 import { PackageConfig } from "../../types";
 
-export default function publishLernaPackage(): void {
-  const packages: string[] = yargs.array("packages").parse().packages;
+export default function publishLernaPackage() {
+  const packages = (yargs.array("packages").parse().packages || []) as string[];
 
   if (typeof process.env.LERNA_PACKAGE_NAME === "string" && packages.indexOf(process.env.LERNA_PACKAGE_NAME) !== -1) {
     const packagePath = resolve(process.cwd(), "package.json");

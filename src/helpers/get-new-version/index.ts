@@ -7,7 +7,7 @@ export default function getNewVersion(
   type: ReleaseType,
   tag?: ReleaseTag,
   preReleaseId?: PreReleaseId,
-): string | undefined {
+) {
   if (tag && preReleaseId) {
     tag += preReleaseId;
   }

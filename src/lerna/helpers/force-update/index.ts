@@ -1,11 +1,12 @@
+import { StringObject } from "@repodog/types";
 import { readdirSync, statSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import semver from "semver";
-import { PackageConfig, StringObjectMap, UpdatedPackage } from "../../../types";
+import { PackageConfig, UpdatedPackage } from "../../../types";
 
-function updateDependencies(name: string, version: string, dependencies?: StringObjectMap): void {
+function updateDependencies(name: string, version: string, dependencies?: StringObject) {
   if (dependencies) {
-    Object.keys(dependencies).forEach((key) => {
+    Object.keys(dependencies).forEach(key => {
       if (!key.startsWith(`@${name}/`)) return;
       if (semver.satisfies(version, dependencies[key])) return;
       dependencies[key] = `^${version}`;
@@ -13,13 +14,13 @@ function updateDependencies(name: string, version: string, dependencies?: String
   }
 }
 
-export default function forceUpdate(name: string, version: string): void {
+export default function forceUpdate(name: string, version: string) {
   const cwd = process.cwd();
   const packagesPath = resolve(cwd, "packages");
   const filenames = readdirSync(packagesPath);
   const updated: UpdatedPackage[] = [];
 
-  filenames.forEach((filename) => {
+  filenames.forEach(filename => {
     const packagePath = resolve(packagesPath, filename);
     if (!statSync(packagePath).isDirectory()) return;
     const configPath = resolve(packagePath, "package.json");

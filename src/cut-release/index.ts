@@ -9,7 +9,7 @@ import isValidReleaseTag from "../helpers/is-valid-release-tag";
 import isValidReleaseType from "../helpers/is-valid-release-type";
 import { PackageConfig, PreReleaseId, ReleaseTag } from "../types";
 
-export default function cutRelease(): void {
+export default function cutRelease() {
   const argv = yargs
     .boolean("dryrun")
     .boolean("skip-checkout")
@@ -17,13 +17,13 @@ export default function cutRelease(): void {
     .boolean("skip-prehook")
     .parse();
 
-  const dryrun: boolean = argv.dryrun;
-  const skipCheckout: boolean = argv.skipCheckout;
-  const skipPosthook: boolean = argv.skipPosthook;
-  const skipPrehook: boolean = argv.skipPrehook;
-  const type: ReleaseType = argv.type;
-  const tag: ReleaseTag | undefined = argv.tag;
-  const preReleaseId: PreReleaseId | undefined = argv.preid;
+  const dryrun: boolean = argv.dryrun || false;
+  const skipCheckout: boolean = argv["skip-checkout"] || false;
+  const skipPosthook: boolean = argv["skip-posthook"] || false;
+  const skipPrehook: boolean = argv["skip-prehook"] || false;
+  const type = argv.type as ReleaseType;
+  const tag = argv.tag as ReleaseTag | undefined;
+  const preReleaseId = argv.preid as PreReleaseId | undefined;
 
   if (!isValidReleaseType(type)) {
     shell.echo("cutoff expected type to be a valid release type.");

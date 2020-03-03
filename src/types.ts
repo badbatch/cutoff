@@ -1,3 +1,5 @@
+import { StringObject } from "@repodog/types";
+
 export interface ConfigMap {
   [key: string]: PackageConfig;
 }
@@ -6,25 +8,17 @@ export interface LernaConfig {
   version: string;
 }
 
-export interface ObjectMap {
-  [key: string]: any;
-}
-
 export type PreReleaseId = string;
 
 export type ReleaseTag = "alpha" | "beta" | "unstable";
 
 export interface PackageConfig {
+  dependencies?: StringObject;
+  devDependencies?: StringObject;
   name: string;
-  dependencies?: StringObjectMap;
-  devDependencies?: StringObjectMap;
   private?: boolean;
-  scripts?: StringObjectMap;
+  scripts?: StringObject;
   version: string;
-}
-
-export interface StringObjectMap {
-  [key: string]: string;
 }
 
 export interface UpdatedPackage {
@@ -34,5 +28,5 @@ export interface UpdatedPackage {
 }
 
 export interface UpdatedPackagesMap {
-  [key: string]: { private: boolean, version: string };
+  [key: string]: { private: boolean; version: string };
 }
