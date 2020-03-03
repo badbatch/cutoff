@@ -9,13 +9,13 @@
     "npm",
     "releases"
   ],
-  "homepage": "https://github.com/bad-batch/cutoff",
+  "homepage": "https://github.com/badbatch/cutoff",
   "bugs": {
-    "url": "https://github.com/bad-batch/cutoff/issues"
+    "url": "https://github.com/badbatch/cutoff/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bad-batch/cutoff"
+    "url": "https://github.com/badbatch/cutoff"
   },
   "license": "MIT",
   "author": "Dylan Aubrey <dylanaubrey@gmail.com>",
