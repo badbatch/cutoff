@@ -1,6 +1,6 @@
 {
   "name": "cutoff",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "An opinionated command line utility for cutting releases and publishing to npm.",
   "keywords": [
     "command line",

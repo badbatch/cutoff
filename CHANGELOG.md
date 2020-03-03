@@ -1,3 +1,25 @@
+#### 0.2.8 (2020-03-03)
+
+##### Chores
+
+*  upgrade dependencies and sort peer versions ([1897ba18](https://github.com/badbatch/cutoff/commit/1897ba184a8eb890f228e8ddf7dc617eab6d02cf))
+* **deps-dev:**
+  *  bump codecov from 3.1.0 to 3.6.5 ([#21](https://github.com/badbatch/cutoff/pull/21)) ([bfd7c9db](https://github.com/badbatch/cutoff/commit/bfd7c9db52ec7c76207ee4aaa1d363688b66d981))
+  *  bump lodash from 4.17.11 to 4.17.13 ([#20](https://github.com/badbatch/cutoff/pull/20)) ([54a44f96](https://github.com/badbatch/cutoff/commit/54a44f966ec8dacf8642c8919e8ce98350b91aa2))
+* **deps:**
+  *  bump mixin-deep from 1.3.1 to 1.3.2 ([#18](https://github.com/badbatch/cutoff/pull/18)) ([3cb14ec4](https://github.com/badbatch/cutoff/commit/3cb14ec490abdb75c52578d9aaf7b83033e74756))
+  *  bump handlebars from 4.0.12 to 4.5.3 ([#19](https://github.com/badbatch/cutoff/pull/19)) ([5208730b](https://github.com/badbatch/cutoff/commit/5208730b65a7dbd4242c381dd610aac929818f02))
+  *  bump eslint-utils from 1.3.1 to 1.4.3 ([#17](https://github.com/badbatch/cutoff/pull/17)) ([3b04e559](https://github.com/badbatch/cutoff/commit/3b04e559c5e98db54a4b9f50104e4fc2b93f78b3))
+
+##### Documentation Changes
+
+*  removing old badges from readme ([8c54d2d8](https://github.com/badbatch/cutoff/commit/8c54d2d89032d129b022638c26db68ff3dc201af))
+
+##### Bug Fixes
+
+*  update paths in bin folder ([d5a7a35c](https://github.com/badbatch/cutoff/commit/d5a7a35c9416b1cbf697d2227c7070a9a105e979))
+*  update repo urls ([ce850f87](https://github.com/badbatch/cutoff/commit/ce850f87736ce96aa7cb84ed8d10b2efb719d45d))
+
 #### 0.2.7 (2019-07-02)
 
 ##### Other Changes
