@@ -1,5 +1,7 @@
+!.*
 .repodog
 .vscode
 coverage
+dist
 lib
 node_modules

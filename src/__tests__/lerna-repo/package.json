@@ -1,9 +1,0 @@
-{
-  "name": "test",
-  "version": "0.0.1",
-  "description": "This is a test repo.",
-  "scripts": {
-    "cutoff:pre-version": "yarn run stuff",
-    "cutoff:post-version": "yarn run more stuff"
-  }
-}

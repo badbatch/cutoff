@@ -1,32 +1,30 @@
-import { StringObject } from "@repodog/types";
+import type { ReleaseType } from 'semver';
 
-export interface ConfigMap {
-  [key: string]: PackageConfig;
+export interface CutReleaseArgs {
+  'dry-run'?: boolean;
+  preid?: string;
+  'skip-posthook'?: boolean;
+  'skip-prehook'?: boolean;
+  tag?: string;
+  type?: string;
 }
 
-export interface LernaConfig {
-  version: string;
+export type PackageManager = 'npm' | 'yarn' | 'pnpm';
+
+export interface PnpmWorkspaceYaml {
+  packages: string[];
 }
 
 export type PreReleaseId = string;
 
-export type ReleaseTag = "alpha" | "beta" | "unstable";
-
-export interface PackageConfig {
-  dependencies?: StringObject;
-  devDependencies?: StringObject;
-  name: string;
-  private?: boolean;
-  scripts?: StringObject;
-  version: string;
+export interface ReleaseMeta {
+  dryrun: boolean;
+  packageManager: PackageManager;
+  preReleaseId?: PreReleaseId;
+  skipPosthook: boolean;
+  skipPrehook: boolean;
+  tag?: ReleaseTag;
+  type: ReleaseType;
 }
 
-export interface UpdatedPackage {
-  name: string;
-  private: boolean;
-  version: string;
-}
-
-export interface UpdatedPackagesMap {
-  [key: string]: { private: boolean; version: string };
-}
+export type ReleaseTag = 'alpha' | 'beta' | 'unstable';

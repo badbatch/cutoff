@@ -12,8 +12,8 @@
       "args": [
         "--type", "patch",
       ],
-      "protocol": "inspector",
-      "stopOnEntry": false
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     },
     {
       "type": "node",
