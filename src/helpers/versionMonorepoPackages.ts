@@ -8,16 +8,17 @@ import versionPackage from './versionPackage.js';
 
 const { echo } = shelljs;
 
-export default async ({
-  packageManager,
-  preReleaseId,
-  tag,
-  type,
-}: Pick<ReleaseMeta, 'packageManager' | 'preReleaseId' | 'tag' | 'type'>) => {
-  const packageJsonPaths = await getMonorepoPackageJsonPaths(packageManager);
+export default (
+  { packageManager, preReleaseId, tag, type }: Pick<ReleaseMeta, 'packageManager' | 'preReleaseId' | 'tag' | 'type'>,
+  verboseLog: (msg: string) => void
+) => {
+  const packageJsonPaths = getMonorepoPackageJsonPaths(packageManager);
   const lastReleaseTag = getLastReleaseTag();
   const changedFiles = getChangedFiles(lastReleaseTag);
   const cwd = process.cwd();
+  verboseLog(`packageJsonPaths: ${packageJsonPaths.join('\n')}`);
+  verboseLog(`changedFiles: ${changedFiles.join('\n')}`);
+  verboseLog(`lastReleaseTag: ${lastReleaseTag}`);
 
   packageJsonPaths.forEach(packageJsonPath => {
     const { dir } = parse(packageJsonPath);
@@ -28,6 +29,6 @@ export default async ({
       return;
     }
 
-    void versionPackage(packageJsonPath, { preReleaseId, tag, type });
+    versionPackage(packageJsonPath, { preReleaseId, tag, type }, verboseLog);
   });
 };

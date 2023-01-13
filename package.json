@@ -4,6 +4,9 @@
   "version": "0.2.8",
   "description": "An opinionated command line utility for cutting releases and publishing to npm.",
   "homepage": "https://github.com/badbatch/cutoff",
+  "engines": {
+    "node": "^18.13.0"
+  },
   "bugs": {
     "url": "https://github.com/badbatch/cutoff/issues"
   },
@@ -36,10 +39,10 @@
     "compile": "concurrently npm:compile:*",
     "compile:main": "rollup -c ./rollup.config.cjs",
     "compile:types": "tsc --declaration --declarationMap --emitDeclarationOnly",
-    "cutoff": "node ./bin/cutoff.mjs cut",
+    "cutoff": "node --trace-warnings ./bin/cutoff.mjs cut",
     "cutoff:post-version": "pnpm run compile",
     "lint": "eslint . --ext .ts,.cjs",
-    "publish": "node ./bin/cutoff.mjs publish",
+    "publish": "node --trace-warnings ./bin/cutoff.mjs publish",
     "test": "jest --logHeapUsage",
     "type-check": "tsc --noEmit",
     "validate": "pnpm run build && pnpm run lint && pnpm run type-check && pnpm run test"
@@ -75,6 +78,7 @@
     "@babel/plugin-proposal-class-properties": "7.18.6",
     "@babel/plugin-proposal-export-namespace-from": "7.18.9",
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
+    "@babel/plugin-syntax-import-assertions": "7.20.0",
     "@babel/plugin-transform-runtime": "7.19.6",
     "@babel/preset-env": "7.20.2",
     "@babel/preset-react": "7.18.6",

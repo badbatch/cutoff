@@ -7,7 +7,7 @@ import publishPackage from '../helpers/publishPackage.js';
 
 const { echo, exit } = shelljs;
 
-export default async () => {
+export default () => {
   try {
     const packageManager = getPackageManager();
 
@@ -17,11 +17,11 @@ export default async () => {
       );
     }
 
-    if (await isProjectMonorepo(packageManager)) {
-      await publishMonorepoPackages(packageManager);
+    if (isProjectMonorepo(packageManager)) {
+      publishMonorepoPackages(packageManager);
     } else {
       const packageJsonPath = resolve(process.cwd(), 'package.json');
-      await publishPackage(packageJsonPath, { packageManager });
+      publishPackage(packageJsonPath, { packageManager });
     }
 
     return exit(0);

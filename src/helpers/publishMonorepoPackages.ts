@@ -5,12 +5,14 @@ import publishPackage from './publishPackage.js';
 
 const { echo } = shelljs;
 
-export default async (packageManager: PackageManager) => {
-  const packageJsonPaths = await getMonorepoPackageJsonPaths(packageManager);
+export default (packageManager: PackageManager) => {
+  const packageJsonPaths = getMonorepoPackageJsonPaths(packageManager);
 
   packageJsonPaths.forEach(packageJsonPath => {
-    publishPackage(packageJsonPath, { packageManager }).catch((err: Error) => {
-      echo(err.message);
-    });
+    try {
+      publishPackage(packageJsonPath, { packageManager });
+    } catch (err: unknown) {
+      echo((err as Error).message);
+    }
   });
 };

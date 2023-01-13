@@ -7,6 +7,7 @@ export interface CutReleaseArgs {
   'skip-prehook'?: boolean;
   tag?: string;
   type?: string;
+  verbose?: boolean;
 }
 
 export type PackageManager = 'npm' | 'yarn' | 'pnpm';

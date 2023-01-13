@@ -5,18 +5,20 @@ import type { ReleaseMeta } from '../types.js';
 import getLastestPackageVersionOnNpm from './getLastestPackageVersionOnNpm.js';
 import getNewVersion from './getNewVersion.js';
 
-const { outputFileSync } = fs;
+const { outputFileSync, readFileSync } = fs;
 const { gt } = semver;
 
-export default async (
+export default (
   packageJsonPath: string,
-  { preReleaseId, tag, type }: Pick<ReleaseMeta, 'preReleaseId' | 'tag' | 'type'>
+  { preReleaseId, tag, type }: Pick<ReleaseMeta, 'preReleaseId' | 'tag' | 'type'>,
+  verboseLog?: (msg: string) => void
 ) => {
   let packageJson: PackageJson;
 
   try {
-    packageJson = (await import(packageJsonPath)) as PackageJson;
-  } catch {
+    packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
+  } catch (err: unknown) {
+    verboseLog?.(`packageJson read error: ${(err as Error).name}, ${(err as Error).message}`);
     throw new Error(`Cutoff => Could not resolve the package.json at: ${packageJsonPath}`);
   }
 
@@ -45,8 +47,9 @@ export default async (
   }
 
   try {
-    outputFileSync(packageJsonPath, { ...packageJson, version: newVersion });
-  } catch {
+    outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
+  } catch (err: unknown) {
+    verboseLog?.(`packageJson output error: ${(err as Error).name}, ${(err as Error).message}`);
     throw new Error(`Cutoff => Could not write the package.json to: ${packageJsonPath}`);
   }
 };

@@ -8,7 +8,7 @@ export default (releaseTag: string) => {
     return cachedChangedFiles;
   }
 
-  cachedChangedFiles = exec(`git diff --name-only HEAD ${releaseTag}`)
+  cachedChangedFiles = exec(`git diff --name-only HEAD ${releaseTag}`, { silent: true })
     .stdout.trim()
     .split('\n')
     .filter(val => !!val);
