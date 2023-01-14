@@ -58,6 +58,7 @@
     "@types/semver": "7.1.0",
     "@types/shelljs": "^0.8.11",
     "@types/yargs": "15.0.4",
+    "chalk": "^5.2.0",
     "generate-changelog": "1.8.0",
     "glob": "^8.0.3",
     "js-yaml": "4.1.0",

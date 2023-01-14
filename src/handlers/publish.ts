@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { resolve } from 'path';
 import shelljs from 'shelljs';
 import getPackageManager from '../helpers/getPackageManager.js';
@@ -26,7 +27,7 @@ export default () => {
 
     return exit(0);
   } catch (err: unknown) {
-    echo((err as Error).message);
+    echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
     return exit(1);
   }
 };

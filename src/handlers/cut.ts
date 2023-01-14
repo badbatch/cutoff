@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import fs from 'fs-extra';
 import { resolve } from 'path';
 import type { ReleaseType } from 'semver';
@@ -15,7 +16,7 @@ import versionMonorepoPackages from '../helpers/versionMonorepoPackages.js';
 import versionPackage from '../helpers/versionPackage.js';
 import type { CutReleaseArgs, ReleaseTag } from '../types.js';
 
-const { readFileSync } = fs;
+const { outputFileSync, readFileSync } = fs;
 const { echo, exec, exit } = shelljs;
 
 export default (argv: CutReleaseArgs) => {
@@ -29,7 +30,7 @@ export default (argv: CutReleaseArgs) => {
 
   const verboseLog = (msg: string) => {
     if (verbose) {
-      echo(`Cutoff => ${msg}`);
+      echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${msg}`);
     }
   };
 
@@ -42,11 +43,11 @@ export default (argv: CutReleaseArgs) => {
 
   try {
     if (!isValidReleaseType(type)) {
-      throw new Error(`Cutoff => Expected type to be a valid release type: ${VALID_RELEASE_TYPES.join(', ')}`);
+      throw new Error(`Expected type to be a valid release type: ${VALID_RELEASE_TYPES.join(', ')}`);
     }
 
     if (tag && !isValidReleaseTag(tag)) {
-      throw new Error(`Cutoff => Expected tag to be a valid release tag: ${VALID_RELEASE_TAGS.join(', ')}`);
+      throw new Error(`Expected tag to be a valid release tag: ${VALID_RELEASE_TAGS.join(', ')}`);
     }
 
     const packageManager = getPackageManager();
@@ -62,36 +63,38 @@ export default (argv: CutReleaseArgs) => {
     verboseLog(`lastReleaseTag: ${lastReleaseTag}`);
 
     if (!haveFilesChanged(lastReleaseTag)) {
-      throw new Error(`Cutoff => No files have changed since the last release tag: ${lastReleaseTag}`);
+      throw new Error(`No files have changed since the last release tag: ${lastReleaseTag}`);
     }
 
-    const packageJsonPath = resolve(process.cwd(), 'package.json');
     verboseLog('haveFilesChanged: true');
-    verboseLog(`packageJsonPath: ${packageJsonPath}`);
-
+    const packageJsonPath = resolve(process.cwd(), 'package.json');
     let packageJson: PackageJson;
 
     try {
+      verboseLog(`Reading packageJson at: ${packageJsonPath}`);
       packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
-      verboseLog(`packageJson imported`);
     } catch (err: unknown) {
       verboseLog(`packageJson read error: ${(err as Error).name}, ${(err as Error).message}`);
-      throw new Error(`Cutoff => Could not resolve the package.json at: ${packageJsonPath}`);
+      throw new Error(`Could not resolve the package.json at: ${packageJsonPath}`);
     }
 
     const { name, scripts = {}, version } = packageJson;
 
     if (!name) {
-      throw new Error(`Cutoff => Expected the package.json at "${packageJsonPath}" to have a name.`);
+      throw new Error(`Expected the package.json at "${packageJsonPath}" to have a name.`);
     }
 
     if (!version) {
-      throw new Error(`Cutoff => Expected the package.json at "${packageJsonPath}" to have a version.`);
+      throw new Error(`Expected the package.json at "${packageJsonPath}" to have a version.`);
     }
 
+    verboseLog(`${name} packageJson imported with version ${version}`);
+
     if (!skipPrehook && scripts['cutoff:pre-version']) {
-      verboseLog('Running skipPrehook');
+      verboseLog(`Running skipPrehook: ${scripts['cutoff:pre-version']}`);
       exec(`${packageManager} run cutoff:pre-version`);
+    } else {
+      verboseLog('skipPrehook not run');
     }
 
     if (isProjectMonorepo(packageManager)) {
@@ -103,8 +106,10 @@ export default (argv: CutReleaseArgs) => {
     }
 
     if (!skipPosthook && scripts['cutoff:post-version']) {
-      verboseLog('Running skipPosthook');
+      verboseLog(`Running skipPosthook: ${scripts['cutoff:post-version']}`);
       exec(`${packageManager} run cutoff:post-version`);
+    } else {
+      verboseLog('skipPosthook not run');
     }
 
     if (['patch', 'minor', 'major'].includes(type)) {
@@ -115,19 +120,30 @@ export default (argv: CutReleaseArgs) => {
     const newVersion = getNewVersion(version, type, tag, preReleaseId);
 
     if (!newVersion) {
-      throw new Error(`Cutoff => The new project verison for a ${type} increment on ${version} is invalid.`);
+      throw new Error(`The new project verison for a ${type} increment on ${version} is invalid.`);
     }
 
-    verboseLog(`newVersion: ${newVersion}`);
+    verboseLog(`release newVersion: ${newVersion}`);
+
+    if (isProjectMonorepo(packageManager)) {
+      try {
+        verboseLog(`Outputting packageJson with new version: ${newVersion}`);
+        outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
+      } catch (err: unknown) {
+        verboseLog(`packageJson output error: ${(err as Error).name}, ${(err as Error).message}`);
+        throw new Error(`Could not write the package.json to: ${packageJsonPath}`);
+      }
+    }
 
     if (dryRun) {
       return exit(0);
     }
 
+    verboseLog(`Adding, committing and pushing new version: ${newVersion}`);
     addCommitPushRelease(newVersion);
     return exit(0);
   } catch (err: unknown) {
-    echo((err as Error).message);
+    echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
     return exit(1);
   }
 };

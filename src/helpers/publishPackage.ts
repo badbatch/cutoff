@@ -17,17 +17,17 @@ export default (packageJsonPath: string, { packageManager }: Pick<ReleaseMeta, '
   try {
     packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
   } catch {
-    throw new Error(`Cutoff => Could not resolve the package.json at: ${packageJsonPath}`);
+    throw new Error(`Could not resolve the package.json at: ${packageJsonPath}`);
   }
 
   const { name, version } = packageJson;
 
   if (!name) {
-    throw new Error(`Cutoff => Expected the package.json at "${packageJsonPath}" to have a name.`);
+    throw new Error(`Expected the package.json at "${packageJsonPath}" to have a name.`);
   }
 
   if (!version) {
-    throw new Error(`Cutoff => Expected the package.json at "${packageJsonPath}" to have a version.`);
+    throw new Error(`Expected the package.json at "${packageJsonPath}" to have a version.`);
   }
 
   const latestNpmPackageVersion = getLastestPackageVersionOnNpm(name);
