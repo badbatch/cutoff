@@ -21,12 +21,14 @@ A command line utility for cutting releases and publishing to npm.
 ## Installation
 
 ```sh
+# terminal
 npm install cutoff --save-dev
 ```
 
 ## Configuration
 
 ```json
+// package.json
 "scripts": {
   "cutoff:cut": "cutoff cut",
   "cutoff:publish": "cutoff publish"
@@ -75,6 +77,7 @@ Options:
 Any tasks you want to run prior to package versions getting updated should be run in this script hook.
 
 ```json
+// package.json
 "scripts": {
   "cutoff:pre-version": "npm run pre-version-tasks"
 }
@@ -85,6 +88,7 @@ Any tasks you want to run prior to package versions getting updated should be ru
 Any tasks you want to run after package versions have been updated should be run in this script hook.
 
 ```json
+// package.json
 "scripts": {
   "cutoff:post-version": "npm run post-version-tasks"
 }
