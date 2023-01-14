@@ -6,7 +6,13 @@ import getMonorepoPackageJsonPaths from './getMonorepoPackageJsonPaths.js';
 import versionPackage from './versionPackage.js';
 
 export default (
-  { packageManager, preReleaseId, tag, type }: Pick<ReleaseMeta, 'packageManager' | 'preReleaseId' | 'tag' | 'type'>,
+  {
+    force,
+    packageManager,
+    preReleaseId,
+    tag,
+    type,
+  }: Pick<ReleaseMeta, 'force' | 'packageManager' | 'preReleaseId' | 'tag' | 'type'>,
   verboseLog: (msg: string) => void
 ) => {
   const packageJsonPaths = getMonorepoPackageJsonPaths(packageManager);
@@ -23,7 +29,7 @@ export default (
     const relativeDir = dir.replace(cwd, '');
     verboseLog(`relativeDir: ${relativeDir}`);
 
-    if (!changedFiles.some(file => file.includes(relativeDir))) {
+    if (!force && !changedFiles.some(file => file.includes(relativeDir))) {
       verboseLog(`Cutoff => No files have changed in "${relativeDir}" since the last release tag: ${lastReleaseTag}`);
       return;
     }

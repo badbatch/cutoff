@@ -2,6 +2,7 @@ import type { ReleaseType } from 'semver';
 
 export interface CutReleaseArgs {
   'dry-run'?: boolean;
+  force?: boolean;
   preid?: string;
   'skip-posthook'?: boolean;
   'skip-prehook'?: boolean;
@@ -20,6 +21,7 @@ export type PreReleaseId = string;
 
 export interface ReleaseMeta {
   dryrun: boolean;
+  force: boolean;
   packageManager: PackageManager;
   preReleaseId?: PreReleaseId;
   skipPosthook: boolean;

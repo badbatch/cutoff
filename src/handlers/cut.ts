@@ -21,6 +21,7 @@ const { echo, exec, exit } = shelljs;
 
 export default (argv: CutReleaseArgs) => {
   const dryRun = argv['dry-run'] ?? false;
+  const force = argv.force ?? false;
   const preReleaseId = argv.preid;
   const skipPosthook = argv['skip-posthook'] ?? false;
   const skipPrehook = argv['skip-prehook'] ?? false;
@@ -35,6 +36,7 @@ export default (argv: CutReleaseArgs) => {
   };
 
   verboseLog(`dryRun: ${String(dryRun)}`);
+  verboseLog(`force: ${String(force)}`);
   verboseLog(`preReleaseId: ${preReleaseId ?? 'undefined'}`);
   verboseLog(`skipPosthook: ${String(skipPosthook)}`);
   verboseLog(`skipPrehook: ${String(skipPrehook)}`);
@@ -61,12 +63,13 @@ export default (argv: CutReleaseArgs) => {
     const lastReleaseTag = getLastReleaseTag();
     verboseLog(`PackageManager: ${packageManager}`);
     verboseLog(`lastReleaseTag: ${lastReleaseTag}`);
+    const filesChanged = !haveFilesChanged(lastReleaseTag);
 
-    if (!haveFilesChanged(lastReleaseTag)) {
+    if (!force && !filesChanged) {
       throw new Error(`No files have changed since the last release tag: ${lastReleaseTag}`);
     }
 
-    verboseLog('haveFilesChanged: true');
+    verboseLog(`haveFilesChanged: ${String(filesChanged)}`);
     const packageJsonPath = resolve(process.cwd(), 'package.json');
     let packageJson: PackageJson;
 
@@ -99,7 +102,7 @@ export default (argv: CutReleaseArgs) => {
 
     if (isProjectMonorepo(packageManager)) {
       verboseLog('Project is monorepo');
-      versionMonorepoPackages({ packageManager, preReleaseId, tag, type }, verboseLog);
+      versionMonorepoPackages({ force, packageManager, preReleaseId, tag, type }, verboseLog);
     } else {
       verboseLog('Project is standard repo structure');
       versionPackage(packageJsonPath, { preReleaseId, tag, type }, verboseLog);

@@ -16,6 +16,10 @@ export default {
         desc: 'The release tag: alpha | beta | unstable',
         type: 'boolean',
       })
+      .option('force', {
+        desc: 'Increment version regardless of files changed',
+        type: 'boolean',
+      })
       .option('preid', {
         desc: 'The pre release ID',
         type: 'string',
