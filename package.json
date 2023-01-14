@@ -39,10 +39,10 @@
     "compile": "concurrently npm:compile:*",
     "compile:main": "rollup -c ./rollup.config.cjs",
     "compile:types": "tsc --declaration --declarationMap --emitDeclarationOnly",
-    "cutoff": "node --trace-warnings ./bin/cutoff.mjs cut",
+    "cutoff:cut": "node --trace-warnings ./bin/cutoff.mjs cut",
     "cutoff:post-version": "pnpm run compile",
     "lint": "eslint . --ext .ts,.cjs",
-    "publish": "node --trace-warnings ./bin/cutoff.mjs publish",
+    "cutoff:publish": "node --trace-warnings ./bin/cutoff.mjs publish",
     "test": "jest --logHeapUsage",
     "type-check": "tsc --noEmit",
     "validate": "pnpm run build && pnpm run lint && pnpm run type-check && pnpm run test"

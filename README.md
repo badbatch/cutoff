@@ -1,137 +1,92 @@
 # Cutoff
 
-An opinionated command line utility for cutting releases and publishing to npm.
+A command line utility for cutting releases and publishing to npm.
 
 [![Build Status](https://travis-ci.com/badbatch/cutoff.svg?branch=master)](https://travis-ci.com/badbatch/cutoff)
-[![codecov](https://codecov.io/gh/badbatch/cutoff/branch/master/graph/badge.svg)](https://codecov.io/gh/badbatch/cutoff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://badge.fury.io/js/cutoff.svg)](https://badge.fury.io/js/cutoff)
 
 ## Summary
 
-* Works exclusively with Yarn... sorry npm, it is just better.
-* Cuts major, minor or patch releases from master branch.
-* Generates changelog based on angular-style commits since last git tag.
+* Works with npm, yarn and pnpm.
+* Works with standard repo and monorepo structures.
+* Cuts major, minor, patch and pre- release types from any branch.
+* Generates changelog based on conventional commits since last git tag.
 * Updates package version and git tag automatically based on release type.
 * Exposes pre- and post-versioning npm script hooks to run custom tasks.
-* Commits changelog, version and custom task changes to master prior to cutting tag.
-* Provides separate cli command to publish new version to npm.
-* Offers all of the above for fixed-mode Lerna-based monorepos.
-* Allows force updates of all monorepo packages to next version.
+* Commits changelog, version and custom task changes to remote prior to cutting tag.
+* Provides separate cli command to publish new version to configured package registry.
+* Allows force updates of packages to next version regardless of files changed.
 
 ## Installation
 
-```bash
-yarn add cutoff --dev
+```sh
+npm install cutoff --save-dev
 ```
 
-## Commands
-
-### cutoff
-
-The script cuts a major, minor or patch release, generates/updates the changelog, runs the pre-versioning
-npm script hook, updates the project version, runs the post-versioning npm script hook, commits the changes to master
-with the message `"Release version <version>."`, and then commits a new tag with the same message.
-
-Include the `--dryrun` flag to stop the script after the versioning is completed, so no changes are
-committed to master. Include the `--skip-checkout` flag to commit the changes to current branch.
-
-If a `preid` is provided it is appended to the release tag.
+## Configuration
 
 ```json
 "scripts": {
-  "cutoff": "cutoff"
+  "cutoff:cut": "cutoff cut",
+  "cutoff:publish": "cutoff publish"
 }
 ```
 
-```bash
-yarn run cutoff
-  [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alpha | beta | unstable> [--preid <string>]]
-  [--skip-checkout]
-  [--skip-prehook]
-  [--skip-posthook]
-  [--dryrun]
+## Usage
+
+### cut
+
+```sh
+cutoff cut <type>
+
+Cut release to current branch
+
+Positionals:
+  type  The release type: major | premajor | minor | preminor | patch | prepatch
+        | prerelease                                         [string] [required]
+
+Options:
+  --version        Show version number                                 [boolean]
+  --help           Show help                                           [boolean]
+  --tag            The release tag: alpha | beta | unstable             [string]
+  --dry-run        The release tag: alpha | beta | unstable            [boolean]
+  --preid          The pre release ID                                   [string]
+  --skip-posthook  To skip post version lifecycle hook                 [boolean]
+  --skip-prehook   To skip pre version lifecycle hook                  [boolean]
 ```
 
-### cutoff-lerna
+### publish
 
-The script cuts a major, minor or patch release, generates/updates the changelog, runs the pre-versioning npm script
-hook, updates the project, lerna config and package versions, writes the list of updated packages to
-`.lerna.updated.json`, runs the post-versioning npm script hook, commits the changes to master with the message
-`"Release version <version>."`, and then commits a new tag with the same message.
+```sh
+cutoff publish
 
-Include the `--dryrun` flag to stop the script after the versioning is completed, so no changes are
-committed to master. Include the `--force` flag to force update all packages to the new version. Include the
-`--skip-checkout` flag to commit the changes to current branch.
+Publish packages to registry
 
-If a `preid` is provided it is appended to the release tag.
-
-```json
-"scripts": {
-  "cutoff-lerna": "cutoff-lerna"
-}
-```
-
-```bash
-yarn run cutoff-lerna
-  [--type <major | premajor | minor | preminor | patch | prepatch | prerelease>]
-  [--tag <alpha | beta | unstable> [--preid <string>]]
-  [--skip-checkout]
-  [--skip-prehook]
-  [--skip-posthook]
-  [--dryrun]
-  [--force]
-```
-
-### publish-cutoff
-
-The script publishes the project to npm with the new version.
-
-```json
-"scripts": {
-  "publish-cutoff": "publish-cutoff"
-}
-```
-
-```bash
-yarn run publish-cutoff
-```
-
-### publish-lerna-cutoff
-
-The script reads the `.lerna.updated.json`, iterates over each package in the list and publishes it to npm with the
-new version.
-
-```json
-"scripts": {
-  "publish-lerna-cutoff": "publish-lerna-cutoff"
-}
-```
-
-```bash
-yarn run publish-lerna-cutoff
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
 ```
 
 ## Script hooks
 
 ### cutoff:pre-version
 
-Any tasks you want to run prior to npm package versions getting updated should be run in this script hook.
+Any tasks you want to run prior to package versions getting updated should be run in this script hook.
 
 ```json
 "scripts": {
-  "cutoff:pre-version": "yarn run pre-version-tasks"
+  "cutoff:pre-version": "npm run pre-version-tasks"
 }
 ```
 
 ### cutoff:post-version
 
-Any tasks you want to run after npm package versions have been updated should be run in this script hook.
+Any tasks you want to run after package versions have been updated should be run in this script hook.
 
 ```json
 "scripts": {
-  "cutoff:post-version": "yarn run post-version-tasks"
+  "cutoff:post-version": "npm run post-version-tasks"
 }
 ```
 
