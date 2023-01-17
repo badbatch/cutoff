@@ -8,6 +8,6 @@ export default () => {
     return lastReleaseTag;
   }
 
-  lastReleaseTag = exec('git describe --tags --abbrev=0', { silent: true }).stdout;
+  lastReleaseTag = exec('git describe --tags --abbrev=0', { silent: true }).stdout.trim();
   return lastReleaseTag;
 };

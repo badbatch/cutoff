@@ -3,8 +3,10 @@ import fs from 'fs-extra';
 import { resolve } from 'path';
 import type { ReleaseType } from 'semver';
 import shelljs from 'shelljs';
-import type { PackageJson } from 'type-fest';
+import type { PackageJson, SetRequired } from 'type-fest';
 import addCommitPushRelease from '../helpers/addCommitPushRelease.js';
+import formatListLogMessage from '../helpers/formatListLogMessage.js';
+import getChangedFiles from '../helpers/getChangedFiles.js';
 import getLastReleaseTag from '../helpers/getLastReleaseTag.js';
 import getNewVersion from '../helpers/getNewVersion.js';
 import getPackageManager from '../helpers/getPackageManager.js';
@@ -12,6 +14,7 @@ import haveFilesChanged from '../helpers/haveFilesChanged.js';
 import isProjectMonorepo from '../helpers/isProjectMonorepo.js';
 import isValidReleaseTag, { VALID_RELEASE_TAGS } from '../helpers/isValidReleaseTag.js';
 import isValidReleaseType, { VALID_RELEASE_TYPES } from '../helpers/isValidReleaseType.js';
+import verboseLog, { isVerbose } from '../helpers/verboseLog.js';
 import versionMonorepoPackages from '../helpers/versionMonorepoPackages.js';
 import versionPackage from '../helpers/versionPackage.js';
 import type { CutReleaseArgs, ReleaseTag } from '../types.js';
@@ -29,12 +32,8 @@ export default (argv: CutReleaseArgs) => {
   const type = argv.type as ReleaseType;
   const verbose = argv.verbose ?? false;
 
-  const verboseLog = (msg: string) => {
-    if (verbose) {
-      echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${msg}`);
-    }
-  };
-
+  isVerbose(verbose);
+  verboseLog('>>>> USER CONFIG START <<<<');
   verboseLog(`dryRun: ${String(dryRun)}`);
   verboseLog(`force: ${String(force)}`);
   verboseLog(`preReleaseId: ${preReleaseId ?? 'undefined'}`);
@@ -42,6 +41,7 @@ export default (argv: CutReleaseArgs) => {
   verboseLog(`skipPrehook: ${String(skipPrehook)}`);
   verboseLog(`tag: ${tag ?? 'undefined'}`);
   verboseLog(`type: ${type}`);
+  verboseLog('>>>> USER CONFIG END <<<<\n');
 
   try {
     if (!isValidReleaseType(type)) {
@@ -61,20 +61,23 @@ export default (argv: CutReleaseArgs) => {
     }
 
     const lastReleaseTag = getLastReleaseTag();
+    verboseLog('>>>> DERIVED VALUES START <<<<');
     verboseLog(`PackageManager: ${packageManager}`);
     verboseLog(`lastReleaseTag: ${lastReleaseTag}`);
-    const filesChanged = !haveFilesChanged(lastReleaseTag);
+    const filesChanged = haveFilesChanged(lastReleaseTag);
 
     if (!force && !filesChanged) {
       throw new Error(`No files have changed since the last release tag: ${lastReleaseTag}`);
     }
 
     verboseLog(`haveFilesChanged: ${String(filesChanged)}`);
+    verboseLog('>>>> DERIVED VALUES END <<<<\n');
+    verboseLog('>>>> PROJECT ROOT START <<<<');
     const packageJsonPath = resolve(process.cwd(), 'package.json');
+    verboseLog(`Reading packageJson at: ${packageJsonPath}`);
     let packageJson: PackageJson;
 
     try {
-      verboseLog(`Reading packageJson at: ${packageJsonPath}`);
       packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
     } catch (err: unknown) {
       verboseLog(`packageJson read error: ${(err as Error).name}, ${(err as Error).message}`);
@@ -94,29 +97,42 @@ export default (argv: CutReleaseArgs) => {
     verboseLog(`${name} packageJson imported with version ${version}`);
 
     if (!skipPrehook && scripts['cutoff:pre-version']) {
-      verboseLog(`Running skipPrehook: ${scripts['cutoff:pre-version']}`);
+      verboseLog(`Running cutoff:pre-version script: ${scripts['cutoff:pre-version']}`);
       exec(`${packageManager} run cutoff:pre-version`);
-    } else {
-      verboseLog('skipPrehook not run');
+    } else if (skipPrehook && scripts['cutoff:pre-version']) {
+      verboseLog(`cutoff:pre-version script skipped, skipPrehook set to true`);
+    } else if (!scripts['cutoff:pre-version']) {
+      verboseLog(`cutoff:pre-version script not provided`);
     }
 
     if (isProjectMonorepo(packageManager)) {
       verboseLog('Project is monorepo');
-      versionMonorepoPackages({ force, packageManager, preReleaseId, tag, type }, verboseLog);
+      versionMonorepoPackages({ force, packageManager, preReleaseId, tag, type });
+      verboseLog('>>>> PROJECT ROOT STARTS <<<<\n');
     } else {
       verboseLog('Project is standard repo structure');
-      versionPackage(packageJsonPath, { preReleaseId, tag, type }, verboseLog);
+      const changedFiles = getChangedFiles(lastReleaseTag);
+      verboseLog(formatListLogMessage('Project changedFiles', changedFiles));
+
+      versionPackage(packageJson as SetRequired<PackageJson, 'name' | 'version'>, {
+        packageJsonPath,
+        preReleaseId,
+        tag,
+        type,
+      });
     }
 
     if (!skipPosthook && scripts['cutoff:post-version']) {
-      verboseLog(`Running skipPosthook: ${scripts['cutoff:post-version']}`);
+      verboseLog(`Running cutoff:post-version script: ${scripts['cutoff:post-version']}`);
       exec(`${packageManager} run cutoff:post-version`);
-    } else {
-      verboseLog('skipPosthook not run');
+    } else if (skipPosthook && scripts['cutoff:post-version']) {
+      verboseLog(`cutoff:post-version skipped, skipPosthook set to true`);
+    } else if (!scripts['cutoff:post-version']) {
+      verboseLog(`cutoff:post-version script not provided`);
     }
 
     if (['patch', 'minor', 'major'].includes(type)) {
-      verboseLog('Generating changelog');
+      verboseLog(`Generating changelog for ${type} release`);
       exec(`${packageManager} run changelog -- --${type}`);
     }
 
@@ -130,7 +146,7 @@ export default (argv: CutReleaseArgs) => {
 
     if (isProjectMonorepo(packageManager)) {
       try {
-        verboseLog(`Outputting packageJson with new version: ${newVersion}`);
+        verboseLog(`Outputting project packageJson with new version: ${newVersion}`);
         outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
       } catch (err: unknown) {
         verboseLog(`packageJson output error: ${(err as Error).name}, ${(err as Error).message}`);
@@ -139,14 +155,18 @@ export default (argv: CutReleaseArgs) => {
     }
 
     if (dryRun) {
+      verboseLog('Exiting process as dry-run set to true');
+      verboseLog('>>>> PROJECT ROOT END <<<<\n');
       return exit(0);
     }
 
     verboseLog(`Adding, committing and pushing new version: ${newVersion}`);
     addCommitPushRelease(newVersion);
+    verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(0);
   } catch (err: unknown) {
     echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
+    verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(1);
   }
 };

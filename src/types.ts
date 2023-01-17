@@ -22,6 +22,7 @@ export type PreReleaseId = string;
 export interface ReleaseMeta {
   dryrun: boolean;
   force: boolean;
+  packageJsonPath: string;
   packageManager: PackageManager;
   preReleaseId?: PreReleaseId;
   skipPosthook: boolean;
