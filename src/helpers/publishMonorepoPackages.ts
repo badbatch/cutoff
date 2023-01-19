@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { dim, magenta } from 'colorette';
 import shelljs from 'shelljs';
 import type { PackageManager } from '../types.js';
 import getMonorepoPackagePaths from './getMonorepoPackageMeta.js';
@@ -13,7 +13,7 @@ export default (packageManager: PackageManager) => {
     try {
       publishPackage(packageJsonPath, { packageManager });
     } catch (err: unknown) {
-      echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${(err as Error).message}`);
+      echo(`${magenta('Cutoff')} ${dim('=>')} ${(err as Error).message}`);
     }
   });
 };

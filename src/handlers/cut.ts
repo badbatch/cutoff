@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { dim, magenta, red } from 'colorette';
 import fs from 'fs-extra';
 import { resolve } from 'path';
 import type { ReleaseType } from 'semver';
@@ -148,7 +148,7 @@ export default (argv: CutReleaseArgs) => {
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(0);
   } catch (err: unknown) {
-    echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
+    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(1);
   }

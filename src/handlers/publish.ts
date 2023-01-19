@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { dim, magenta, red } from 'colorette';
 import { resolve } from 'path';
 import shelljs from 'shelljs';
 import getPackageManager from '../helpers/getPackageManager.js';
@@ -25,7 +25,7 @@ export default () => {
 
     return exit(0);
   } catch (err: unknown) {
-    echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
+    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
     return exit(1);
   }
 };

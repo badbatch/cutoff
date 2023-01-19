@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { dim, magenta, red } from 'colorette';
 import { parse } from 'path';
 import shell from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
@@ -73,7 +73,7 @@ export default ({
 
       verboseLog('>>>> PACKAGE END <<<<\n');
     } catch (err: unknown) {
-      echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${chalk.red(`Error: ${(err as Error).message}`)}`);
+      echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
       verboseLog('>>>> PACKAGE END <<<<\n');
     }
   }

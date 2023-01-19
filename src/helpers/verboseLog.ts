@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { dim, magenta } from 'colorette';
 import shell from 'shelljs';
 
 const { echo } = shell;
@@ -10,6 +10,6 @@ export const isVerbose = (value: boolean) => {
 
 export default (message: string) => {
   if (verbose) {
-    echo(`${chalk.magenta('Cutoff')} ${chalk.dim('=>')} ${message}`);
+    echo(`${magenta('Cutoff')} ${dim('=>')} ${message}`);
   }
 };

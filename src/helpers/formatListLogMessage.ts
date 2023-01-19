@@ -1,6 +1,6 @@
-import chalk from 'chalk';
+import { dim } from 'colorette';
 
 export default (fieldName: string, fieldVlaue: string[]) =>
   `${fieldName}:${
-    fieldVlaue.length ? `\n          ${chalk.dim('>')} ${fieldVlaue.join(`\n          ${chalk.dim('>')} `)}` : ' None'
+    fieldVlaue.length ? `\n          ${dim('>')} ${fieldVlaue.join(`\n          ${dim('>')} `)}` : ' None'
   }`;

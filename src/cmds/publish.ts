@@ -1,8 +1,6 @@
 import handlePublish from '../handlers/publish.js';
 
-export default {
-  builder: {},
-  command: 'publish',
-  desc: 'Publish packages to registry',
-  handler: handlePublish,
-};
+export const builder = {};
+export const command = 'publish';
+export const desc = 'Publish packages to registry';
+export const handler = handlePublish;
