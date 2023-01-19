@@ -1,15 +1,15 @@
 import chalk from 'chalk';
 import shelljs from 'shelljs';
 import type { PackageManager } from '../types.js';
-import getMonorepoPackageJsonPaths from './getMonorepoPackageJsonPaths.js';
+import getMonorepoPackagePaths from './getMonorepoPackageMeta.js';
 import publishPackage from './publishPackage.js';
 
 const { echo } = shelljs;
 
 export default (packageManager: PackageManager) => {
-  const packageJsonPaths = getMonorepoPackageJsonPaths(packageManager);
+  const packagePaths = getMonorepoPackagePaths(packageManager);
 
-  packageJsonPaths.forEach(packageJsonPath => {
+  Object.keys(packagePaths).forEach(packageJsonPath => {
     try {
       publishPackage(packageJsonPath, { packageManager });
     } catch (err: unknown) {

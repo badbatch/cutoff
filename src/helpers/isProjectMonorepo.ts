@@ -2,8 +2,8 @@ import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import type { LoadOptions } from 'js-yaml';
 import { resolve } from 'path';
-import type { PackageJson } from 'type-fest';
 import type { PackageManager, PnpmWorkspaceYaml } from '../types.js';
+import loadPackageJson from './loadPackageJson.js';
 
 const { readFileSync } = fs;
 
@@ -15,7 +15,7 @@ export default (packageManager: PackageManager) => {
       // eslint-disable-next-line no-fallthrough
       case 'yarn': {
         const packageJsonPath = resolve(process.cwd(), 'package.json');
-        const packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
+        const packageJson = loadPackageJson(packageJsonPath);
 
         if (!packageJson.workspaces) {
           return false;

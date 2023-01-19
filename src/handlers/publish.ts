@@ -13,9 +13,7 @@ export default () => {
     const packageManager = getPackageManager();
 
     if (!packageManager) {
-      throw new Error(
-        `Cutoff => Could not derive the package manager from the lock file in the current working directory.`
-      );
+      throw new Error('Could not derive the package manager from the lock file in the current working directory');
     }
 
     if (isProjectMonorepo(packageManager)) {

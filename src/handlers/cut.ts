@@ -3,7 +3,6 @@ import fs from 'fs-extra';
 import { resolve } from 'path';
 import type { ReleaseType } from 'semver';
 import shelljs from 'shelljs';
-import type { PackageJson, SetRequired } from 'type-fest';
 import addCommitPushRelease from '../helpers/addCommitPushRelease.js';
 import formatListLogMessage from '../helpers/formatListLogMessage.js';
 import getChangedFiles from '../helpers/getChangedFiles.js';
@@ -14,12 +13,13 @@ import haveFilesChanged from '../helpers/haveFilesChanged.js';
 import isProjectMonorepo from '../helpers/isProjectMonorepo.js';
 import isValidReleaseTag, { VALID_RELEASE_TAGS } from '../helpers/isValidReleaseTag.js';
 import isValidReleaseType, { VALID_RELEASE_TYPES } from '../helpers/isValidReleaseType.js';
+import loadPackageJson from '../helpers/loadPackageJson.js';
 import verboseLog, { isVerbose } from '../helpers/verboseLog.js';
 import versionMonorepoPackages from '../helpers/versionMonorepoPackages.js';
 import versionPackage from '../helpers/versionPackage.js';
 import type { CutReleaseArgs, ReleaseTag } from '../types.js';
 
-const { outputFileSync, readFileSync } = fs;
+const { outputFileSync } = fs;
 const { echo, exec, exit } = shelljs;
 
 export default (argv: CutReleaseArgs) => {
@@ -62,43 +62,25 @@ export default (argv: CutReleaseArgs) => {
 
     const lastReleaseTag = getLastReleaseTag();
     verboseLog('>>>> DERIVED VALUES START <<<<');
-    verboseLog(`PackageManager: ${packageManager}`);
-    verboseLog(`lastReleaseTag: ${lastReleaseTag}`);
+    verboseLog(`Package manager: ${packageManager}`);
+    verboseLog(`Last release tag: ${lastReleaseTag}`);
     const filesChanged = haveFilesChanged(lastReleaseTag);
 
     if (!force && !filesChanged) {
       throw new Error(`No files have changed since the last release tag: ${lastReleaseTag}`);
     }
 
-    verboseLog(`haveFilesChanged: ${String(filesChanged)}`);
+    verboseLog(`Have files changed: ${String(filesChanged)}`);
     verboseLog('>>>> DERIVED VALUES END <<<<\n');
     verboseLog('>>>> PROJECT ROOT START <<<<');
     const packageJsonPath = resolve(process.cwd(), 'package.json');
-    verboseLog(`Reading packageJson at: ${packageJsonPath}`);
-    let packageJson: PackageJson;
-
-    try {
-      packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
-    } catch (err: unknown) {
-      verboseLog(`packageJson read error: ${(err as Error).name}, ${(err as Error).message}`);
-      throw new Error(`Could not resolve the package.json at: ${packageJsonPath}`);
-    }
-
-    const { name, scripts = {}, version } = packageJson;
-
-    if (!name) {
-      throw new Error(`Expected the package.json at "${packageJsonPath}" to have a name.`);
-    }
-
-    if (!version) {
-      throw new Error(`Expected the package.json at "${packageJsonPath}" to have a version.`);
-    }
-
-    verboseLog(`${name} packageJson imported with version ${version}`);
+    const packageJson = loadPackageJson(packageJsonPath);
+    const { scripts = {}, version } = packageJson;
 
     if (!skipPrehook && scripts['cutoff:pre-version']) {
-      verboseLog(`Running cutoff:pre-version script: ${scripts['cutoff:pre-version']}`);
+      verboseLog(`Running cutoff:pre-version script: ${scripts['cutoff:pre-version']}\n`);
       exec(`${packageManager} run cutoff:pre-version`);
+      echo('\n');
     } else if (skipPrehook && scripts['cutoff:pre-version']) {
       verboseLog(`cutoff:pre-version script skipped, skipPrehook set to true`);
     } else if (!scripts['cutoff:pre-version']) {
@@ -112,9 +94,9 @@ export default (argv: CutReleaseArgs) => {
     } else {
       verboseLog('Project is standard repo structure');
       const changedFiles = getChangedFiles(lastReleaseTag);
-      verboseLog(formatListLogMessage('Project changedFiles', changedFiles));
+      verboseLog(formatListLogMessage('Project changed files', changedFiles));
 
-      versionPackage(packageJson as SetRequired<PackageJson, 'name' | 'version'>, {
+      versionPackage(packageJson, {
         packageJsonPath,
         preReleaseId,
         tag,
@@ -125,6 +107,7 @@ export default (argv: CutReleaseArgs) => {
     if (!skipPosthook && scripts['cutoff:post-version']) {
       verboseLog(`Running cutoff:post-version script: ${scripts['cutoff:post-version']}`);
       exec(`${packageManager} run cutoff:post-version`);
+      echo('\n');
     } else if (skipPosthook && scripts['cutoff:post-version']) {
       verboseLog(`cutoff:post-version skipped, skipPosthook set to true`);
     } else if (!scripts['cutoff:post-version']) {
@@ -142,14 +125,14 @@ export default (argv: CutReleaseArgs) => {
       throw new Error(`The new project verison for a ${type} increment on ${version} is invalid.`);
     }
 
-    verboseLog(`release newVersion: ${newVersion}`);
+    verboseLog(`Release new version: ${newVersion}`);
 
     if (isProjectMonorepo(packageManager)) {
       try {
         verboseLog(`Outputting project packageJson with new version: ${newVersion}`);
         outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
       } catch (err: unknown) {
-        verboseLog(`packageJson output error: ${(err as Error).name}, ${(err as Error).message}`);
+        verboseLog(`Package.json output error: ${(err as Error).name}, ${(err as Error).message}`);
         throw new Error(`Could not write the package.json to: ${packageJsonPath}`);
       }
     }

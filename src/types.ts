@@ -13,6 +13,13 @@ export interface CutReleaseArgs {
 
 export type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
+export interface PackageMeta {
+  name: string;
+  path: string;
+}
+
+export type PackageMetaRecord = Record<string, PackageMeta>;
+
 export interface PnpmWorkspaceYaml {
   packages: string[];
 }
