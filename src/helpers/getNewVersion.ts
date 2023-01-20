@@ -4,7 +4,7 @@ import type { PreReleaseId, ReleaseTag } from '../types.js';
 
 const { inc } = semver;
 
-export default (version: string, type: ReleaseType, tag?: ReleaseTag, preReleaseId?: PreReleaseId) => {
+export const getNewVersion = (version: string, type: ReleaseType, tag?: ReleaseTag, preReleaseId?: PreReleaseId) => {
   if (tag && preReleaseId) {
     tag += `.${preReleaseId}`;
   }

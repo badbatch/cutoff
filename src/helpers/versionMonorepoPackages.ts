@@ -2,18 +2,18 @@ import { dim, magenta, red } from 'colorette';
 import { parse } from 'path';
 import shell from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
-import formatListLogMessage from './formatListLogMessage.js';
-import getChangedFiles from './getChangedFiles.js';
-import getInternalDepsPackageMeta from './getInternalDepsPackageMeta.js';
-import getLastReleaseTag from './getLastReleaseTag.js';
-import getMonorepoPackageMeta from './getMonorepoPackageMeta.js';
-import loadPackageJson from './loadPackageJson.js';
-import verboseLog from './verboseLog.js';
-import versionPackage from './versionPackage.js';
+import { formatListLogMessage } from './formatListLogMessage.js';
+import { getChangedFiles } from './getChangedFiles.js';
+import { getInternalDepsPackageMeta } from './getInternalDepsPackageMeta.js';
+import { getLastReleaseTag } from './getLastReleaseTag.js';
+import { getMonorepoPackageMeta } from './getMonorepoPackageMeta.js';
+import { loadPackageJson } from './loadPackageJson.js';
+import { verboseLog } from './verboseLog.js';
+import { versionPackage } from './versionPackage.js';
 
 const { echo } = shell;
 
-export default ({
+export const versionMonorepoPackages = ({
   force,
   packageManager,
   preReleaseId,

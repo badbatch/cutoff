@@ -1,14 +1,14 @@
 import { dim, magenta, red } from 'colorette';
 import { resolve } from 'path';
 import shelljs from 'shelljs';
-import getPackageManager from '../helpers/getPackageManager.js';
-import isProjectMonorepo from '../helpers/isProjectMonorepo.js';
-import publishMonorepoPackages from '../helpers/publishMonorepoPackages.js';
-import publishPackage from '../helpers/publishPackage.js';
+import { getPackageManager } from '../helpers/getPackageManager.js';
+import { isProjectMonorepo } from '../helpers/isProjectMonorepo.js';
+import { publishMonorepoPackages } from '../helpers/publishMonorepoPackages.js';
+import { publishPackage } from '../helpers/publishPackage.js';
 
 const { echo, exit } = shelljs;
 
-export default () => {
+export const publish = () => {
   try {
     const packageManager = getPackageManager();
 

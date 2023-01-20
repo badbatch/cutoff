@@ -1,17 +1,17 @@
 import semver from 'semver';
 import shelljs from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
-import getLastestPackageVersionOnNpm from './getLastestPackageVersionOnNpm.js';
-import getPublishCmd from './getPublishCmd.js';
-import getTag from './getTag.js';
-import loadPackageJson from './loadPackageJson.js';
+import { getLatestPackageVersionOnNpm } from './getLatestPackageVersionOnNpm.js';
+import { getPublishCmd } from './getPublishCmd.js';
+import { getTag } from './getTag.js';
+import { loadPackageJson } from './loadPackageJson.js';
 
 const { gt } = semver;
 const { exec } = shelljs;
 
-export default (packageJsonPath: string, { packageManager }: Pick<ReleaseMeta, 'packageManager'>) => {
+export const publishPackage = (packageJsonPath: string, { packageManager }: Pick<ReleaseMeta, 'packageManager'>) => {
   const { name, version } = loadPackageJson(packageJsonPath);
-  const latestNpmPackageVersion = getLastestPackageVersionOnNpm(name);
+  const latestNpmPackageVersion = getLatestPackageVersionOnNpm(name);
 
   if (latestNpmPackageVersion === version && !gt(latestNpmPackageVersion, version)) {
     throw new Error(

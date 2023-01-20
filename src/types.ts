@@ -7,7 +7,7 @@ export interface CutReleaseArgs {
   'skip-posthook'?: boolean;
   'skip-prehook'?: boolean;
   tag?: string;
-  type?: string;
+  type: string;
   verbose?: boolean;
 }
 

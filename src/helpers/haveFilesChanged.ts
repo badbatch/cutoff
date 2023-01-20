@@ -1,3 +1,3 @@
-import getChangedFiles from './getChangedFiles.js';
+import { getChangedFiles } from './getChangedFiles.js';
 
-export default (releaseTag: string) => !!getChangedFiles(releaseTag).length;
+export const haveFilesChanged = (releaseTag: string) => !!getChangedFiles(releaseTag).length;

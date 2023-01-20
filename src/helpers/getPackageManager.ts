@@ -4,7 +4,7 @@ import type { PackageManager } from '../types.js';
 
 const { pathExistsSync } = fs;
 
-export default (): PackageManager | undefined => {
+export const getPackageManager = (): PackageManager | undefined => {
   switch (true) {
     case pathExistsSync(resolve(process.cwd(), 'package-lock.json')):
       return 'npm';

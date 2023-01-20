@@ -1,9 +1,9 @@
 import type { PackageJson } from 'type-fest';
 import type { PackageMetaRecord } from '../types.js';
-import formatListLogMessage from './formatListLogMessage.js';
-import verboseLog from './verboseLog.js';
+import { formatListLogMessage } from './formatListLogMessage.js';
+import { verboseLog } from './verboseLog.js';
 
-export default (
+export const getInternalDepsPackageMeta = (
   { dependencies = {}, devDependencies = {}, peerDependencies = {} }: PackageJson,
   packageMeta: PackageMetaRecord
 ) => {

@@ -3,7 +3,7 @@ import shelljs from 'shelljs';
 const { exec } = shelljs;
 let lastReleaseTag: string | undefined;
 
-export default () => {
+export const getLastReleaseTag = () => {
   if (lastReleaseTag) {
     return lastReleaseTag;
   }

@@ -3,11 +3,11 @@ import { load } from 'js-yaml';
 import type { LoadOptions } from 'js-yaml';
 import { resolve } from 'path';
 import type { PackageManager, PnpmWorkspaceYaml } from '../types.js';
-import loadPackageJson from './loadPackageJson.js';
+import { loadPackageJson } from './loadPackageJson.js';
 
 const { readFileSync } = fs;
 
-export default (packageManager: PackageManager) => {
+export const getPackagePatterns = (packageManager: PackageManager) => {
   try {
     switch (packageManager) {
       case 'npm':

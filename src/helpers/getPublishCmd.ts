@@ -1,6 +1,6 @@
 import type { PackageManager } from '../types.js';
 
-export default (packageManager: PackageManager, version: string, tag?: string) => {
+export const getPublishCmd = (packageManager: PackageManager, version: string, tag?: string) => {
   const tagArg = tag ? `--tag ${tag}` : '';
 
   switch (packageManager) {

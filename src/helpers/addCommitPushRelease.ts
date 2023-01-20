@@ -2,7 +2,7 @@ import shelljs from 'shelljs';
 
 const { exec } = shelljs;
 
-export default (version: string) => {
+export const addCommitPushRelease = (version: string) => {
   exec('git add --all');
   exec(`git commit --no-verify -m "Release version ${version}."`);
   exec('git push --no-verify');

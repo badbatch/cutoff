@@ -2,14 +2,14 @@ import fs from 'fs-extra';
 import semver from 'semver';
 import type { PackageJson, SetRequired } from 'type-fest';
 import type { ReleaseMeta } from '../types.js';
-import getLastestPackageVersionOnNpm from './getLastestPackageVersionOnNpm.js';
-import getNewVersion from './getNewVersion.js';
-import verboseLog from './verboseLog.js';
+import { getLatestPackageVersionOnNpm } from './getLatestPackageVersionOnNpm.js';
+import { getNewVersion } from './getNewVersion.js';
+import { verboseLog } from './verboseLog.js';
 
 const { outputFileSync } = fs;
 const { gt } = semver;
 
-export default (
+export const versionPackage = (
   packageJson: SetRequired<PackageJson, 'name' | 'version'>,
   { packageJsonPath, preReleaseId, tag, type }: Pick<ReleaseMeta, 'packageJsonPath' | 'preReleaseId' | 'tag' | 'type'>
 ) => {
@@ -21,7 +21,7 @@ export default (
     throw new Error(`The new package verison for a ${type} increment on ${version} is invalid.`);
   }
 
-  const latestNpmPackageVersion = getLastestPackageVersionOnNpm(name);
+  const latestNpmPackageVersion = getLatestPackageVersionOnNpm(name);
   verboseLog(`New version: ${newVersion}`);
   verboseLog(`Latest version on npm: ${latestNpmPackageVersion}`);
 

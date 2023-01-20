@@ -8,7 +8,7 @@ export const isVerbose = (value: boolean) => {
   verbose = value;
 };
 
-export default (message: string) => {
+export const verboseLog = (message: string) => {
   if (verbose) {
     echo(`${magenta('Cutoff')} ${dim('=>')} ${message}`);
   }

@@ -1,9 +1,10 @@
 import type { Argv } from 'yargs';
-import handleCut from '../handlers/cut.js';
+import { cut } from '../handlers/cut.js';
 
 export const builder = (argv: Argv) =>
   argv
     .positional('type', {
+      demandOption: true,
       desc: 'The release type: major | premajor | minor | preminor | patch | prepatch | prerelease',
       type: 'string',
     })
@@ -34,4 +35,4 @@ export const builder = (argv: Argv) =>
 
 export const command = 'cut <type>';
 export const desc = 'Cut release to current branch';
-export const handler = handleCut;
+export const handler = cut;

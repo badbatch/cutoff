@@ -1,13 +1,13 @@
 import glob from 'glob';
 import type { PackageManager, PackageMetaRecord } from '../types.js';
-import formatListLogMessage from './formatListLogMessage.js';
-import getPackagePatterns from './getPackagePatterns.js';
-import loadPackageJson from './loadPackageJson.js';
-import verboseLog from './verboseLog.js';
+import { formatListLogMessage } from './formatListLogMessage.js';
+import { getPackagePatterns } from './getPackagePatterns.js';
+import { loadPackageJson } from './loadPackageJson.js';
+import { verboseLog } from './verboseLog.js';
 
 const { sync } = glob;
 
-export default (packageManager: PackageManager) => {
+export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
   const packagePatterns = getPackagePatterns(packageManager);
   verboseLog(formatListLogMessage('Package patterns', packagePatterns));
 

@@ -3,26 +3,26 @@ import fs from 'fs-extra';
 import { resolve } from 'path';
 import type { ReleaseType } from 'semver';
 import shelljs from 'shelljs';
-import addCommitPushRelease from '../helpers/addCommitPushRelease.js';
-import formatListLogMessage from '../helpers/formatListLogMessage.js';
-import getChangedFiles from '../helpers/getChangedFiles.js';
-import getLastReleaseTag from '../helpers/getLastReleaseTag.js';
-import getNewVersion from '../helpers/getNewVersion.js';
-import getPackageManager from '../helpers/getPackageManager.js';
-import haveFilesChanged from '../helpers/haveFilesChanged.js';
-import isProjectMonorepo from '../helpers/isProjectMonorepo.js';
-import isValidReleaseTag, { VALID_RELEASE_TAGS } from '../helpers/isValidReleaseTag.js';
-import isValidReleaseType, { VALID_RELEASE_TYPES } from '../helpers/isValidReleaseType.js';
-import loadPackageJson from '../helpers/loadPackageJson.js';
-import verboseLog, { isVerbose } from '../helpers/verboseLog.js';
-import versionMonorepoPackages from '../helpers/versionMonorepoPackages.js';
-import versionPackage from '../helpers/versionPackage.js';
+import { addCommitPushRelease } from '../helpers/addCommitPushRelease.js';
+import { formatListLogMessage } from '../helpers/formatListLogMessage.js';
+import { getChangedFiles } from '../helpers/getChangedFiles.js';
+import { getLastReleaseTag } from '../helpers/getLastReleaseTag.js';
+import { getNewVersion } from '../helpers/getNewVersion.js';
+import { getPackageManager } from '../helpers/getPackageManager.js';
+import { haveFilesChanged } from '../helpers/haveFilesChanged.js';
+import { isProjectMonorepo } from '../helpers/isProjectMonorepo.js';
+import { VALID_RELEASE_TAGS, isValidReleaseTag } from '../helpers/isValidReleaseTag.js';
+import { VALID_RELEASE_TYPES, isValidReleaseType } from '../helpers/isValidReleaseType.js';
+import { loadPackageJson } from '../helpers/loadPackageJson.js';
+import { isVerbose, verboseLog } from '../helpers/verboseLog.js';
+import { versionMonorepoPackages } from '../helpers/versionMonorepoPackages.js';
+import { versionPackage } from '../helpers/versionPackage.js';
 import type { CutReleaseArgs, ReleaseTag } from '../types.js';
 
 const { outputFileSync } = fs;
 const { echo, exec, exit } = shelljs;
 
-export default (argv: CutReleaseArgs) => {
+export const cut = (argv: CutReleaseArgs) => {
   const dryRun = argv['dry-run'] ?? false;
   const force = argv.force ?? false;
   const preReleaseId = argv.preid;
@@ -105,7 +105,7 @@ export default (argv: CutReleaseArgs) => {
     }
 
     if (!skipPosthook && scripts['cutoff:post-version']) {
-      verboseLog(`Running cutoff:post-version script: ${scripts['cutoff:post-version']}`);
+      verboseLog(`Running cutoff:post-version script: ${scripts['cutoff:post-version']}\n`);
       exec(`${packageManager} run cutoff:post-version`);
       echo('\n');
     } else if (skipPosthook && scripts['cutoff:post-version']) {

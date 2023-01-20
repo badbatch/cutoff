@@ -1,4 +1,4 @@
-export default (version: string): string | undefined => {
+export const getTag = (version: string): string | undefined => {
   if (version.includes('alpha')) {
     return 'alpha';
   }

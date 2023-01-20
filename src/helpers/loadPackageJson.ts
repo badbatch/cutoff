@@ -1,11 +1,11 @@
 import fs from 'fs-extra';
 import type { PackageJson, SetRequired } from 'type-fest';
-import verboseLog from './verboseLog.js';
+import { verboseLog } from './verboseLog.js';
 
 const { readFileSync } = fs;
 const packageJsonCache: Record<string, SetRequired<PackageJson, 'name' | 'version'>> = {};
 
-export default (packageJsonPath: string) => {
+export const loadPackageJson = (packageJsonPath: string) => {
   const cachedPackageJson = packageJsonCache[packageJsonPath];
 
   if (cachedPackageJson) {

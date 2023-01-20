@@ -3,7 +3,7 @@ import shelljs from 'shelljs';
 const { exec } = shelljs;
 let cachedChangedFiles: string[] | undefined;
 
-export default (releaseTag: string) => {
+export const getChangedFiles = (releaseTag: string) => {
   if (cachedChangedFiles) {
     return cachedChangedFiles;
   }
