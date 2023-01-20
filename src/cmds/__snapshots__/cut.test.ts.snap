@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cut should return the correct terminal output 1`] = `
+"cutoff.mjs cut <type>
+
+Cut release to current branch
+
+Positionals:
+  type  The release type: major | premajor | minor | preminor | patch | prepatch
+        | prerelease                                         [string] [required]
+
+Options:
+  --version        Show version number                                 [boolean]
+  --help           Show help                                           [boolean]
+  --tag            The release tag: alpha | beta | unstable             [string]
+  --dry-run        The release tag: alpha | beta | unstable            [boolean]
+  --force          Increment version regardless of files changed       [boolean]
+  --preid          The pre release ID                                   [string]
+  --skip-posthook  To skip post version lifecycle hook                 [boolean]
+  --skip-prehook   To skip pre version lifecycle hook                  [boolean]
+"
+`;

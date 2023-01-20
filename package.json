@@ -43,7 +43,7 @@
     "cutoff:post-version": "pnpm run compile",
     "lint": "eslint . --ext .ts,.cjs",
     "cutoff:publish": "node --trace-warnings ./bin/cutoff.mjs publish",
-    "jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --require=suppress-experimental-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "type-check": "tsc --noEmit",
     "validate": "pnpm run build && pnpm run lint && pnpm run type-check && pnpm run test"
   },
@@ -138,6 +138,7 @@
     "rollup-plugin-analyzer": "4.0.0",
     "rollup-plugin-copy": "3.4.0",
     "rollup-plugin-sourcemaps": "0.6.3",
+    "suppress-experimental-warnings": "1.1.3",
     "typescript": "4.9.4"
   }
 }

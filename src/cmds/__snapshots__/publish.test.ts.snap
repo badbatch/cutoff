@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`publish should return the correct terminal output 1`] = `
+"cutoff.mjs publish
+
+Publish packages to registry
+
+Options:
+  --version  Show version number                                       [boolean]
+  --help     Show help                                                 [boolean]
+"
+`;
