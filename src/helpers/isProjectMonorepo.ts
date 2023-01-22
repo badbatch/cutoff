@@ -1,11 +1,9 @@
-import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import type { LoadOptions } from 'js-yaml';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { PackageManager, PnpmWorkspaceYaml } from '../types.js';
 import { loadPackageJson } from './loadPackageJson.js';
-
-const { readFileSync } = fs;
 
 export const isProjectMonorepo = (packageManager: PackageManager) => {
   try {
