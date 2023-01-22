@@ -1,6 +1,6 @@
 import { dim, magenta, red } from 'colorette';
-import fs from 'fs-extra';
-import { resolve } from 'path';
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { ReleaseType } from 'semver';
 import shelljs from 'shelljs';
 import { addCommitPushRelease } from '../helpers/addCommitPushRelease.js';
@@ -17,12 +17,11 @@ import { loadPackageJson } from '../helpers/loadPackageJson.js';
 import { isVerbose, verboseLog } from '../helpers/verboseLog.js';
 import { versionMonorepoPackages } from '../helpers/versionMonorepoPackages.js';
 import { versionPackage } from '../helpers/versionPackage.js';
-import type { CutReleaseArgs, ReleaseTag } from '../types.js';
+import type { CutReleaseArguments, ReleaseTag } from '../types.js';
 
-const { outputFileSync } = fs;
 const { echo, exec, exit } = shelljs;
 
-export const cut = (argv: CutReleaseArgs) => {
+export const cut = (argv: CutReleaseArguments) => {
   const dryRun = argv['dry-run'] ?? false;
   const force = argv.force ?? false;
   const preReleaseId = argv.preid;
@@ -55,9 +54,7 @@ export const cut = (argv: CutReleaseArgs) => {
     const packageManager = getPackageManager();
 
     if (!packageManager) {
-      throw new Error(
-        `Cutoff => Could not derive the package manager from the lock file in the current working directory.`
-      );
+      throw new Error('Could not derive the package manager from the lock file in the current working directory');
     }
 
     const lastReleaseTag = getLastReleaseTag();
@@ -130,9 +127,9 @@ export const cut = (argv: CutReleaseArgs) => {
     if (isProjectMonorepo(packageManager)) {
       try {
         verboseLog(`Outputting project packageJson with new version: ${newVersion}`);
-        outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
-      } catch (err: unknown) {
-        verboseLog(`Package.json output error: ${(err as Error).name}, ${(err as Error).message}`);
+        writeFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, undefined, 2));
+      } catch (error: unknown) {
+        verboseLog(`Package.json output error: ${(error as Error).name}, ${(error as Error).message}`);
         throw new Error(`Could not write the package.json to: ${packageJsonPath}`);
       }
     }
@@ -147,8 +144,8 @@ export const cut = (argv: CutReleaseArgs) => {
     addCommitPushRelease(newVersion);
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(0);
-  } catch (err: unknown) {
-    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
+  } catch (error: unknown) {
+    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
     return exit(1);
   }

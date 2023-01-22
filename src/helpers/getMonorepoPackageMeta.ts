@@ -17,29 +17,35 @@ export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
   const excludePatterns = packagePatterns.filter(pattern => pattern.startsWith('!'));
   verboseLog(formatListLogMessage('Exclude patterns', excludePatterns));
 
-  const includedPackagePaths = includePatterns.reduce((acc, pattern) => {
-    return new Set([...acc, ...sync(`${pattern}/package.json`)]);
-  }, new Set<string>());
+  let includedPackagePaths = new Set<string>();
+
+  for (const pattern of includePatterns) {
+    includedPackagePaths = new Set([...includedPackagePaths, ...sync(`${pattern}/package.json`)]);
+  }
 
   verboseLog(formatListLogMessage('Included package paths', [...includedPackagePaths]));
 
-  const excludedPackagePaths = excludePatterns.reduce((acc, pattern) => {
-    return new Set([...acc, ...sync(`${pattern}/package.json`)]);
-  }, new Set<string>());
+  let excludedPackagePaths = new Set<string>();
+
+  for (const pattern of excludePatterns) {
+    excludedPackagePaths = new Set([...excludedPackagePaths, ...sync(`${pattern}/package.json`)]);
+  }
 
   verboseLog(formatListLogMessage('Excluded package paths', [...excludedPackagePaths]));
 
   const packagePaths = [...includedPackagePaths].filter(file => !excludedPackagePaths.has(file));
   verboseLog(formatListLogMessage('Package paths', packagePaths));
 
-  return packagePaths.reduce((acc: PackageMetaRecord, packagePath) => {
+  const packageMetaRecord: PackageMetaRecord = {};
+
+  for (const packagePath of packagePaths) {
     const { name } = loadPackageJson(packagePath);
 
-    acc[name] = {
+    packageMetaRecord[name] = {
       name,
       path: packagePath,
     };
+  }
 
-    return acc;
-  }, {});
+  return packageMetaRecord;
 };

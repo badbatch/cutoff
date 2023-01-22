@@ -16,8 +16,8 @@ export const loadPackageJson = (packageJsonPath: string) => {
 
   try {
     packageJson = JSON.parse(readFileSync(packageJsonPath, { encoding: 'utf8' })) as PackageJson;
-  } catch (err: unknown) {
-    verboseLog(`Package.json read error: ${(err as Error).name}, ${(err as Error).message}`);
+  } catch (error: unknown) {
+    verboseLog(`Package.json read error: ${(error as Error).name}, ${(error as Error).message}`);
     throw new Error(`Could not resolve the package.json at: ${packageJsonPath}`);
   }
 

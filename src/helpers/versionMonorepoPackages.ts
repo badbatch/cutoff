@@ -1,5 +1,5 @@
 import { dim, magenta, red } from 'colorette';
-import { parse } from 'path';
+import { parse } from 'node:path';
 import shell from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
 import { formatListLogMessage } from './formatListLogMessage.js';
@@ -38,10 +38,10 @@ export const versionMonorepoPackages = ({
       const { name } = packageJson;
       verboseLog(`Versioning package: ${name}`);
       const { dir } = parse(path);
-      const relativeDir = dir.replace(cwd, '');
-      verboseLog(`Relative dir: ${relativeDir}`);
+      const relativeDirectory = dir.replace(cwd, '');
+      verboseLog(`Relative dir: ${relativeDirectory}`);
 
-      if (!changedFiles.some(file => file.includes(relativeDir))) {
+      if (!changedFiles.some(file => file.includes(relativeDirectory))) {
         verboseLog(`No files have changed since the last release tag: ${lastReleaseTag}`);
 
         if (!force) {
@@ -52,7 +52,7 @@ export const versionMonorepoPackages = ({
         verboseLog('Force is set to true, proceeding regardless of file changes');
       }
 
-      const packageChangedFiles = changedFiles.filter(file => file.includes(relativeDir));
+      const packageChangedFiles = changedFiles.filter(file => file.includes(relativeDirectory));
       verboseLog(formatListLogMessage(`Package changed files`, packageChangedFiles));
 
       versionPackage(packageJson, {
@@ -64,16 +64,16 @@ export const versionMonorepoPackages = ({
 
       const internalDepsPackageMeta = getInternalDepsPackageMeta(packageJson, packageMetaRecord);
 
-      internalDepsPackageMeta.forEach(({ name }) => {
+      for (const { name } of internalDepsPackageMeta) {
         if (!packageMetaKeys.includes(name)) {
           verboseLog(`${name} added to packages to version`);
           packageMetaKeys.push(name);
         }
-      });
+      }
 
       verboseLog('>>>> PACKAGE END <<<<\n');
-    } catch (err: unknown) {
-      echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
+    } catch (error: unknown) {
+      echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
       verboseLog('>>>> PACKAGE END <<<<\n');
     }
   }

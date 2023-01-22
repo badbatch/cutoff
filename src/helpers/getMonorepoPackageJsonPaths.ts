@@ -16,15 +16,19 @@ export const getMonorepoPackageJsonPaths = (packageManager: PackageManager) => {
   const excludePatterns = packagePatterns.filter(pattern => pattern.startsWith('!'));
   verboseLog(formatListLogMessage('excludePatterns', excludePatterns));
 
-  const includedPackages = includePatterns.reduce((acc, pattern) => {
-    return new Set([...acc, ...sync(`${pattern}/package.json`)]);
-  }, new Set<string>());
+  let includedPackages = new Set<string>();
+
+  for (const pattern of includePatterns) {
+    includedPackages = new Set([...includedPackages, ...sync(`${pattern}/package.json`)]);
+  }
 
   verboseLog(formatListLogMessage('includedPackages', [...includedPackages]));
 
-  const excludedPackages = excludePatterns.reduce((acc, pattern) => {
-    return new Set([...acc, ...sync(`${pattern}/package.json`)]);
-  }, new Set<string>());
+  let excludedPackages = new Set<string>();
+
+  for (const pattern of excludePatterns) {
+    excludedPackages = new Set([...excludedPackages, ...sync(`${pattern}/package.json`)]);
+  }
 
   verboseLog(formatListLogMessage('excludedPackages', [...excludedPackages]));
 

@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import { load } from 'js-yaml';
 import type { LoadOptions } from 'js-yaml';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import type { PackageManager, PnpmWorkspaceYaml } from '../types.js';
 import { loadPackageJson } from './loadPackageJson.js';
 
@@ -26,7 +26,7 @@ export const getPackagePatterns = (packageManager: PackageManager) => {
 
       case 'pnpm': {
         const pnpmWorkspaceYamlPath = resolve(process.cwd(), 'pnpm-workspace.yaml');
-        const typedLoad = load as (str: string, opts?: LoadOptions) => unknown;
+        const typedLoad = load as (path: string, options?: LoadOptions) => unknown;
 
         const pnpmWorkspaceYaml = typedLoad(
           readFileSync(pnpmWorkspaceYamlPath, { encoding: 'utf8' })

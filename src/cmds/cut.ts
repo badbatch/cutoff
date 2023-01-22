@@ -1,5 +1,4 @@
 import type { Argv } from 'yargs';
-import { cut } from '../handlers/cut.js';
 
 export const builder = (argv: Argv) =>
   argv
@@ -35,4 +34,4 @@ export const builder = (argv: Argv) =>
 
 export const command = 'cut <type>';
 export const desc = 'Cut release to current branch';
-export const handler = cut;
+export { cut as handler } from '../handlers/cut.js';

@@ -9,11 +9,11 @@ const { echo } = shelljs;
 export const publishMonorepoPackages = (packageManager: PackageManager) => {
   const packagePaths = getMonorepoPackageMeta(packageManager);
 
-  Object.keys(packagePaths).forEach(packageJsonPath => {
+  for (const packageJsonPath of Object.keys(packagePaths)) {
     try {
       publishPackage(packageJsonPath, { packageManager });
-    } catch (err: unknown) {
-      echo(`${magenta('Cutoff')} ${dim('=>')} ${(err as Error).message}`);
+    } catch (error: unknown) {
+      echo(`${magenta('Cutoff')} ${dim('=>')} ${(error as Error).message}`);
     }
-  });
+  }
 };

@@ -11,7 +11,7 @@ export const getChangedFiles = (releaseTag: string) => {
   cachedChangedFiles = exec(`git diff --name-only HEAD ${releaseTag}`, { silent: true })
     .stdout.trim()
     .split('\n')
-    .filter(val => !!val);
+    .filter(value => !!value);
 
   return cachedChangedFiles;
 };

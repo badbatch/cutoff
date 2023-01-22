@@ -1,5 +1,5 @@
 import { dim, magenta, red } from 'colorette';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import shelljs from 'shelljs';
 import { getPackageManager } from '../helpers/getPackageManager.js';
 import { isProjectMonorepo } from '../helpers/isProjectMonorepo.js';
@@ -24,8 +24,8 @@ export const publish = () => {
     }
 
     return exit(0);
-  } catch (err: unknown) {
-    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(err as Error).message}`)}`);
+  } catch (error: unknown) {
+    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
     return exit(1);
   }
 };

@@ -1,4 +1,4 @@
-import fs from 'fs-extra';
+import { writeFileSync } from 'node:fs';
 import semver from 'semver';
 import type { PackageJson, SetRequired } from 'type-fest';
 import type { ReleaseMeta } from '../types.js';
@@ -6,7 +6,6 @@ import { getLatestPackageVersionOnNpm } from './getLatestPackageVersionOnNpm.js'
 import { getNewVersion } from './getNewVersion.js';
 import { verboseLog } from './verboseLog.js';
 
-const { outputFileSync } = fs;
 const { gt } = semver;
 
 export const versionPackage = (
@@ -33,9 +32,9 @@ export const versionPackage = (
 
   try {
     verboseLog(`Outputting package.json with new version: ${newVersion}`);
-    outputFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, null, 2));
-  } catch (err: unknown) {
-    verboseLog(`Package.json output error: ${(err as Error).name}, ${(err as Error).message}`);
+    writeFileSync(packageJsonPath, JSON.stringify({ ...packageJson, version: newVersion }, undefined, 2));
+  } catch (error: unknown) {
+    verboseLog(`Package.json output error: ${(error as Error).name}, ${(error as Error).message}`);
     throw new Error(`Could not write the package.json to: ${packageJsonPath}`);
   }
 };

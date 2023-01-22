@@ -1,6 +1,6 @@
 import type { ReleaseType } from 'semver';
 
-export interface CutReleaseArgs {
+export interface CutReleaseArguments {
   'dry-run'?: boolean;
   force?: boolean;
   preid?: string;
