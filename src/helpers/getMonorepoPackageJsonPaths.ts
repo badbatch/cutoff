@@ -4,8 +4,6 @@ import { formatListLogMessage } from './formatListLogMessage.js';
 import { getPackagePatterns } from './getPackagePatterns.js';
 import { verboseLog } from './verboseLog.js';
 
-const { sync } = glob;
-
 export const getMonorepoPackageJsonPaths = (packageManager: PackageManager) => {
   const packagePatterns = getPackagePatterns(packageManager);
   verboseLog(formatListLogMessage('packagePatterns', packagePatterns));
@@ -19,7 +17,7 @@ export const getMonorepoPackageJsonPaths = (packageManager: PackageManager) => {
   let includedPackages = new Set<string>();
 
   for (const pattern of includePatterns) {
-    includedPackages = new Set([...includedPackages, ...sync(`${pattern}/package.json`)]);
+    includedPackages = new Set([...includedPackages, ...glob.sync(`${pattern}/package.json`)]);
   }
 
   verboseLog(formatListLogMessage('includedPackages', [...includedPackages]));
@@ -27,7 +25,7 @@ export const getMonorepoPackageJsonPaths = (packageManager: PackageManager) => {
   let excludedPackages = new Set<string>();
 
   for (const pattern of excludePatterns) {
-    excludedPackages = new Set([...excludedPackages, ...sync(`${pattern}/package.json`)]);
+    excludedPackages = new Set([...excludedPackages, ...glob.sync(`${pattern}/package.json`)]);
   }
 
   verboseLog(formatListLogMessage('excludedPackages', [...excludedPackages]));

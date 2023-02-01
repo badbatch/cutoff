@@ -19,8 +19,6 @@ import { versionMonorepoPackages } from '../helpers/versionMonorepoPackages.js';
 import { versionPackage } from '../helpers/versionPackage.js';
 import type { CutReleaseArguments, ReleaseTag } from '../types.js';
 
-const { echo, exec, exit } = shelljs;
-
 export const cut = (argv: CutReleaseArguments) => {
   const dryRun = argv['dry-run'] ?? false;
   const force = argv.force ?? false;
@@ -76,8 +74,8 @@ export const cut = (argv: CutReleaseArguments) => {
 
     if (!skipPrehook && scripts['cutoff:pre-version']) {
       verboseLog(`Running cutoff:pre-version script: ${scripts['cutoff:pre-version']}\n`);
-      exec(`${packageManager} run cutoff:pre-version`);
-      echo('\n');
+      shelljs.exec(`${packageManager} run cutoff:pre-version`);
+      shelljs.echo('\n');
     } else if (skipPrehook && scripts['cutoff:pre-version']) {
       verboseLog(`cutoff:pre-version script skipped, skipPrehook set to true`);
     } else {
@@ -103,8 +101,8 @@ export const cut = (argv: CutReleaseArguments) => {
 
     if (!skipPosthook && scripts['cutoff:post-version']) {
       verboseLog(`Running cutoff:post-version script: ${scripts['cutoff:post-version']}\n`);
-      exec(`${packageManager} run cutoff:post-version`);
-      echo('\n');
+      shelljs.exec(`${packageManager} run cutoff:post-version`);
+      shelljs.echo('\n');
     } else if (skipPosthook && scripts['cutoff:post-version']) {
       verboseLog(`cutoff:post-version skipped, skipPosthook set to true`);
     } else {
@@ -113,7 +111,7 @@ export const cut = (argv: CutReleaseArguments) => {
 
     if (['patch', 'minor', 'major'].includes(type)) {
       verboseLog(`Generating changelog for ${type} release`);
-      exec(`${packageManager} run changelog -- --${type}`);
+      shelljs.exec(`${packageManager} run changelog -- --${type}`);
     }
 
     const newVersion = getNewVersion(version, type, tag, preReleaseId);
@@ -137,16 +135,16 @@ export const cut = (argv: CutReleaseArguments) => {
     if (dryRun) {
       verboseLog('Exiting process as dry-run set to true');
       verboseLog('>>>> PROJECT ROOT END <<<<\n');
-      return exit(0);
+      return shelljs.exit(0);
     }
 
     verboseLog(`Adding, committing and pushing new version: ${newVersion}`);
     addCommitPushRelease(newVersion);
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
-    return exit(0);
+    return shelljs.exit(0);
   } catch (error: unknown) {
-    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
+    shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
     verboseLog('>>>> PROJECT ROOT END <<<<\n');
-    return exit(1);
+    return shelljs.exit(1);
   }
 };

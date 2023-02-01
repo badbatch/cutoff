@@ -70,7 +70,6 @@ specifiers:
   js-yaml: 4.1.0
   lodash: 4.17.21
   markdownlint-cli: 0.32.2
-  memfs: 3.4.13
   prettier: 2.8.1
   rollup: 3.7.0
   rollup-plugin-analyzer: 4.0.0
@@ -159,7 +158,6 @@ devDependencies:
   jest: 29.3.1_@types+node@18.11.18
   lodash: 4.17.21
   markdownlint-cli: 0.32.2
-  memfs: 3.4.13
   prettier: 2.8.1
   rollup: 3.7.0
   rollup-plugin-analyzer: 4.0.0
@@ -4228,10 +4226,6 @@ packages:
       universalify: 0.1.2
     dev: true
 
-  /fs-monkey/1.0.3:
-    resolution: {integrity: sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==}
-    dev: true
-
   /fs-readdir-recursive/1.1.0:
     resolution: {integrity: sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==}
     dev: true
@@ -5679,13 +5673,6 @@ packages:
 
   /mdurl/1.0.1:
     resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
-    dev: true
-
-  /memfs/3.4.13:
-    resolution: {integrity: sha512-omTM41g3Skpvx5dSYeZIbXKcXoAVc/AoMNwn9TKx++L/gaen/+4TTttmu8ZSch5vfVJ8uJvGbroTsIlslRg6lg==}
-    engines: {node: '>= 4.0.0'}
-    dependencies:
-      fs-monkey: 1.0.3
     dev: true
 
   /meow/5.0.0:

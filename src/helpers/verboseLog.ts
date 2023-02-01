@@ -1,7 +1,6 @@
 import { dim, magenta } from 'colorette';
-import shell from 'shelljs';
+import shelljs from 'shelljs';
 
-const { echo } = shell;
 let verbose = false;
 
 export const isVerbose = (value: boolean) => {
@@ -10,6 +9,6 @@ export const isVerbose = (value: boolean) => {
 
 export const verboseLog = (message: string) => {
   if (verbose) {
-    echo(`${magenta('Cutoff')} ${dim('=>')} ${message}`);
+    shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${message}`);
   }
 };

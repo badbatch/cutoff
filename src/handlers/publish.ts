@@ -6,8 +6,6 @@ import { isProjectMonorepo } from '../helpers/isProjectMonorepo.js';
 import { publishMonorepoPackages } from '../helpers/publishMonorepoPackages.js';
 import { publishPackage } from '../helpers/publishPackage.js';
 
-const { echo, exit } = shelljs;
-
 export const publish = () => {
   try {
     const packageManager = getPackageManager();
@@ -23,9 +21,9 @@ export const publish = () => {
       publishPackage(packageJsonPath, { packageManager });
     }
 
-    return exit(0);
+    return shelljs.exit(0);
   } catch (error: unknown) {
-    echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
-    return exit(1);
+    shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
+    return shelljs.exit(1);
   }
 };

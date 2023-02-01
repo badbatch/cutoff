@@ -4,8 +4,6 @@ import type { PackageManager } from '../types.js';
 import { getMonorepoPackageMeta } from './getMonorepoPackageMeta.js';
 import { publishPackage } from './publishPackage.js';
 
-const { echo } = shelljs;
-
 export const publishMonorepoPackages = (packageManager: PackageManager) => {
   const packagePaths = getMonorepoPackageMeta(packageManager);
 
@@ -13,7 +11,7 @@ export const publishMonorepoPackages = (packageManager: PackageManager) => {
     try {
       publishPackage(packageJsonPath, { packageManager });
     } catch (error: unknown) {
-      echo(`${magenta('Cutoff')} ${dim('=>')} ${(error as Error).message}`);
+      shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${(error as Error).message}`);
     }
   }
 };

@@ -5,8 +5,6 @@ import { getPackagePatterns } from './getPackagePatterns.js';
 import { loadPackageJson } from './loadPackageJson.js';
 import { verboseLog } from './verboseLog.js';
 
-const { sync } = glob;
-
 export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
   const packagePatterns = getPackagePatterns(packageManager);
   verboseLog(formatListLogMessage('Package patterns', packagePatterns));
@@ -20,7 +18,7 @@ export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
   let includedPackagePaths = new Set<string>();
 
   for (const pattern of includePatterns) {
-    includedPackagePaths = new Set([...includedPackagePaths, ...sync(`${pattern}/package.json`)]);
+    includedPackagePaths = new Set([...includedPackagePaths, ...glob.sync(`${pattern}/package.json`)]);
   }
 
   verboseLog(formatListLogMessage('Included package paths', [...includedPackagePaths]));
@@ -28,7 +26,7 @@ export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
   let excludedPackagePaths = new Set<string>();
 
   for (const pattern of excludePatterns) {
-    excludedPackagePaths = new Set([...excludedPackagePaths, ...sync(`${pattern}/package.json`)]);
+    excludedPackagePaths = new Set([...excludedPackagePaths, ...glob.sync(`${pattern}/package.json`)]);
   }
 
   verboseLog(formatListLogMessage('Excluded package paths', [...excludedPackagePaths]));

@@ -1,5 +1,4 @@
-import { load } from 'js-yaml';
-import type { LoadOptions } from 'js-yaml';
+import { type LoadOptions, load } from 'js-yaml';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { PackageManager, PnpmWorkspaceYaml } from '../types.js';

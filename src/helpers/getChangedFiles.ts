@@ -1,6 +1,5 @@
 import shelljs from 'shelljs';
 
-const { exec } = shelljs;
 let cachedChangedFiles: string[] | undefined;
 
 export const getChangedFiles = (releaseTag: string) => {
@@ -8,7 +7,8 @@ export const getChangedFiles = (releaseTag: string) => {
     return cachedChangedFiles;
   }
 
-  cachedChangedFiles = exec(`git diff --name-only HEAD ${releaseTag}`, { silent: true })
+  cachedChangedFiles = shelljs
+    .exec(`git diff --name-only HEAD ${releaseTag}`, { silent: true })
     .stdout.trim()
     .split('\n')
     .filter(value => !!value);

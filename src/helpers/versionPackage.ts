@@ -6,8 +6,6 @@ import { getLatestPackageVersionOnNpm } from './getLatestPackageVersionOnNpm.js'
 import { getNewVersion } from './getNewVersion.js';
 import { verboseLog } from './verboseLog.js';
 
-const { gt } = semver;
-
 export const versionPackage = (
   packageJson: SetRequired<PackageJson, 'name' | 'version'>,
   { packageJsonPath, preReleaseId, tag, type }: Pick<ReleaseMeta, 'packageJsonPath' | 'preReleaseId' | 'tag' | 'type'>
@@ -24,7 +22,7 @@ export const versionPackage = (
   verboseLog(`New version: ${newVersion}`);
   verboseLog(`Latest version on npm: ${latestNpmPackageVersion}`);
 
-  if (latestNpmPackageVersion === newVersion && !gt(latestNpmPackageVersion, newVersion)) {
+  if (latestNpmPackageVersion === newVersion && !semver.gt(latestNpmPackageVersion, newVersion)) {
     throw new Error(
       `The new package verison ${newVersion} is less than or equal to the lastest version ${latestNpmPackageVersion} on npm`
     );

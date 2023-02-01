@@ -1,6 +1,5 @@
 import shelljs from 'shelljs';
 
-const { exec } = shelljs;
 let lastReleaseTag: string | undefined;
 
 export const getLastReleaseTag = () => {
@@ -8,6 +7,6 @@ export const getLastReleaseTag = () => {
     return lastReleaseTag;
   }
 
-  lastReleaseTag = exec('git describe --tags --abbrev=0', { silent: true }).stdout.trim();
+  lastReleaseTag = shelljs.exec('git describe --tags --abbrev=0', { silent: true }).stdout.trim();
   return lastReleaseTag;
 };

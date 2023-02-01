@@ -6,19 +6,16 @@ import { getPublishCmd } from './getPublishCmd.js';
 import { getTag } from './getTag.js';
 import { loadPackageJson } from './loadPackageJson.js';
 
-const { gt } = semver;
-const { exec } = shelljs;
-
 export const publishPackage = (packageJsonPath: string, { packageManager }: Pick<ReleaseMeta, 'packageManager'>) => {
   const { name, version } = loadPackageJson(packageJsonPath);
   const latestNpmPackageVersion = getLatestPackageVersionOnNpm(name);
 
-  if (latestNpmPackageVersion === version && !gt(latestNpmPackageVersion, version)) {
+  if (latestNpmPackageVersion === version && !semver.gt(latestNpmPackageVersion, version)) {
     throw new Error(
       `The new ${name} package verison ${version} is less than or equal to the lastest version on NPM: ${latestNpmPackageVersion}`
     );
   }
 
   const tag = getTag(version);
-  exec(getPublishCmd(packageManager, version, tag));
+  shelljs.exec(getPublishCmd(packageManager, version, tag));
 };

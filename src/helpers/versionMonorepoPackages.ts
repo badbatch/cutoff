@@ -1,6 +1,6 @@
 import { dim, magenta, red } from 'colorette';
 import { parse } from 'node:path';
-import shell from 'shelljs';
+import shelljs from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
 import { formatListLogMessage } from './formatListLogMessage.js';
 import { getChangedFiles } from './getChangedFiles.js';
@@ -10,8 +10,6 @@ import { getMonorepoPackageMeta } from './getMonorepoPackageMeta.js';
 import { loadPackageJson } from './loadPackageJson.js';
 import { verboseLog } from './verboseLog.js';
 import { versionPackage } from './versionPackage.js';
-
-const { echo } = shell;
 
 export const versionMonorepoPackages = ({
   force,
@@ -73,7 +71,7 @@ export const versionMonorepoPackages = ({
 
       verboseLog('>>>> PACKAGE END <<<<\n');
     } catch (error: unknown) {
-      echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
+      shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
       verboseLog('>>>> PACKAGE END <<<<\n');
     }
   }
