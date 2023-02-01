@@ -1,15 +1,10 @@
 import { jest } from '@jest/globals';
 import type { PathOrFileDescriptor, WriteFileOptions } from 'node:fs';
 import type { PackageJson, SetRequired } from 'type-fest';
+import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
 import type { ReleaseMeta } from '../types.js';
 
-jest.unstable_mockModule('shelljs', () => ({
-  default: {
-    echo: jest.fn(),
-    exec: jest.fn(),
-    exit: jest.fn(),
-  },
-}));
+jest.unstable_mockModule('shelljs', shelljsMock);
 
 jest.unstable_mockModule('../helpers/getPackageManager.js', () => ({
   getPackageManager: jest.fn().mockReturnValue('pnpm'),
@@ -56,12 +51,6 @@ jest.unstable_mockModule('node:fs', () => ({
 jest.unstable_mockModule('../helpers/addCommitPushRelease.js', () => ({
   addCommitPushRelease: jest.fn(),
 }));
-
-const clearShelljsMocks = (mock: jest.MockedObject<typeof import('shelljs')>) => {
-  mock.echo.mockClear();
-  mock.exec.mockClear();
-  mock.exit.mockClear();
-};
 
 process.cwd = jest.fn().mockReturnValue('/root') as jest.Mocked<() => string>;
 
