@@ -381,6 +381,8 @@ describe('cut', () => {
       ) => void
     >;
 
+    let mockedAddCommitPushRelease: jest.MockedFunction<(version: string) => void>;
+
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
       clearShelljsMocks(shelljs);
@@ -392,6 +394,10 @@ describe('cut', () => {
       const { versionPackage } = await import('../helpers/versionPackage.js');
       mockedVersionPackage = jest.mocked(versionPackage);
       mockedVersionPackage.mockClear();
+
+      const { addCommitPushRelease } = await import('../helpers/addCommitPushRelease.js');
+      mockedAddCommitPushRelease = jest.mocked(addCommitPushRelease);
+      mockedAddCommitPushRelease.mockClear();
     });
 
     it('should call getChangedFiles with the correct argument', async () => {
@@ -416,6 +422,18 @@ describe('cut', () => {
         }
       );
     });
+
+    it('should call addCommitPushRelease', async () => {
+      const { cut } = await import('./cut.js');
+      cut({ preid: '12345', tag: 'alpha', type: 'preminor' });
+      expect(mockedAddCommitPushRelease).toHaveBeenCalled();
+    });
+
+    it('should exit with the correct code', async () => {
+      const { cut } = await import('./cut.js');
+      cut({ preid: '12345', tag: 'alpha', type: 'preminor' });
+      expect(shelljs.exit).toHaveBeenCalledWith(0);
+    });
   });
 
   describe('when project has a monorepo structure', () => {
@@ -433,6 +451,8 @@ describe('cut', () => {
       ) => void
     >;
 
+    let mockedAddCommitPushRelease: jest.MockedFunction<(version: string) => void>;
+
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
       clearShelljsMocks(shelljs);
@@ -448,6 +468,10 @@ describe('cut', () => {
       const { writeFileSync } = await import('node:fs');
       mockedWriteFileSync = jest.mocked(writeFileSync);
       mockedWriteFileSync.mockClear();
+
+      const { addCommitPushRelease } = await import('../helpers/addCommitPushRelease.js');
+      mockedAddCommitPushRelease = jest.mocked(addCommitPushRelease);
+      mockedAddCommitPushRelease.mockClear();
     });
 
     it('should call versionMonorepoPackages with the correct argument', async () => {
@@ -477,6 +501,18 @@ describe('cut', () => {
           2
         )
       );
+    });
+
+    it('should call addCommitPushRelease', async () => {
+      const { cut } = await import('./cut.js');
+      cut({ preid: '12345', tag: 'alpha', type: 'preminor' });
+      expect(mockedAddCommitPushRelease).toHaveBeenCalled();
+    });
+
+    it('should exit with the correct code', async () => {
+      const { cut } = await import('./cut.js');
+      cut({ preid: '12345', tag: 'alpha', type: 'preminor' });
+      expect(shelljs.exit).toHaveBeenCalledWith(0);
     });
   });
 
