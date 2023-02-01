@@ -80,7 +80,7 @@ export const cut = (argv: CutReleaseArguments) => {
       echo('\n');
     } else if (skipPrehook && scripts['cutoff:pre-version']) {
       verboseLog(`cutoff:pre-version script skipped, skipPrehook set to true`);
-    } else if (!scripts['cutoff:pre-version']) {
+    } else {
       verboseLog(`cutoff:pre-version script not provided`);
     }
 
@@ -107,7 +107,7 @@ export const cut = (argv: CutReleaseArguments) => {
       echo('\n');
     } else if (skipPosthook && scripts['cutoff:post-version']) {
       verboseLog(`cutoff:post-version skipped, skipPosthook set to true`);
-    } else if (!scripts['cutoff:post-version']) {
+    } else {
       verboseLog(`cutoff:post-version script not provided`);
     }
 
@@ -119,7 +119,7 @@ export const cut = (argv: CutReleaseArguments) => {
     const newVersion = getNewVersion(version, type, tag, preReleaseId);
 
     if (!newVersion) {
-      throw new Error(`The new project verison for a ${type} increment on ${version} is invalid.`);
+      throw new Error(`The new project verison for a ${type} increment on ${version} is invalid`);
     }
 
     verboseLog(`Release new version: ${newVersion}`);
