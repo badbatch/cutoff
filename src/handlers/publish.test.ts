@@ -1,8 +1,12 @@
 import { jest } from '@jest/globals';
-import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
 import type { PackageManager, ReleaseMeta } from '../types.js';
 
-jest.unstable_mockModule('shelljs', shelljsMock);
+jest.unstable_mockModule('shelljs', () => ({
+  default: {
+    echo: jest.fn(),
+    exit: jest.fn(),
+  },
+}));
 
 jest.unstable_mockModule('../helpers/getPackageManager.js', () => ({
   getPackageManager: jest.fn().mockReturnValue('pnpm'),
@@ -19,6 +23,11 @@ jest.unstable_mockModule('../helpers/publishMonorepoPackages.js', () => ({
 jest.unstable_mockModule('../helpers/publishPackage.js', () => ({
   publishPackage: jest.fn(),
 }));
+
+const clearShelljsMocks = (mock: jest.MockedObject<typeof import('shelljs')>) => {
+  mock.echo.mockClear();
+  mock.exit.mockClear();
+};
 
 process.cwd = jest.fn().mockReturnValue('/root') as jest.Mocked<() => string>;
 
