@@ -1,6 +1,6 @@
 import { dim } from 'colorette';
 
-export const formatListLogMessage = (fieldName: string, fieldVlaue: string[]) =>
+export const formatListLogMessage = (fieldName: string, fieldValues: string[]) =>
   `${fieldName}:${
-    fieldVlaue.length > 0 ? `\n          ${dim('>')} ${fieldVlaue.join(`\n          ${dim('>')} `)}` : ' None'
+    fieldValues.length > 0 ? `\n          ${dim('>')} ${fieldValues.join(`\n          ${dim('>')} `)}` : ' None'
   }`;
