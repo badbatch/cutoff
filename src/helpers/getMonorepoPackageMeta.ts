@@ -1,47 +1,17 @@
-import glob from 'glob';
 import type { PackageManager, PackageMetaRecord } from '../types.js';
-import { formatListLogMessage } from './formatListLogMessage.js';
-import { getPackagePatterns } from './getPackagePatterns.js';
+import { getMonorepoPackageJsonPaths } from './getMonorepoPackageJsonPaths.js';
 import { loadPackageJson } from './loadPackageJson.js';
-import { verboseLog } from './verboseLog.js';
 
 export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
-  const packagePatterns = getPackagePatterns(packageManager);
-  verboseLog(formatListLogMessage('Package patterns', packagePatterns));
-
-  const includePatterns = packagePatterns.filter(pattern => !pattern.startsWith('!'));
-  verboseLog(formatListLogMessage('Include patterns', includePatterns));
-
-  const excludePatterns = packagePatterns.filter(pattern => pattern.startsWith('!'));
-  verboseLog(formatListLogMessage('Exclude patterns', excludePatterns));
-
-  let includedPackagePaths = new Set<string>();
-
-  for (const pattern of includePatterns) {
-    includedPackagePaths = new Set([...includedPackagePaths, ...glob.sync(`${pattern}/package.json`)]);
-  }
-
-  verboseLog(formatListLogMessage('Included package paths', [...includedPackagePaths]));
-
-  let excludedPackagePaths = new Set<string>();
-
-  for (const pattern of excludePatterns) {
-    excludedPackagePaths = new Set([...excludedPackagePaths, ...glob.sync(`${pattern}/package.json`)]);
-  }
-
-  verboseLog(formatListLogMessage('Excluded package paths', [...excludedPackagePaths]));
-
-  const packagePaths = [...includedPackagePaths].filter(file => !excludedPackagePaths.has(file));
-  verboseLog(formatListLogMessage('Package paths', packagePaths));
-
+  const packageJsonPaths = getMonorepoPackageJsonPaths(packageManager);
   const packageMetaRecord: PackageMetaRecord = {};
 
-  for (const packagePath of packagePaths) {
-    const { name } = loadPackageJson(packagePath);
+  for (const packageJsonPath of packageJsonPaths) {
+    const { name } = loadPackageJson(packageJsonPath);
 
     packageMetaRecord[name] = {
       name,
-      path: packagePath,
+      path: packageJsonPath,
     };
   }
 

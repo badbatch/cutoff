@@ -5,11 +5,11 @@ import { verboseLog } from './verboseLog.js';
 
 export const getInternalDepsPackageMeta = (
   { dependencies = {}, devDependencies = {}, peerDependencies = {} }: PackageJson,
-  packageMeta: PackageMetaRecord
+  packageMetaRecord: PackageMetaRecord
 ) => {
-  const packageNames = Object.keys(packageMeta);
+  const packageNames = Object.keys(packageMetaRecord);
   const dependencyNames = Object.keys({ ...dependencies, ...devDependencies, ...peerDependencies });
   const internalDependencies = dependencyNames.filter(name => packageNames.includes(name));
   verboseLog(formatListLogMessage(`Internal dependencies`, internalDependencies));
-  return internalDependencies.map(name => packageMeta[name]!);
+  return internalDependencies.map(name => packageMetaRecord[name]!);
 };

@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 import type { PathOrFileDescriptor, WriteFileOptions } from 'node:fs';
 import type { PackageJson, SetRequired } from 'type-fest';
-import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
+import { clearShelljsMock, shelljsMock } from '../__testUtils__/shelljs.js';
 import type { ReleaseMeta } from '../types.js';
 
 jest.unstable_mockModule('shelljs', shelljsMock);
@@ -60,7 +60,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
     });
 
     it('should log the correct error message', async () => {
@@ -86,7 +86,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
     });
 
     it('should log the correct error message', async () => {
@@ -110,7 +110,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { getPackageManager } = await import('../helpers/getPackageManager.js');
       const mockedGetPackageManager = jest.mocked(getPackageManager);
@@ -140,7 +140,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { haveFilesChanged } = await import('../helpers/haveFilesChanged.js');
       const mockedHaveFilesChanged = jest.mocked(haveFilesChanged);
@@ -168,7 +168,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { getNewVersion } = await import('../helpers/getNewVersion.js');
       const mockedGetNewVersion = jest.mocked(getNewVersion);
@@ -197,7 +197,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
 
         const { loadPackageJson } = await import('../helpers/loadPackageJson.js');
         const mockedLoadPackageJson = jest.mocked(loadPackageJson);
@@ -223,7 +223,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
 
         const { loadPackageJson } = await import('../helpers/loadPackageJson.js');
         const mockedLoadPackageJson = jest.mocked(loadPackageJson);
@@ -249,7 +249,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
       });
 
       it('should not execute the script', async () => {
@@ -266,7 +266,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
 
         const { loadPackageJson } = await import('../helpers/loadPackageJson.js');
         const mockedLoadPackageJson = jest.mocked(loadPackageJson);
@@ -292,7 +292,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
 
         const { loadPackageJson } = await import('../helpers/loadPackageJson.js');
         const mockedLoadPackageJson = jest.mocked(loadPackageJson);
@@ -318,7 +318,7 @@ describe('cut', () => {
 
       beforeEach(async () => {
         shelljs = jest.mocked(await import('shelljs')).default;
-        clearShelljsMocks(shelljs);
+        clearShelljsMock(shelljs);
       });
 
       it('should not execute the script', async () => {
@@ -334,7 +334,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
     });
 
     it.each([['patch'], ['minor'], ['major']])('%p release should run changelog', async type => {
@@ -349,7 +349,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
     });
 
     it.each([['prepatch'], ['preminor'], ['premajor']])('%p release should not run changelog', async type => {
@@ -374,7 +374,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { getChangedFiles } = await import('../helpers/getChangedFiles.js');
       mockedGetChangedFiles = jest.mocked(getChangedFiles);
@@ -444,7 +444,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { isProjectMonorepo } = await import('../helpers/isProjectMonorepo.js');
       const mockedIsProjectMonorepo = jest.mocked(isProjectMonorepo);
@@ -511,7 +511,7 @@ describe('cut', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { addCommitPushRelease } = await import('../helpers/addCommitPushRelease.js');
       mockedAddCommitPushRelease = jest.mocked(addCommitPushRelease);

@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
+import { clearShelljsMock, shelljsMock } from '../__testUtils__/shelljs.js';
 
 jest.unstable_mockModule('shelljs', shelljsMock);
 
@@ -8,7 +8,7 @@ describe('addCommitPushRelease', () => {
 
   beforeEach(async () => {
     shelljs = jest.mocked(await import('shelljs')).default;
-    clearShelljsMocks(shelljs);
+    clearShelljsMock(shelljs);
   });
 
   it('should run the correct git commands', async () => {

@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 import type { ChildProcess } from 'node:child_process';
-import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
+import { clearShelljsMock, shelljsMock } from '../__testUtils__/shelljs.js';
 
 jest.unstable_mockModule('shelljs', shelljsMock);
 
@@ -27,7 +27,7 @@ describe('getChangedFiles', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { addChangedFilesToCache, clearChangedFilesCache } = await import('./getChangedFiles.js');
       clearChangedFilesCache();
@@ -52,7 +52,7 @@ describe('getChangedFiles', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       shelljs.exec.mockReturnValue({
         stdout: '.editorconfig\n.gitignore\npackage.json\npnpm-lock.yaml\n',
@@ -65,6 +65,12 @@ describe('getChangedFiles', () => {
     it('should return the changed files', async () => {
       const { getChangedFiles } = await import('./getChangedFiles.js');
       expect(getChangedFiles('v1.1.0')).toEqual(cachedChangedFiles);
+    });
+
+    it('should run the git diff command', async () => {
+      const { getChangedFiles } = await import('./getChangedFiles.js');
+      getChangedFiles('v1.1.0');
+      expect(shelljs.exec).toHaveBeenCalledWith('git diff --name-only HEAD v1.1.0', { silent: true });
     });
 
     it('should cache the changed files', async () => {

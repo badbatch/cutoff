@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-export const clearShelljsMocks = (mock: jest.MockedObject<typeof import('shelljs')>) => {
+export const clearShelljsMock = (mock: jest.MockedObject<typeof import('shelljs')>) => {
   mock.echo.mockClear();
   mock.exec.mockClear();
   mock.exit.mockClear();

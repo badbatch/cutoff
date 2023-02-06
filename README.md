@@ -1,8 +1,8 @@
 # Cutoff
 
-A command line utility for cutting releases and publishing to npm.
+A command line utility for cutting releases and publishing to npm registry.
 
-[![Build Status](https://travis-ci.com/badbatch/cutoff.svg?branch=master)](https://travis-ci.com/badbatch/cutoff)
+[![build-and-deploy](https://github.com/badbatch/cutoff/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/badbatch/cutoff/actions/workflows/build-and-deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![npm version](https://badge.fury.io/js/cutoff.svg)](https://badge.fury.io/js/cutoff)
 

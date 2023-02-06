@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { clearShelljsMocks, shelljsMock } from '../__testUtils__/shelljs.js';
+import { clearShelljsMock, shelljsMock } from '../__testUtils__/shelljs.js';
 import type { PackageManager, ReleaseMeta } from '../types.js';
 
 jest.unstable_mockModule('shelljs', shelljsMock);
@@ -28,7 +28,7 @@ describe('publish', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { getPackageManager } = await import('../helpers/getPackageManager.js');
       const mockedGetPackageManager = jest.mocked(getPackageManager);
@@ -62,7 +62,7 @@ describe('publish', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { publishPackage } = await import('../helpers/publishPackage.js');
       mockedPublishPackage = jest.mocked(publishPackage);
@@ -91,7 +91,7 @@ describe('publish', () => {
 
     beforeEach(async () => {
       shelljs = jest.mocked(await import('shelljs')).default;
-      clearShelljsMocks(shelljs);
+      clearShelljsMock(shelljs);
 
       const { isProjectMonorepo } = await import('../helpers/isProjectMonorepo.js');
       const mockedIsProjectMonorepo = jest.mocked(isProjectMonorepo);
