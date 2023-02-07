@@ -1,7 +1,6 @@
 import { dim, magenta, red } from 'colorette';
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { ReleaseType } from 'semver';
 import shelljs from 'shelljs';
 import { addCommitPushRelease } from '../helpers/addCommitPushRelease.js';
 import { formatListLogMessage } from '../helpers/formatListLogMessage.js';
@@ -14,7 +13,7 @@ import { isProjectMonorepo } from '../helpers/isProjectMonorepo.js';
 import { VALID_RELEASE_TAGS, isValidReleaseTag } from '../helpers/isValidReleaseTag.js';
 import { VALID_RELEASE_TYPES, isValidReleaseType } from '../helpers/isValidReleaseType.js';
 import { loadPackageJson } from '../helpers/loadPackageJson.js';
-import { isVerbose, verboseLog } from '../helpers/verboseLog.js';
+import { setVerbose, verboseLog } from '../helpers/verboseLog.js';
 import { versionMonorepoPackages } from '../helpers/versionMonorepoPackages.js';
 import { versionPackage } from '../helpers/versionPackage.js';
 import type { CutReleaseArguments, ReleaseTag } from '../types.js';
@@ -25,30 +24,30 @@ export const cut = (argv: CutReleaseArguments) => {
   const preReleaseId = argv.preid;
   const skipPosthook = argv['skip-posthook'] ?? false;
   const skipPrehook = argv['skip-prehook'] ?? false;
-  const tag = argv.tag as ReleaseTag | undefined;
-  const type = argv.type as ReleaseType;
   const verbose = argv.verbose ?? false;
 
-  isVerbose(verbose);
+  setVerbose(verbose);
   verboseLog('>>>> USER CONFIG START <<<<');
   verboseLog(`dryRun: ${String(dryRun)}`);
   verboseLog(`force: ${String(force)}`);
   verboseLog(`preReleaseId: ${preReleaseId ?? 'undefined'}`);
   verboseLog(`skipPosthook: ${String(skipPosthook)}`);
   verboseLog(`skipPrehook: ${String(skipPrehook)}`);
-  verboseLog(`tag: ${tag ?? 'undefined'}`);
-  verboseLog(`type: ${type}`);
+  verboseLog(`tag: ${argv.tag ?? 'undefined'}`);
+  verboseLog(`type: ${argv.type}`);
   verboseLog('>>>> USER CONFIG END <<<<\n');
 
   try {
-    if (!isValidReleaseType(type)) {
+    if (!isValidReleaseType(argv.type)) {
       throw new Error(`Expected type to be a valid release type: ${VALID_RELEASE_TYPES.join(', ')}`);
     }
 
-    if (tag && !isValidReleaseTag(tag)) {
+    if (argv.tag && !isValidReleaseTag(argv.tag)) {
       throw new Error(`Expected tag to be a valid release tag: ${VALID_RELEASE_TAGS.join(', ')}`);
     }
 
+    const tag = argv.tag as ReleaseTag | undefined;
+    const type = argv.type;
     const packageManager = getPackageManager();
 
     if (!packageManager) {

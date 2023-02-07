@@ -10,9 +10,7 @@ export const clearChangedFilesCache = () => {
   cachedChangedFiles = undefined;
 };
 
-export const getCachedChangedFiles = () => {
-  return cachedChangedFiles;
-};
+export const getCachedChangedFiles = () => cachedChangedFiles;
 
 export const getChangedFiles = (releaseTag: string) => {
   if (cachedChangedFiles) {

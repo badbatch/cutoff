@@ -2,7 +2,17 @@ import { readFileSync } from 'node:fs';
 import type { PackageJson, SetRequired } from 'type-fest';
 import { verboseLog } from './verboseLog.js';
 
-const packageJsonCache: Record<string, SetRequired<PackageJson, 'name' | 'version'>> = {};
+let packageJsonCache: Record<string, SetRequired<PackageJson, 'name' | 'version'>> = {};
+
+export const addPackageJsonToCache = (path: string, packageJson: SetRequired<PackageJson, 'name' | 'version'>) => {
+  packageJsonCache[path] = packageJson;
+};
+
+export const clearPackageJsonCache = () => {
+  packageJsonCache = {};
+};
+
+export const getCachedPackageJsons = () => packageJsonCache;
 
 export const loadPackageJson = (packageJsonPath: string) => {
   const cachedPackageJson = packageJsonCache[packageJsonPath];
@@ -27,7 +37,7 @@ export const loadPackageJson = (packageJsonPath: string) => {
   }
 
   if (!version) {
-    throw new Error(`Expected the package.json at "${packageJsonPath}" to have a version.`);
+    throw new Error(`Expected the package.json at "${packageJsonPath}" to have a version`);
   }
 
   const validatedPackageJson = packageJson as SetRequired<PackageJson, 'name' | 'version'>;

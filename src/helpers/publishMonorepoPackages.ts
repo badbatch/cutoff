@@ -5,13 +5,14 @@ import { getMonorepoPackageMeta } from './getMonorepoPackageMeta.js';
 import { publishPackage } from './publishPackage.js';
 
 export const publishMonorepoPackages = (packageManager: PackageManager) => {
-  const packagePaths = getMonorepoPackageMeta(packageManager);
+  const packageMeta = getMonorepoPackageMeta(packageManager);
 
-  for (const packageJsonPath of Object.keys(packagePaths)) {
+  for (const name in packageMeta) {
     try {
-      publishPackage(packageJsonPath, { packageManager });
+      const { path } = packageMeta[name]!;
+      publishPackage(path, { packageManager });
     } catch (error: unknown) {
-      shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${(error as Error).message}`);
+      shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} Error publishing ${name}: ${(error as Error).message}`);
     }
   }
 };

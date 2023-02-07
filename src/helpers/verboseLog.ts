@@ -3,7 +3,7 @@ import shelljs from 'shelljs';
 
 let verbose = false;
 
-export const isVerbose = (value: boolean) => {
+export const setVerbose = (value: boolean) => {
   verbose = value;
 };
 
