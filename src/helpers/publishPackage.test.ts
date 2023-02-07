@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { loadPackageJsonMock } from '../__testUtils__/loadPackageJson.js';
 import { shelljsMock } from '../__testUtils__/shelljs.js';
 import type { PackageManager } from '../types.js';
 
@@ -12,9 +13,7 @@ jest.unstable_mockModule('./getPublishCmd.js', () => ({
   getPublishCmd: jest.fn(),
 }));
 
-jest.unstable_mockModule('./loadPackageJson.js', () => ({
-  loadPackageJson: jest.fn().mockReturnValue({ name: 'alpha', version: '1.0.0' }),
-}));
+jest.unstable_mockModule('./loadPackageJson.js', loadPackageJsonMock);
 
 describe('publishPackage', () => {
   const packageJsonPath = '/root/alpha/package.json';

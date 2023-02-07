@@ -15,14 +15,14 @@ export const versionPackage = (
   const newVersion = getNewVersion(version, type, tag, preReleaseId);
 
   if (!newVersion) {
-    throw new Error(`The new package verison for a ${type} increment on ${version} is invalid.`);
+    throw new Error(`The new package verison for a ${type} increment on ${version} is invalid`);
   }
 
   const latestNpmPackageVersion = getLatestPackageVersionOnNpm(name);
   verboseLog(`New version: ${newVersion}`);
   verboseLog(`Latest version on npm: ${latestNpmPackageVersion}`);
 
-  if (latestNpmPackageVersion === newVersion && !semver.gt(latestNpmPackageVersion, newVersion)) {
+  if (newVersion === latestNpmPackageVersion || semver.lt(newVersion, latestNpmPackageVersion)) {
     throw new Error(
       `The new package verison ${newVersion} is less than or equal to the lastest version ${latestNpmPackageVersion} on npm`
     );

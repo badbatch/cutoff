@@ -1,5 +1,5 @@
 import { dim, magenta, red } from 'colorette';
-import { parse } from 'node:path';
+import { parse, sep } from 'node:path';
 import shelljs from 'shelljs';
 import type { ReleaseMeta } from '../types.js';
 import { formatListLogMessage } from './formatListLogMessage.js';
@@ -28,33 +28,46 @@ export const versionMonorepoPackages = ({
   verboseLog('>>>> PROJECT ROOT END <<<<\n');
   const packageMetaKeys = Object.keys(packageMetaRecord);
 
-  for (const packageMetaKey of packageMetaKeys) {
+  for (let index = packageMetaKeys.length - 1; index >= 0; index -= 1) {
     try {
       verboseLog('>>>> PACKAGE START <<<<');
-      const { path } = packageMetaRecord[packageMetaKey]!;
-      const packageJson = loadPackageJson(path);
+      const packageMetaKey = packageMetaKeys[index]!;
+      const packageMeta = packageMetaRecord[packageMetaKey]!;
+      const packageJson = loadPackageJson(packageMeta.path);
       const { name } = packageJson;
       verboseLog(`Versioning package: ${name}`);
-      const { dir } = parse(path);
-      const relativeDirectory = dir.replace(cwd, '');
+      const { dir } = parse(packageMeta.path);
+      let relativeDirectory = dir.replace(cwd, '');
+
+      if (relativeDirectory.startsWith(sep)) {
+        relativeDirectory = relativeDirectory.slice(1);
+      }
+
       verboseLog(`Relative dir: ${relativeDirectory}`);
 
       if (!changedFiles.some(file => file.includes(relativeDirectory))) {
         verboseLog(`No files have changed since the last release tag: ${lastReleaseTag}`);
 
-        if (!force) {
+        if (!force && !packageMeta.force) {
           verboseLog('>>>> PACKAGE END <<<<\n');
-          return;
+          continue;
         }
 
-        verboseLog('Force is set to true, proceeding regardless of file changes');
+        if (force) {
+          verboseLog('Force is set to true, proceeding regardless of file changes');
+        } else if (packageMeta.force) {
+          verboseLog('Package is an internal dependency of a package with file changes');
+        }
       }
 
       const packageChangedFiles = changedFiles.filter(file => file.includes(relativeDirectory));
-      verboseLog(formatListLogMessage(`Package changed files`, packageChangedFiles));
+
+      if (packageChangedFiles.length > 0) {
+        verboseLog(formatListLogMessage(`Package changed files`, packageChangedFiles));
+      }
 
       versionPackage(packageJson, {
-        packageJsonPath: path,
+        packageJsonPath: packageMeta.path,
         preReleaseId,
         tag,
         type,
@@ -63,9 +76,16 @@ export const versionMonorepoPackages = ({
       const internalDepsPackageMeta = getInternalDepsPackageMeta(packageJson, packageMetaRecord);
 
       for (const { name } of internalDepsPackageMeta) {
+        const depsPackageMeta = packageMetaRecord[name];
+
+        if (depsPackageMeta) {
+          depsPackageMeta.force = true;
+        }
+
         if (!packageMetaKeys.includes(name)) {
           verboseLog(`${name} added to packages to version`);
-          packageMetaKeys.push(name);
+          packageMetaKeys.unshift(name);
+          index += 1;
         }
       }
 
@@ -73,6 +93,8 @@ export const versionMonorepoPackages = ({
     } catch (error: unknown) {
       shelljs.echo(`${magenta('Cutoff')} ${dim('=>')} ${red(`Error: ${(error as Error).message}`)}`);
       verboseLog('>>>> PACKAGE END <<<<\n');
+    } finally {
+      packageMetaKeys.splice(index, 1);
     }
   }
 };

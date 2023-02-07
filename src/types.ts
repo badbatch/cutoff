@@ -14,6 +14,7 @@ export interface CutReleaseArguments {
 export type PackageManager = 'npm' | 'yarn' | 'pnpm';
 
 export interface PackageMeta {
+  force: boolean;
   name: string;
   path: string;
 }

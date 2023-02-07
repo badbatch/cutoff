@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import type { PackageJson } from 'type-fest';
+import { loadPackageJsonMock } from '../__testUtils__/loadPackageJson.js';
 
 jest.unstable_mockModule('./getMonorepoPackageJsonPaths.js', () => ({
   getMonorepoPackageJsonPaths: jest
@@ -11,12 +11,7 @@ jest.unstable_mockModule('./getMonorepoPackageJsonPaths.js', () => ({
     ]),
 }));
 
-jest.unstable_mockModule('./loadPackageJson.js', () => ({
-  loadPackageJson: jest.fn<(value: string) => PackageJson>().mockImplementation((path: string) => {
-    const match = /\/([a-z]+)\/package.json$/.exec(path)!;
-    return { name: match[1]! };
-  }),
-}));
+jest.unstable_mockModule('./loadPackageJson.js', loadPackageJsonMock);
 
 describe('getMonorepoPackageMeta', () => {
   it('should return the correct package meta', async () => {
@@ -24,14 +19,17 @@ describe('getMonorepoPackageMeta', () => {
 
     expect(getMonorepoPackageMeta('pnpm')).toEqual({
       alpha: {
+        force: false,
         name: 'alpha',
         path: '/root/apps/client/alpha/package.json',
       },
       bravo: {
+        force: false,
         name: 'bravo',
         path: '/root/apps/server/bravo/package.json',
       },
       delta: {
+        force: false,
         name: 'delta',
         path: '/root/configs/delta/package.json',
       },

@@ -10,6 +10,7 @@ export const getMonorepoPackageMeta = (packageManager: PackageManager) => {
     const { name } = loadPackageJson(packageJsonPath);
 
     packageMetaRecord[name] = {
+      force: false,
       name,
       path: packageJsonPath,
     };
