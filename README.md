@@ -2,6 +2,8 @@
 
 An opinionated command line utility for cutting releases and publishing to npm.
 
+**This package has been deprecated. Please use [@repodog/cli](https://github.com/badbatch/repodog) instead.**
+
 [![Build Status](https://travis-ci.com/badbatch/cutoff.svg?branch=master)](https://travis-ci.com/badbatch/cutoff)
 [![codecov](https://codecov.io/gh/badbatch/cutoff/branch/master/graph/badge.svg)](https://codecov.io/gh/badbatch/cutoff)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
